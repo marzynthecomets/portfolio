@@ -1,4 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react";
+import { ts, srOnly } from "./theme.js";
+import NavTitles from "./NavTitles.jsx";
 
 const TOTAL_FRAMES = 184;
 const ROTATION_INTERVAL_MS = 60;
@@ -30,9 +32,10 @@ const TRACK = {
 const STICKERS = [
   {
     id: "nutrition-source",
-    label: "MAKING DENSE NUTRITION INFORMATION SNACKABLE",
+    label: "Making Nutrition Education Digestible",
     peakFrame: 0,
     centerY: 350,
+    href: "#/nutrition-source",
   },
   {
     id: "nebo",
@@ -152,7 +155,7 @@ export default function HomepageDtp() {
     // feeling responsive at native finger speeds.
     const delta = Math.round(dx / (isMobile ? 2.5 : 4));
     const next =
-      ((dragStart.current.frame + delta) % TOTAL_FRAMES + TOTAL_FRAMES) %
+      ((dragStart.current.frame - delta) % TOTAL_FRAMES + TOTAL_FRAMES) %
       TOTAL_FRAMES;
     setCurrentFrame(next);
   }, [isMobile]);
@@ -183,17 +186,17 @@ export default function HomepageDtp() {
       <div style={S.mobileRoot}>
         <nav style={S.mobileNav}>
           <p style={S.mobileLogo}>Mars Nevada</p>
-          <p style={S.mobileNavLinks}>About</p>
+          <NavTitles color={COLORS.neptune} isMobile currentRoute="home" />
         </nav>
 
         <main style={S.mobileMain}>
           <div style={S.mobileHero}>
             <p style={S.mobileEyebrow}>Hi, i&rsquo;m mars &amp; i like to</p>
-            <p style={S.mobileHeadline}>
+            <h1 style={S.mobileHeadline}>
               stay curious,
               <br />
               stay thirsty!
-            </p>
+            </h1>
             <p style={S.mobileBody}>
               Spin the bottle to explore my case studies or{" "}
               <button
@@ -342,20 +345,22 @@ export default function HomepageDtp() {
         {/* Yellow nav bar */}
         <nav style={S.nav}>
           <p style={S.logo}>Mars Nevada</p>
-          <p style={S.navLinks}>
-            Sr. Art Director \ Product Designer \ About
-          </p>
+          <NavTitles
+            color={COLORS.neptune}
+            isMobile={false}
+            currentRoute="home"
+          />
         </nav>
 
         {/* Hero text block */}
         <div style={S.hero}>
           <div style={S.heroHeadingGroup}>
             <p style={S.eyebrow}>Hi, i&rsquo;m mars &amp; i like to</p>
-            <p style={S.headline}>
+            <h1 style={S.headline}>
               stay curious,
               <br />
               stay thirsty!
-            </p>
+            </h1>
           </div>
           <p style={S.body}>
             Spin the bottle to explore my case studies or{" "}

@@ -1,6 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import leoProfanity from "leo-profanity";
+import { ts } from "./theme.js";
+import NavTitles from "./NavTitles.jsx";
 
 const COLORS = {
   purps: "#270059",
@@ -377,7 +379,7 @@ function NeboTranslator() {
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 400,
             fontSize: isMobile ? 16 : 22,
-            lineHeight: 1.4,
+            lineHeight: 1.6,
             resize: "vertical",
             padding: "6px 0",
             boxSizing: "border-box",
@@ -1468,11 +1470,8 @@ function StepContent({ step, isMobile }) {
       )}
       <h2
         style={{
-          margin: 0,
-          fontFamily: "'Space Grotesk', sans-serif",
+          ...ts.h2(isMobile),
           fontWeight: 400,
-          fontSize: isMobile ? 24 : 32,
-          lineHeight: 1.142,
           color: COLORS.mint,
           maxWidth: 500,
         }}
@@ -1481,12 +1480,9 @@ function StepContent({ step, isMobile }) {
       </h2>
       <div
         style={{
-          fontFamily: "'DM Sans', sans-serif",
+          ...ts.bodyL(isMobile),
           fontWeight: 400,
-          fontSize: isMobile ? 16 : 22,
-          lineHeight: 1.4,
           color: COLORS.white,
-          fontVariationSettings: "'opsz' 14",
           display: "flex",
           flexDirection: "column",
           gap: isMobile ? 12 : 16,
@@ -1504,11 +1500,8 @@ function CharacterSplit({ isMobile }) {
     <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 18 : 22, color: COLORS.white }}>
       <h2
         style={{
-          margin: 0,
-          fontFamily: "'Space Grotesk', sans-serif",
+          ...ts.h2(isMobile),
           fontWeight: 400,
-          fontSize: isMobile ? 24 : 32,
-          lineHeight: 1.142,
           color: COLORS.mint,
         }}
       >
@@ -2014,20 +2007,11 @@ function Nav({ isMobile }) {
       >
         Mars Nevada
       </a>
-      <p
-        style={{
-          margin: 0,
-          fontFamily: "'DM Sans', sans-serif",
-          fontWeight: 500,
-          fontSize: isMobile ? 13 : 22,
-          lineHeight: 1.142,
-          color: COLORS.black,
-          whiteSpace: "nowrap",
-          fontVariationSettings: "'opsz' 14",
-        }}
-      >
-        {isMobile ? "About" : "Sr. Art Director \\ Product Designer \\ About"}
-      </p>
+      <NavTitles
+        color={COLORS.neptune}
+        isMobile={isMobile}
+        currentRoute="nebo"
+      />
     </nav>
   );
 }
@@ -2102,24 +2086,15 @@ function Hero({ isMobile }) {
       >
         <p
           style={{
-            margin: 0,
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontWeight: 400,
-            fontSize: isMobile ? 14 : 20,
-            lineHeight: 0.984,
+            ...ts.eyebrow(isMobile),
             color: COLORS.thothy,
-            textTransform: "uppercase",
           }}
         >
           An educational character-driven chatbot for kids
         </p>
         <h1
           style={{
-            margin: 0,
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontWeight: 400,
-            fontSize: isMobile ? 30 : 52,
-            lineHeight: 1.142,
+            ...ts.display(isMobile),
             color: COLORS.mint,
           }}
         >
@@ -2127,13 +2102,8 @@ function Hero({ isMobile }) {
         </h1>
         <p
           style={{
-            margin: 0,
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: 400,
-            fontSize: isMobile ? 17 : 28,
-            lineHeight: 1.35,
+            ...ts.bodyL(isMobile),
             color: COLORS.white,
-            fontVariationSettings: "'opsz' 14",
           }}
         >
           Find out what stars and constellations are above you and help Nebo and
@@ -2267,32 +2237,27 @@ function NutsAndBolts({ bolts, activeBolt, onPick, content, isMobile }) {
   }, [content?.id]);
 
   const titleNode = (
-    <h3
+    <h2
       key={`${content?.id}-title`}
       style={{
-        margin: 0,
+        ...ts.h1(isMobile),
         fontFamily: "'DM Sans', sans-serif",
         fontWeight: 700,
-        fontSize: isMobile ? 28 : 40,
-        lineHeight: 1.142,
-        color: COLORS.neptune,
         fontVariationSettings: "'opsz' 14",
+        color: COLORS.neptune,
         animation: "neboFadeIn 0.35s ease",
       }}
     >
       {content?.title || content?.label}
-    </h3>
+    </h2>
   );
   const bodyNode = (
     <div
       key={`${content?.id}-body`}
       style={{
-        fontFamily: "'DM Sans', sans-serif",
+        ...ts.bodyL(isMobile),
         fontWeight: 400,
-        fontSize: isMobile ? 16 : 22,
-        lineHeight: 1.5,
         color: COLORS.black,
-        fontVariationSettings: "'opsz' 14",
         display: "flex",
         flexDirection: "column",
         gap: isMobile ? 14 : 18,

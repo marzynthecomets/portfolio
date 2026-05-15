@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import HomepageDtp from "./HomepageDtp.jsx";
 import NeboCaseStudy from "./NeboCaseStudy.jsx";
+import NutritionSourceCaseStudy from "./NutritionSourceCaseStudy.jsx";
 
 function readRoute() {
   const h = window.location.hash.replace(/^#\/?/, "");
@@ -21,6 +22,7 @@ function App() {
   }, []);
 
   if (route === "nebo") return <NeboCaseStudy />;
+  if (route === "nutrition-source") return <NutritionSourceCaseStudy />;
   return <HomepageDtp />;
 }
 

@@ -485,8 +485,9 @@ const S = {
     gap: "10px",
     padding: "32px 80px 30px",
     width: "100%",
-    overflow: "clip",
     margin: 0,
+    position: "relative",
+    zIndex: 5,
   },
   logo: {
     flex: "1 0 0",

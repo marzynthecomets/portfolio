@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import HomepageDtp from "./HomepageDtp.jsx";
 import NeboCaseStudy from "./NeboCaseStudy.jsx";
 import NutritionSourceCaseStudy from "./NutritionSourceCaseStudy.jsx";
+import CulturePassCaseStudy from "./CulturePassCaseStudy.jsx";
 
 function readRoute() {
   const h = window.location.hash.replace(/^#\/?/, "");
@@ -23,6 +24,7 @@ function App() {
 
   if (route === "nebo") return <NeboCaseStudy />;
   if (route === "nutrition-source") return <NutritionSourceCaseStudy />;
+  if (route === "culturepass") return <CulturePassCaseStudy />;
   return <HomepageDtp />;
 }
 

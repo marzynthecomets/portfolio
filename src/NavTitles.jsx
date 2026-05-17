@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const CASE_STUDIES = [
   { route: "nutrition-source", label: "The Nutrition Source", href: "#/nutrition-source" },
+  { route: "culturepass", label: "CulturePass", href: "#/culturepass" },
   { route: "nebo", label: "Nebo", href: "#/nebo" },
 ];
 

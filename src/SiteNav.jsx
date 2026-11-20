@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { C, F, DM_SANS_OPSZ } from "./tnsShared.jsx";
 
 // Site-wide nav: "MARS NEVADA" on the left, the practice areas on the right.
-// "Research" and "Design" each open a dropdown of pages.
+// "Design" and "Health Research" each open a dropdown of pages.
 
 export const CASE_STUDIES = [
   { route: "nutrition-source", label: "The Nutrition Source", href: "#/nutrition-source" },
@@ -13,8 +13,8 @@ export const RESEARCH = [
   { route: "queering-intake-forms", label: "Queering Intake Form Design", href: "#/queering-intake-forms" },
 ];
 const MENUS = [
-  { label: "Research", items: RESEARCH },
   { label: "Design", items: CASE_STUDIES },
+  { label: "Health Research", items: RESEARCH },
 ];
 
 // Text that turns bold without moving anything around it: an invisible bold
@@ -228,11 +228,9 @@ export default function SiteNav({ isMobile, current }) {
         <MobileMenu current={current} />
       ) : (
         <div style={{ ...plex, display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "flex-end", alignItems: "baseline" }}>
-          <NavMenu label="Research" items={RESEARCH} current={current} textStyle={plex} />
-          <span aria-hidden="true">&amp;</span>
           <NavMenu label="Design" items={CASE_STUDIES} current={current} textStyle={plex} />
           <span aria-hidden="true">&amp;</span>
-          <span>Health Storytelling</span>
+          <NavMenu label="Health Research" items={RESEARCH} current={current} textStyle={plex} />
         </div>
       )}
     </nav>

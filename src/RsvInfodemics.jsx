@@ -26,7 +26,7 @@ export default function RsvInfodemics() {
   return (
     <ResearchArticle
       current="rsv-infodemics"
-      eyebrowText="Research · Seminar paper · December 15, 2025"
+      date="December 15, 2025"
       title="When #RSV Goes Viral: Designing TikTok to Fight Infodemics"
       lead={{ id: "abstract", eyebrow: "Abstract", paragraphs: [abstractBlock.x] }}
       start={{ id: "abstract", label: "Abstract" }}

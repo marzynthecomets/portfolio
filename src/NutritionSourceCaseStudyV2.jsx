@@ -460,12 +460,25 @@ function TestersSay({ isMobile }) {
   );
 }
 
+/* ---------- Cause → effect arrow between an insight and its redesign ---------- */
+function SoWeArrow({ isMobile }) {
+  return (
+    <div aria-hidden="true" style={{ display: "flex", justifyContent: "center", padding: isMobile ? "8px 0 24px" : "16px 0 26px" }}>
+      <img
+        alt=""
+        src="/tns/v2/so-we-arrow.svg"
+        style={{ display: "block", height: isMobile ? 96 : "var(--ns-gap-lg, 6rem)", width: "auto" }}
+      />
+    </div>
+  );
+}
+
 /* ---------- Insight 1 ---------- */
 function InsightOne({ isMobile }) {
   return (
     <section
       style={{
-        padding: sectionPad(isMobile, "78px 120px var(--ns-gap-lg, 6rem)"),
+        padding: sectionPad(isMobile, "78px 120px 0"),
         display: "flex",
         flexDirection: "column",
         gap: "var(--ns-gap-sm, 0.75rem)",
@@ -473,7 +486,7 @@ function InsightOne({ isMobile }) {
         textAlign: "center",
       }}
     >
-      <p style={eyebrow()}>Insight 1</p>
+      <p style={eyebrow()}>Insight</p>
       <h2 style={h2Insight(isMobile)}>“I feel like real people don’t use this website.” - P7</h2>
       <p style={pLarge(isMobile)}>
         People felt like they were walking into an academic library and struggled to know where to start. Because
@@ -530,10 +543,10 @@ function HomepageSection({ isMobile }) {
   return (
     <section
       style={{
-        padding: isMobile ? "0 20px 48px" : "26px 120px 78px",
+        padding: isMobile ? "0 20px 48px" : "0 120px 78px",
         display: "flex",
         flexDirection: "column",
-        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // redesign sits close to its copy,
+        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // redesign sits close to its copy
         alignItems: "center",
       }}
     >
@@ -610,10 +623,10 @@ function InsightTwo({ isMobile }) {
   return (
     <section
       style={{
-        padding: sectionPad(isMobile, "78px 120px var(--ns-gap-lg, 6rem)"),
+        padding: sectionPad(isMobile, "78px 120px 0"),
         display: "flex",
         flexDirection: "column",
-        gap: "var(--ns-gap-lg, 6rem)",
+        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // cards sit close to their copy
         alignItems: "center",
       }}
     >
@@ -628,7 +641,7 @@ function InsightTwo({ isMobile }) {
           color: C.navy,
         }}
       >
-        <p style={eyebrow()}>Insight 2</p>
+        <p style={eyebrow()}>Insight</p>
         <h2 style={h2Insight(isMobile)}>No one’s nutritional needs are the same, because their lives aren’t the same.</h2>
         <p style={{ ...pLarge(isMobile) }}>
           In our interviews, people said there’s what they <em>should</em> eat, and what they <em>actually</em> end up
@@ -674,10 +687,10 @@ function PlateRedesign({ isMobile }) {
   return (
     <section
       style={{
-        padding: sectionPad(isMobile, "26px 120px 78px"),
+        padding: isMobile ? "0 20px 48px" : "0 120px 78px",
         display: "flex",
         flexDirection: "column",
-        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // redesign sits close to its copy,
+        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // redesign sits close to its copy
         alignItems: "center",
       }}
     >
@@ -726,7 +739,7 @@ function PlateRedesign({ isMobile }) {
 /* ---------- Insight 3 (165:16434) ---------- */
 function InsightThree({ isMobile }) {
   return (
-    <section style={{ padding: sectionPad(isMobile, "78px 120px var(--ns-gap-lg, 6rem)"), display: "flex", justifyContent: "center" }}>
+    <section style={{ padding: sectionPad(isMobile, "78px 120px 0"), display: "flex", justifyContent: "center" }}>
       <div
         style={{
           display: "flex",
@@ -748,7 +761,7 @@ function InsightThree({ isMobile }) {
           />
         </div>
         <div style={{ flex: "1 0 0", display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.75rem)", color: C.navy, textAlign: isMobile ? "center" : "left" }}>
-          <p style={eyebrow()}>Insight 3</p>
+          <p style={eyebrow()}>Insight</p>
           <h2 style={h2Insight(isMobile)}>People want actionable content, like recipes, but they need to be able to find them easily.</h2>
         </div>
       </div>
@@ -762,10 +775,10 @@ function RecipeRedesign({ isMobile }) {
   return (
     <section
       style={{
-        padding: sectionPad(isMobile, "26px 120px 78px"),
+        padding: isMobile ? "0 20px 48px" : "0 120px 78px",
         display: "flex",
         flexDirection: "column",
-        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // redesign sits close to its copy,
+        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // redesign sits close to its copy
         alignItems: "center",
       }}
     >
@@ -809,12 +822,13 @@ function InformationArchitecture({ isMobile }) {
   return (
     <section style={{ display: "flex", flexDirection: "column", gap: isMobile ? 32 : 48, alignItems: "center", padding: isMobile ? "0 0 48px" : "0 0 80px" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", textAlign: "center", padding: isMobile ? "0 20px" : "0 165px" }}>
+        <p style={eyebrow()}>We also…</p>
         <h2 style={h2Insight(isMobile)}>
-          Sitewide, we also conducted card-sorting and tree testing studies to help reorganize the navigation and relabel pages for
+          Sitewide, we conducted card-sorting and tree testing studies to help reorganize the navigation and relabel pages for
           clarity.
         </h2>
       </div>
-      <div style={{ width: "100%", boxSizing: "border-box", padding: isMobile ? "0 20px" : "0 160px" }}>
+      <div style={{ width: "100%", maxWidth: 1042, boxSizing: "border-box", padding: isMobile ? "0 20px" : 0 }}>
         <video
           src="/tns/v2/ia-changes.mp4"
           poster="/tns/v2/ia-changes-poster.jpg"
@@ -885,14 +899,17 @@ export default function NutritionSourceCaseStudyV2() {
       {/* Each insight shares one band with the redesign it led to; bands alternate pale/dark cream. */}
       <div style={{ background: C.sand50 }}>
         <InsightOne isMobile={isMobile} />
+        <SoWeArrow isMobile={isMobile} />
         <HomepageSection isMobile={isMobile} />
       </div>
       <div style={{ background: C.sand100 }}>
         <InsightTwo isMobile={isMobile} />
+        <SoWeArrow isMobile={isMobile} />
         <PlateRedesign isMobile={isMobile} />
       </div>
       <div style={{ background: C.sand50 }}>
         <InsightThree isMobile={isMobile} />
+        <SoWeArrow isMobile={isMobile} />
         <RecipeRedesign isMobile={isMobile} />
         <InformationArchitecture isMobile={isMobile} />
       </div>

@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { tsSize, tsLead } from "./typeScale.js";
+import { useEffect, useRef, useState } from "react";
 import {
   C, F, A, DM_SANS_OPSZ, NUNITO_VAR, useIsMobile, usePrefersReducedMotion, ScaleBox,
   PLATE_PORTIONS, PLATE_KEYFRAMES, PlateContent,
@@ -11,58 +12,79 @@ import SiteNav from "./SiteNav.jsx";
 // Reskinned Nutrition Source case study.
 // Source: Figma file "wippy", frame New_NutritionSource_CaseStudy (node 1:21).
 /* ---------- Type helpers ---------- */
+// Type: every size is a step on the scale in typeScale.js.
+// DM Sans everywhere, except eyebrows and card headers (H3): all-caps DM Mono.
 const eyebrow = (color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
-  fontWeight: 400,
-  fontSize: 18,
+  fontWeight: "var(--ts-small-weight, 400)",
+  fontSize: tsSize("small"),
   lineHeight: 0.984,
+  letterSpacing: "var(--ts-small-track, 0.13em)", // letterspace all-caps ~5–10% of type size
   textTransform: "uppercase",
   color,
 });
+// Section headlines; insights and redesigns share this level (problem / answer).
 const h2 = (isMobile, color = C.navy) => ({
   margin: 0,
-  fontFamily: F.mono,
-  fontWeight: 400,
-  fontSize: isMobile ? 24 : 34,
-  lineHeight: isMobile ? "30px" : "40px",
-  letterSpacing: isMobile ? "0.48px" : "0.68px",
+  fontFamily: F.sans,
+  fontWeight: "var(--ts-h2-weight, 400)",
+  fontSize: tsSize("h2", isMobile),
+  lineHeight: tsLead("h2"),
+  letterSpacing: "var(--ts-h2-track, 0.03em)",
+  textWrap: "var(--ts-h2-wrap, balance)",
   color,
 });
-// Headings after "What did testers say?": 24px.
-const h2Insight = (isMobile, color = C.navy) => ({
-  ...h2(isMobile, color),
-  fontSize: isMobile ? 20 : 24,
-  lineHeight: isMobile ? "26px" : "30px",
-  letterSpacing: isMobile ? "0.4px" : "0.48px",
-});
-const h2Medium = (isMobile, color = C.navy) => ({
+const h2Insight = h2;
+const h3 = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
-  fontWeight: 500,
-  fontSize: isMobile ? 20 : 24,
-  lineHeight: isMobile ? "26px" : "30px",
-  letterSpacing: isMobile ? "-0.4px" : "-0.48px",
+  fontWeight: "var(--ts-h3-weight, 400)",
+  fontSize: tsSize("h3", isMobile),
+  lineHeight: tsLead("h3"),
+  letterSpacing: "var(--ts-h3-track, 0.1em)", // all caps: letterspace ~5–10%
+  textTransform: "uppercase",
+  textWrap: "var(--ts-h3-wrap, balance)",
   color,
 });
 const pLarge = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.sans,
-  fontWeight: 400,
-  fontSize: isMobile ? 16 : 18,
-  lineHeight: isMobile ? "24px" : "26px",
+  fontWeight: "var(--ts-body-weight, 400)",
+  fontSize: tsSize("body", isMobile),
+  lineHeight: tsLead("body"),
+  wordSpacing: "var(--ts-body-wordspace, -0.01em)",
+  // Unset unless the tuner sets it, so each paragraph keeps its section's alignment.
+  textAlign: "var(--ts-body-align)",
+  // One measure for all body text: a ceiling, so paragraphs in narrower columns keep their column width.
+  maxWidth: "var(--ns-measure, 44.5rem)",
+  textWrap: "pretty",
   color,
   ...DM_SANS_OPSZ,
 });
-const pMedium = (color = C.navy) => ({
-  margin: 0,
-  fontFamily: F.sans,
-  fontWeight: 400,
-  fontSize: 18,
-  lineHeight: "22px",
-  color,
-  ...DM_SANS_OPSZ,
+// Body medium: card text (stat cards, need cards). Quote bubbles stay body large.
+const pMedium = (isMobile, color = C.navy) => ({
+  ...pLarge(isMobile, color),
+  fontWeight: "var(--ts-medium-weight, 400)",
+  fontSize: tsSize("medium", isMobile),
+  lineHeight: tsLead("medium"),
 });
+
+// Scroll the before/after insets back to the top once they leave the screen,
+// so each one starts from the top again when the reader comes back to it.
+function useResetScrollOffscreen() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") return undefined;
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) el.scrollTop = 0;
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return ref;
+}
 
 const sectionPad = (isMobile, desktop) => (isMobile ? "48px 20px" : desktop);
 
@@ -147,11 +169,12 @@ function TitleBand({ isMobile }) {
       <h1
         style={{
           margin: 0,
-          fontFamily: F.mono,
-          fontWeight: 400,
-          fontSize: isMobile ? 26 : 36,
-          lineHeight: isMobile ? "34px" : "52px",
-          letterSpacing: isMobile ? "-0.52px" : "-0.72px",
+          fontFamily: F.sans,
+          fontWeight: "var(--ts-h1-weight, 400)",
+          fontSize: tsSize("h1", isMobile),
+          lineHeight: tsLead("h1"),
+          letterSpacing: "var(--ts-h1-track, 0.03em)",
+          textWrap: "var(--ts-h1-wrap, wrap)",
           color: C.white,
         }}
       >
@@ -183,7 +206,7 @@ function ProjectBand({ isMobile }) {
         <div style={{ display: "flex", flexDirection: "column", gap: 10, width: isMobile ? "100%" : 489 }}>
           <p style={eyebrow(C.navy)}>The team</p>
           <p style={pLarge(isMobile, C.navy)}>Mars Nevada, Xinyu Wang, Mai Amit</p>
-          <p style={pMedium(C.navy)}>All team members contributed to both research and design.</p>
+          <p style={pLarge(isMobile, C.navy)}>All team members contributed to both research and design.</p>
         </div>
       </div>
     </section>
@@ -227,11 +250,12 @@ function AboutTNS({ isMobile }) {
         <h2
           style={{
             margin: 0,
-            fontFamily: F.mono,
-            fontWeight: 400,
-            fontSize: isMobile ? 26 : 36,
-            lineHeight: isMobile ? "34px" : "52px",
-            letterSpacing: isMobile ? "-0.52px" : "-0.72px",
+            fontFamily: F.sans,
+            fontWeight: "var(--ts-h2-weight, 400)",
+            fontSize: tsSize("h2", isMobile),
+            lineHeight: tsLead("h2"),
+            letterSpacing: "var(--ts-h2-track, 0.03em)",
+            textWrap: "var(--ts-h2-wrap, balance)",
             color: C.navy,
           }}
         >
@@ -249,19 +273,16 @@ function AboutTNS({ isMobile }) {
 const STATS = [
   {
     title: "129 million",
-    titleSize: 32,
     body: "Americans have preventable chronic diseases which are often related to diet and physical inactivity. Nutrition can also have a protective effect on health. - ",
     source: { label: "NIH", href: "https://www.niehs.nih.gov/health/topics/nutrition", underline: false },
   },
   {
     title: "Less than 1 in 10",
-    titleSize: 30,
     body: "children and adults eat their recommended vegetables, increasing the risk of diseases like obesity, depression, type 2 diabetes, heart disease, and some cancers - ",
     source: { label: "CDC", href: "https://www.cdc.gov/cdi/indicator-definitions/npao.html", underline: true },
   },
   {
     title: "Disinformation about nutrition",
-    titleSize: 30,
     body: "is rampant online, especially on social media. Most online sources of nutrition information are inaccurate or of low quality. - ",
     source: { label: "PHN", href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10346027/", underline: true },
   },
@@ -333,19 +354,10 @@ function WhyItMatters({ isMobile }) {
               color: C.navy,
             }}
           >
-            <p
-              style={{
-                margin: 0,
-                fontFamily: F.sans,
-                fontWeight: 700,
-                fontSize: isMobile ? 26 : s.titleSize,
-                lineHeight: "32px",
-                ...DM_SANS_OPSZ,
-              }}
-            >
+            <p style={h3(isMobile)}>
               {s.title}
             </p>
-            <p style={pMedium()}>
+            <p style={pMedium(isMobile)}>
               {s.body}
               <a
                 href={s.source.href}
@@ -392,6 +404,7 @@ function QuoteBubble({ q }) {
 }
 
 function TestersSay({ isMobile }) {
+  const scrollRef = useResetScrollOffscreen();
   return (
     <section
       style={{
@@ -417,7 +430,7 @@ function TestersSay({ isMobile }) {
             Accurate nutrition information is only as good as it is discoverable and digestible to everyday people. So
             we asked them.
           </p>
-          <p style={pMedium()}>
+          <p style={pLarge(isMobile)}>
             We conducted qualitative interviews with participants in which they explored the website without guidance
             and we learned how they approach their own nutrition habits and information-seeking.
           </p>
@@ -428,45 +441,53 @@ function TestersSay({ isMobile }) {
           crop={{ width: "257.46%", height: "435.8%", left: "-72.04%", top: "-155.34%" }}
         />
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: isMobile ? 40 : 128, alignItems: "flex-start" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10, maxWidth: "100%" }}>
-          <p style={{ ...eyebrow(), width: isMobile ? "auto" : 486 }}>
-            Original (and{" "}
-            <a href="https://nutritionsource.hsph.harvard.edu/" target="_blank" rel="noreferrer" style={{ color: "inherit", textDecoration: "none" }}>
-              current
-            </a>{" "}
-            design):
-          </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
+        <p style={{ ...eyebrow(), textAlign: "center" }}>What participants said about the site:</p>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "flex-start", gap: isMobile ? 16 : 46 }}>
+          {QUOTES.map((q) => <QuoteBubble key={q.text} q={q} />)}
+        </div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center", width: "100%" }}>
+        <p style={{ ...eyebrow(), textAlign: "center" }}>
+          Original (and{" "}
+          <a href="https://nutritionsource.hsph.harvard.edu/" target="_blank" rel="noreferrer" style={{ color: "inherit", textDecoration: "none" }}>
+            current
+          </a>{" "}
+          design):
+        </p>
+        {/* Same size and lime frame as the redesign insets below. */}
+        <div style={{ position: "relative", width: "100%", maxWidth: 1042 }}>
           <a
             href="https://nutritionsource.hsph.harvard.edu/"
             target="_blank"
             rel="noreferrer"
             aria-label="The current Nutrition Source homepage (opens in a new tab)"
-            style={{ display: "block", position: "relative", width: 486, maxWidth: "100%", aspectRatio: "486 / 313" }}
+            ref={scrollRef}
+            style={{ display: "block", width: "100%", aspectRatio: "1042 / 645.461", overflowY: "auto", background: C.white }}
           >
-            <div style={{ position: "absolute", inset: 0, overflow: "hidden", background: C.white }}>
-              <img
-                alt="Screenshot of the original Nutrition Source homepage"
-                src={A.originalScreencap}
-                style={{ position: "absolute", left: 0.5, top: 0.5, width: "calc(100% - 1px)", aspectRatio: "485 / 742", border: `1px solid ${C.navy}`, boxSizing: "content-box", maxWidth: "none" }}
-              />
-            </div>
-            {/* 43:266 */}
-            <BrushOverlay file="screencap-frame-brush.svg" slice={12} bleed={[3, 2.096, 2, 0.904]} />
+            <img
+              alt="Screenshot of the original Nutrition Source homepage"
+              src={A.originalScreencap}
+              style={{ display: "block", width: "100%", height: "auto" }}
+            />
           </a>
-        </div>
-        <div style={{ flex: "1 0 0", minWidth: isMobile ? "100%" : 0, display: "flex", flexDirection: "column", gap: 24 }}>
-          <p style={eyebrow()}>What participants said about the site:</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: isMobile ? 16 : 46 }}>
-              <QuoteBubble q={QUOTES[0]} />
-              <QuoteBubble q={QUOTES[1]} />
-            </div>
-            <QuoteBubble q={QUOTES[2]} />
-          </div>
+          <BrushOverlay file="homepage-frame-brush.svg" slice={20} bleed={[5.968, 7.129, 6.571, 5.871]} />
         </div>
       </div>
     </section>
+  );
+}
+
+/* ---------- Cause → effect arrow between an insight and its redesign ---------- */
+function SoWeArrow({ isMobile }) {
+  return (
+    <div aria-hidden="true" style={{ display: "flex", justifyContent: "center", padding: isMobile ? "8px 0 24px" : "16px 0 26px" }}>
+      <img
+        alt=""
+        src="/tns/v2/so-we-arrow.svg"
+        style={{ display: "block", height: isMobile ? 96 : "var(--ns-gap-lg, 6rem)", width: "auto" }}
+      />
+    </div>
   );
 }
 
@@ -475,25 +496,25 @@ function InsightOne({ isMobile }) {
   return (
     <section
       style={{
-        padding: sectionPad(isMobile, "80px 120px"),
+        padding: sectionPad(isMobile, "78px 120px 0"),
         display: "flex",
         flexDirection: "column",
-        gap: 10,
+        gap: "var(--ns-gap-sm, 0.75rem)",
         alignItems: "center",
         textAlign: "center",
       }}
     >
-      <p style={eyebrow()}>Insight 1</p>
+      <p style={eyebrow()}>Insight</p>
       <h2 style={h2Insight(isMobile)}>“I feel like real people don’t use this website.” - P7</h2>
       <p style={pLarge(isMobile)}>
-        People felt like they were walking into an academic library and struggled to know where to start.
+        People felt like they were walking into an academic library and struggled to know where to start. Because
+        nutrition isn’t academic. It’s personal.
       </p>
       <img
         alt="Hand-drawn figure standing between towering library shelves"
         src={A.inkLibrary}
         style={{ width: 566, maxWidth: "100%", aspectRatio: "566 / 301.064", objectFit: "cover", display: "block" }}
       />
-      <p style={h2Medium(isMobile)}>Because nutrition isn’t academic. It’s personal.</p>
     </section>
   );
 }
@@ -512,9 +533,10 @@ function BeforeAfterToggle({ labels, value, onChange, isMobile }) {
       padding: isMobile
         ? isLeft ? "12px 8px 12px 16px" : "12px 16px 12px 8px"
         : isLeft ? "18.09px 11.578px 18.09px 26.05px" : "18.09px 26.05px 18.09px 11.578px",
-      fontFamily: F.mono,
-      fontWeight: active ? 500 : 300,
-      fontSize: isMobile ? 13 : 21.708,
+      fontFamily: F.sans,
+      fontWeight: active ? 600 : 400,
+      fontSize: tsSize("small", isMobile),
+      letterSpacing: "var(--ts-small-track, 0.13em)",
       lineHeight: 0.984,
       textTransform: "uppercase",
       color: C.navy,
@@ -535,32 +557,32 @@ function BeforeAfterToggle({ labels, value, onChange, isMobile }) {
 }
 
 function HomepageSection({ isMobile }) {
+  const scrollRef = useResetScrollOffscreen();
   const [view, setView] = useState("after");
   return (
     <section
       style={{
-        background: C.navy,
-        padding: isMobile ? "48px 20px" : "60px 120px 80px",
+        padding: isMobile ? "0 20px 48px" : "0 120px 78px",
         display: "flex",
         flexDirection: "column",
-        gap: 40,
+        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // redesign sits close to its copy
         alignItems: "center",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center", textAlign: "center", maxWidth: 1040 }}>
-        <p style={eyebrow(C.white)}>Homepage redesign</p>
-        <h2 style={h2Medium(isMobile, C.white)}>We started with making a clear starting point.</h2>
-        <p style={pLarge(isMobile, C.white)}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.75rem)", alignItems: "center", textAlign: "center", maxWidth: 1040 }}>
+        <p style={eyebrow(C.navy)}>So we…</p>
+        <h2 style={h2Insight(isMobile)}>Started with a clear starting point</h2>
+        <p style={{ ...pLarge(isMobile, C.navy) }}>
           Since the Nutrition Source truly has so much educational content, giving an overview of common nutrition
           questions, popular content, as well as a search bar, helps reduce the cognitive overload of a large content
           library.
         </p>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 30, alignItems: "center", width: "100%", maxWidth: 1042 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 26, alignItems: "center", width: "100%", maxWidth: 1042 }}>
         <BeforeAfterToggle labels={["Homepage Before", "Homepage after"]} value={view} onChange={setView} isMobile={isMobile} />
         <div style={{ position: "relative", width: "100%" }}>
           <div style={{ width: "100%", background: C.white, overflow: "hidden" }}>
-            <div style={{ aspectRatio: "1042 / 645.461", overflowY: "auto" }}>
+            <div ref={scrollRef} style={{ aspectRatio: "1042 / 645.461", overflowY: "auto" }}>
               {view === "after" ? (
                 <LiveDemo id="homepage-demo" label="Live demo: homepage redesign">
                   <ScaleBox width={1440}>
@@ -620,10 +642,10 @@ function InsightTwo({ isMobile }) {
   return (
     <section
       style={{
-        padding: sectionPad(isMobile, "80px 120px"),
+        padding: sectionPad(isMobile, "78px 120px 0"),
         display: "flex",
         flexDirection: "column",
-        gap: 40,
+        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // cards sit close to their copy
         alignItems: "center",
       }}
     >
@@ -631,21 +653,21 @@ function InsightTwo({ isMobile }) {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 10,
+          gap: "var(--ns-gap-sm, 0.75rem)",
           alignItems: "center",
           textAlign: "center",
-          padding: isMobile ? 0 : "0 156px",
+          maxWidth: 1042, // same column as the insets
           color: C.navy,
         }}
       >
-        <p style={eyebrow()}>Insight 2</p>
+        <p style={eyebrow()}>Insight</p>
         <h2 style={h2Insight(isMobile)}>No one’s nutritional needs are the same, because their lives aren’t the same.</h2>
-        <p style={pLarge(isMobile)}>
+        <p style={{ ...pLarge(isMobile) }}>
           In our interviews, people said there’s what they <em>should</em> eat, and what they <em>actually</em> end up
           eating, because of life. Well, specifically because of:
         </p>
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 30, alignItems: "stretch" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 26, alignItems: "stretch" }}>
         {NEEDS.map((n) => (
           <div
             key={n.title}
@@ -657,7 +679,7 @@ function InsightTwo({ isMobile }) {
               padding: 20,
               display: "flex",
               flexDirection: "column",
-              gap: 10,
+              gap: 13,
               alignItems: "center",
               textAlign: "center",
             }}
@@ -667,20 +689,10 @@ function InsightTwo({ isMobile }) {
                 <img alt="" src={n.img} style={{ position: "absolute", maxWidth: "none", ...n.crop }} />
               </div>
             </div>
-            <h3
-              style={{
-                margin: 0,
-                fontFamily: F.sans,
-                fontWeight: 700,
-                fontSize: 24,
-                lineHeight: "30px",
-                color: C.navy,
-                ...DM_SANS_OPSZ,
-              }}
-            >
+            <h3 style={h3(isMobile)}>
               {n.title}
             </h3>
-            <p style={pMedium()}>{n.body}</p>
+            <p style={pMedium(isMobile)}>{n.body}</p>
           </div>
         ))}
       </div>
@@ -690,33 +702,33 @@ function InsightTwo({ isMobile }) {
 
 /* ---------- Healthy Eating Plate redesign ---------- */
 function PlateRedesign({ isMobile }) {
+  const scrollRef = useResetScrollOffscreen();
   const [view, setView] = useState("after");
   return (
     <section
       style={{
-        background: C.navy,
-        padding: sectionPad(isMobile, "60px 120px"),
+        padding: isMobile ? "0 20px 48px" : "0 120px 78px",
         display: "flex",
         flexDirection: "column",
-        gap: 40,
+        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // redesign sits close to its copy
         alignItems: "center",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center", textAlign: "center", width: "100%" }}>
-        <p style={eyebrow(C.white)}>Healthy Eating Plate page redesign</p>
-        <h2 style={h2Medium(isMobile, C.white)}>Personalizing the Plate</h2>
-        <p style={{ ...pLarge(isMobile, C.white), padding: isMobile ? 0 : "0 119px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.75rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
+        <p style={eyebrow(C.navy)}>So we…</p>
+        <h2 style={h2Insight(isMobile)}>Personalized the Plate Page</h2>
+        <p style={{ ...pLarge(isMobile, C.navy) }}>
           The Healthy Eating Plate is Harvard’s guidelines to healthy portions. But they’re broad guidelines that don’t
           account for people’s individual needs. So I designed an interactive Healthy Eating Plate.
         </p>
-        <p style={eyebrow(C.lime100)}>Solo design work on team project</p>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 48, alignItems: "center", width: "100%", maxWidth: 1042 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 39, alignItems: "center", width: "100%", maxWidth: 1042 }}>
         <BeforeAfterToggle labels={["Plate Before", "Plate After"]} value={view} onChange={setView} isMobile={isMobile} />
         <div style={{ position: "relative", width: "100%" }}>
         {/* Frame 339, 155:12480 */}
         <BrushOverlay file="plate-frame-brush.svg" slice={16} bleed={[3.822, 5.256, 6.178, 3.744]} />
         <div
+          ref={scrollRef}
           style={{
             width: "100%",
             aspectRatio: "1042 / 1491",
@@ -748,14 +760,15 @@ function PlateRedesign({ isMobile }) {
 /* ---------- Insight 3 (165:16434) ---------- */
 function InsightThree({ isMobile }) {
   return (
-    <section style={{ padding: sectionPad(isMobile, "80px 120px"), display: "flex", justifyContent: "center" }}>
+    <section style={{ padding: sectionPad(isMobile, "78px 120px 0"), display: "flex", justifyContent: "center" }}>
       <div
         style={{
           display: "flex",
-          flexDirection: isMobile ? "column" : "row",
+          flexDirection: isMobile ? "column-reverse" : "row-reverse", // text first: left on desktop, above on phones
           gap: isMobile ? 24 : 46,
           alignItems: "center",
           width: "100%",
+          maxWidth: 1042, // same column as the insets, so it doesn't sprawl on wide screens
         }}
       >
         <div
@@ -769,8 +782,8 @@ function InsightThree({ isMobile }) {
             style={{ position: "absolute", maxWidth: "none", width: "221.28%", height: "276.61%", left: "-58.36%", top: "-92.88%" }}
           />
         </div>
-        <div style={{ flex: "1 0 0", display: "flex", flexDirection: "column", gap: 10, color: C.navy, textAlign: isMobile ? "center" : "left" }}>
-          <p style={eyebrow()}>Insight 3</p>
+        <div style={{ flex: "1 0 0", display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.75rem)", color: C.navy, textAlign: isMobile ? "center" : "left" }}>
+          <p style={eyebrow()}>Insight</p>
           <h2 style={h2Insight(isMobile)}>People want actionable content, like recipes, but they need to be able to find them easily.</h2>
         </div>
       </div>
@@ -780,32 +793,32 @@ function InsightThree({ isMobile }) {
 
 /* ---------- Recipe page redesign (165:16852) ---------- */
 function RecipeRedesign({ isMobile }) {
+  const scrollRef = useResetScrollOffscreen();
   const [view, setView] = useState("after");
   return (
     <section
       style={{
-        background: C.navy,
-        padding: sectionPad(isMobile, "60px 120px"),
+        padding: isMobile ? "0 20px 48px" : "0 120px 78px",
         display: "flex",
         flexDirection: "column",
-        gap: 40,
+        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // redesign sits close to its copy
         alignItems: "center",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center", textAlign: "center", width: "100%" }}>
-        <p style={eyebrow(C.white)}>Recipe page redesign</p>
-        <p style={{ ...pLarge(isMobile, C.white), padding: isMobile ? 0 : "0 119px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.75rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
+        <p style={eyebrow(C.navy)}>So we…</p>
+        <h2 style={h2Insight(isMobile)}>Made recipes more findable</h2>
+        <p style={{ ...pLarge(isMobile, C.navy) }}>
           The existing recipe page was essentially a bulleted text list, but participants told us they relied heavily on
           images to choose what appealed to them, and wanted to be able to filter and search to find recipes quickly. I
           also included quick filter tags for things like “Quick and easy” or high-protein recipes.
         </p>
-        <p style={eyebrow(C.lime100)}>Solo design work on team project</p>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 48, alignItems: "center", width: "100%", maxWidth: 1042 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 39, alignItems: "center", width: "100%", maxWidth: 1042 }}>
         <BeforeAfterToggle labels={["Recipes Before", "Recipes After"]} value={view} onChange={setView} isMobile={isMobile} />
         <div style={{ position: "relative", width: "100%" }}>
           <BrushOverlay file="plate-frame-brush.svg" slice={16} bleed={[3.822, 5.256, 6.178, 3.744]} />
-          <div style={{ width: "100%", aspectRatio: "1042 / 1491", position: "relative", overflowY: "auto", background: C.white }}>
+          <div ref={scrollRef} style={{ width: "100%", aspectRatio: "1042 / 1491", position: "relative", overflowY: "auto", background: C.white }}>
             {view === "before" ? (
               <img
                 alt="The original Nutrition Source recipes page: a long text list of recipe links"
@@ -830,15 +843,15 @@ function RecipeRedesign({ isMobile }) {
 function InformationArchitecture({ isMobile }) {
   const reduced = usePrefersReducedMotion();
   return (
-    <section style={{ display: "flex", flexDirection: "column", gap: isMobile ? 32 : 48, alignItems: "center", padding: isMobile ? "48px 0" : "80px 0" }}>
-      <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", textAlign: "center", padding: isMobile ? "0 20px" : "0 165px" }}>
-        <p style={eyebrow()}>Information architecture &amp; site navigation</p>
+    <section style={{ display: "flex", flexDirection: "column", gap: isMobile ? 32 : 48, alignItems: "center", padding: isMobile ? "0 0 48px" : "0 0 80px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", textAlign: "center", padding: isMobile ? "0 20px" : 0, maxWidth: 1042 }}>
+        <p style={eyebrow()}>We also…</p>
         <h2 style={h2Insight(isMobile)}>
-          We also conducted card-sorting and tree testing studies to help reorganize the navigation and relabel pages for
+          Sitewide, we conducted card-sorting and tree testing studies to help reorganize the navigation and relabel pages for
           clarity.
         </h2>
       </div>
-      <div style={{ width: "100%", boxSizing: "border-box", padding: isMobile ? "0 20px" : "0 160px" }}>
+      <div style={{ width: "100%", maxWidth: 1042, boxSizing: "border-box", padding: isMobile ? "0 20px" : 0 }}>
         <video
           src="/tns/v2/ia-changes.mp4"
           poster="/tns/v2/ia-changes-poster.jpg"
@@ -885,7 +898,7 @@ function Conclusion({ isMobile }) {
           />
         </div>
         <h2 style={h2Insight(isMobile)}>People can eat healthier when they have the resources and support they need.</h2>
-        <p style={pLarge(isMobile)}>
+        <p style={{ ...pLarge(isMobile) }}>
           At the end of the day, people want to live healthier lives, but those lives aren’t idealized perfect lives in a
           vacuum. They’re messy and busy, and <em>human</em>, and nutrition resources should recognize and reflect that.
         </p>
@@ -906,13 +919,23 @@ export default function NutritionSourceCaseStudyV2() {
       <AboutTNS isMobile={isMobile} />
       <WhyItMatters isMobile={isMobile} />
       <TestersSay isMobile={isMobile} />
-      <InsightOne isMobile={isMobile} />
-      <HomepageSection isMobile={isMobile} />
-      <InsightTwo isMobile={isMobile} />
-      <PlateRedesign isMobile={isMobile} />
-      <InsightThree isMobile={isMobile} />
-      <RecipeRedesign isMobile={isMobile} />
-      <InformationArchitecture isMobile={isMobile} />
+      {/* Each insight shares one band with the redesign it led to; bands alternate pale/dark cream. */}
+      <div style={{ background: C.sand50 }}>
+        <InsightOne isMobile={isMobile} />
+        <SoWeArrow isMobile={isMobile} />
+        <HomepageSection isMobile={isMobile} />
+      </div>
+      <div style={{ background: C.sand100 }}>
+        <InsightTwo isMobile={isMobile} />
+        <SoWeArrow isMobile={isMobile} />
+        <PlateRedesign isMobile={isMobile} />
+      </div>
+      <div style={{ background: C.sand50 }}>
+        <InsightThree isMobile={isMobile} />
+        <SoWeArrow isMobile={isMobile} />
+        <RecipeRedesign isMobile={isMobile} />
+        <InformationArchitecture isMobile={isMobile} />
+      </div>
       <Conclusion isMobile={isMobile} />
     </main>
   );

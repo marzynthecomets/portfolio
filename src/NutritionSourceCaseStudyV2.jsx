@@ -1,5 +1,5 @@
 import { tsSize, tsLead } from "./typeScale.js";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   C, F, A, DM_SANS_OPSZ, NUNITO_VAR, useIsMobile, usePrefersReducedMotion, ScaleBox,
   PLATE_PORTIONS, PLATE_KEYFRAMES, PlateContent,
@@ -69,6 +69,22 @@ const pMedium = (isMobile, color = C.navy) => ({
   fontSize: tsSize("medium", isMobile),
   lineHeight: tsLead("medium"),
 });
+
+// Scroll the before/after insets back to the top once they leave the screen,
+// so each one starts from the top again when the reader comes back to it.
+function useResetScrollOffscreen() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") return undefined;
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) el.scrollTop = 0;
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return ref;
+}
 
 const sectionPad = (isMobile, desktop) => (isMobile ? "48px 20px" : desktop);
 
@@ -388,6 +404,7 @@ function QuoteBubble({ q }) {
 }
 
 function TestersSay({ isMobile }) {
+  const scrollRef = useResetScrollOffscreen();
   return (
     <section
       style={{
@@ -445,6 +462,7 @@ function TestersSay({ isMobile }) {
             target="_blank"
             rel="noreferrer"
             aria-label="The current Nutrition Source homepage (opens in a new tab)"
+            ref={scrollRef}
             style={{ display: "block", width: "100%", aspectRatio: "1042 / 645.461", overflowY: "auto", background: C.white }}
           >
             <img
@@ -539,6 +557,7 @@ function BeforeAfterToggle({ labels, value, onChange, isMobile }) {
 }
 
 function HomepageSection({ isMobile }) {
+  const scrollRef = useResetScrollOffscreen();
   const [view, setView] = useState("after");
   return (
     <section
@@ -563,7 +582,7 @@ function HomepageSection({ isMobile }) {
         <BeforeAfterToggle labels={["Homepage Before", "Homepage after"]} value={view} onChange={setView} isMobile={isMobile} />
         <div style={{ position: "relative", width: "100%" }}>
           <div style={{ width: "100%", background: C.white, overflow: "hidden" }}>
-            <div style={{ aspectRatio: "1042 / 645.461", overflowY: "auto" }}>
+            <div ref={scrollRef} style={{ aspectRatio: "1042 / 645.461", overflowY: "auto" }}>
               {view === "after" ? (
                 <LiveDemo id="homepage-demo" label="Live demo: homepage redesign">
                   <ScaleBox width={1440}>
@@ -683,6 +702,7 @@ function InsightTwo({ isMobile }) {
 
 /* ---------- Healthy Eating Plate redesign ---------- */
 function PlateRedesign({ isMobile }) {
+  const scrollRef = useResetScrollOffscreen();
   const [view, setView] = useState("after");
   return (
     <section
@@ -708,6 +728,7 @@ function PlateRedesign({ isMobile }) {
         {/* Frame 339, 155:12480 */}
         <BrushOverlay file="plate-frame-brush.svg" slice={16} bleed={[3.822, 5.256, 6.178, 3.744]} />
         <div
+          ref={scrollRef}
           style={{
             width: "100%",
             aspectRatio: "1042 / 1491",
@@ -772,6 +793,7 @@ function InsightThree({ isMobile }) {
 
 /* ---------- Recipe page redesign (165:16852) ---------- */
 function RecipeRedesign({ isMobile }) {
+  const scrollRef = useResetScrollOffscreen();
   const [view, setView] = useState("after");
   return (
     <section
@@ -796,7 +818,7 @@ function RecipeRedesign({ isMobile }) {
         <BeforeAfterToggle labels={["Recipes Before", "Recipes After"]} value={view} onChange={setView} isMobile={isMobile} />
         <div style={{ position: "relative", width: "100%" }}>
           <BrushOverlay file="plate-frame-brush.svg" slice={16} bleed={[3.822, 5.256, 6.178, 3.744]} />
-          <div style={{ width: "100%", aspectRatio: "1042 / 1491", position: "relative", overflowY: "auto", background: C.white }}>
+          <div ref={scrollRef} style={{ width: "100%", aspectRatio: "1042 / 1491", position: "relative", overflowY: "auto", background: C.white }}>
             {view === "before" ? (
               <img
                 alt="The original Nutrition Source recipes page: a long text list of recipe links"

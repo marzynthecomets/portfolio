@@ -107,7 +107,10 @@ function Nav({ isMobile }) {
 function PlateHero() {
   const reducedMotion = usePrefersReducedMotion();
   const [selected, setSelected] = useState(null);
-  const autoplay = !selected && !reducedMotion;
+  const [hovered, setHovered] = useState(null);
+  // Hovering previews a section; clicking pins it open until clicked again.
+  const active = hovered || selected;
+  const autoplay = !active && !reducedMotion;
 
   const onSelect = (key) => setSelected((cur) => (cur === key ? null : key));
 
@@ -120,7 +123,7 @@ function PlateHero() {
       <ScaleBox width={1146} height={545.146}>
         <div style={{ position: "relative", width: 1146, height: 545.146, background: C.plateBg, overflow: "hidden" }}>
           {/* Base layer: the clickable plate. */}
-          <PlateContent activeKey={selected} interactive onSelect={onSelect} />
+          <PlateContent activeKey={active} interactive onSelect={onSelect} onHover={setHovered} />
           {/* Autoplay layers, one per portion, faded on the Figma timeline. */}
           {autoplay &&
             PLATE_PORTIONS.map((p, i) => (
@@ -146,56 +149,61 @@ function PlateHero() {
 }
 
 /* ---------- Intro ---------- */
-function Intro({ isMobile }) {
+// Figma 163:13067: title band above the plate.
+function TitleBand({ isMobile }) {
   return (
     <section
       style={{
         background: C.navy,
-        padding: sectionPad(isMobile, "60px 120px"),
+        padding: isMobile ? "32px 20px" : "40px 120px",
         display: "flex",
         flexDirection: "column",
-        gap: 40,
+        gap: 10,
         alignItems: "center",
+        textAlign: "center",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", textAlign: "center" }}>
-        <p style={eyebrow(C.lime100)}>From Harvard to the Grocery Aisle</p>
-        <h1
-          style={{
-            margin: 0,
-            fontFamily: F.mono,
-            fontWeight: 400,
-            fontSize: isMobile ? 26 : 36,
-            lineHeight: isMobile ? "34px" : "52px",
-            letterSpacing: isMobile ? "-0.52px" : "-0.72px",
-            color: C.white,
-          }}
-        >
-          Making Nutrition Research Digestible
-        </h1>
-      </div>
+      <p style={eyebrow(C.lime100)}>From Harvard to the Grocery Aisle</p>
+      <h1
+        style={{
+          margin: 0,
+          fontFamily: F.mono,
+          fontWeight: 400,
+          fontSize: isMobile ? 26 : 36,
+          lineHeight: isMobile ? "34px" : "52px",
+          letterSpacing: isMobile ? "-0.52px" : "-0.72px",
+          color: C.white,
+        }}
+      >
+        Making Nutrition Research Digestible
+      </h1>
+    </section>
+  );
+}
+
+// Figma 15:533: project and team, below the plate.
+function ProjectBand({ isMobile }) {
+  return (
+    <section style={{ background: C.lime100, padding: sectionPad(isMobile, "60px 120px"), display: "flex", justifyContent: "center" }}>
       <div
         style={{
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
           gap: isMobile ? 32 : 128,
           alignItems: "flex-start",
-          maxWidth: 1204,
-          width: "100%",
-          justifyContent: "center",
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", gap: 10, width: isMobile ? "100%" : 587 }}>
-          <p style={eyebrow(C.lime100)}>The project</p>
-          <p style={pLarge(isMobile, C.white)}>
+          <p style={eyebrow(C.navy)}>The project</p>
+          <p style={pLarge(isMobile, C.navy)}>
             A usability analysis and speculative redesign of the Harvard Nutrition Source, an educational website about
             nutrition and healthy eating.
           </p>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 10, width: isMobile ? "100%" : 489 }}>
-          <p style={eyebrow(C.lime100)}>The team</p>
-          <p style={pLarge(isMobile, C.white)}>Mars Nevada, Xinyu Wang, Mai Amit</p>
-          <p style={pMedium(C.white)}>All team members contributed to both research and design.</p>
+          <p style={eyebrow(C.navy)}>The team</p>
+          <p style={pLarge(isMobile, C.navy)}>Mars Nevada, Xinyu Wang, Mai Amit</p>
+          <p style={pMedium(C.navy)}>All team members contributed to both research and design.</p>
         </div>
       </div>
     </section>
@@ -700,7 +708,7 @@ function InsightTwo({ isMobile }) {
 
 /* ---------- Healthy Eating Plate redesign ---------- */
 function PlateRedesign({ isMobile }) {
-  const [view, setView] = useState("before");
+  const [view, setView] = useState("after");
   return (
     <section
       style={{
@@ -759,8 +767,9 @@ export default function NutritionSourceCaseStudyV2() {
   return (
     <main style={{ background: C.sand50, width: "100%", overflowX: "hidden" }}>
       <Nav isMobile={isMobile} />
+      <TitleBand isMobile={isMobile} />
       <PlateHero />
-      <Intro isMobile={isMobile} />
+      <ProjectBand isMobile={isMobile} />
       <AboutTNS isMobile={isMobile} />
       <WhyItMatters isMobile={isMobile} />
       <TestersSay isMobile={isMobile} />

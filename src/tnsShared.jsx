@@ -416,7 +416,7 @@ function PortionPill({ portion, open, images }) {
 }
 
 // One full plate drawing. `activeKey` decides which wedge is lit and open.
-function PlateDrawing({ activeKey, interactive, onSelect, images }) {
+function PlateDrawing({ activeKey, interactive, onSelect, onHover, images }) {
   return (
     <div
       style={{
@@ -439,6 +439,9 @@ function PlateDrawing({ activeKey, interactive, onSelect, images }) {
             aria-label={interactive ? `${p.label.join(" ")}: ${isOpen ? "close" : "open"} details` : undefined}
             tabIndex={interactive ? 0 : -1}
             onClick={interactive ? () => onSelect(p.key) : undefined}
+            // Hover previews a section with a mouse; touch taps still go through onClick.
+            onPointerEnter={interactive && onHover ? (e) => e.pointerType === "mouse" && onHover(p.key) : undefined}
+            onPointerLeave={interactive && onHover ? (e) => e.pointerType === "mouse" && onHover(null) : undefined}
             style={{
               position: "absolute",
               display: "block",
@@ -569,7 +572,7 @@ function Callout({ portion }) {
 
 // `images` swaps in higher-resolution wedge art (keys: vegetables, grains,
 // protein, fruits) where a page has its own exports.
-export function PlateContent({ activeKey, interactive, onSelect, images }) {
+export function PlateContent({ activeKey, interactive, onSelect, onHover, images }) {
   const portion = PLATE_PORTIONS.find((p) => p.key === activeKey);
   return (
     <div
@@ -586,7 +589,7 @@ export function PlateContent({ activeKey, interactive, onSelect, images }) {
     >
       <div style={{ position: "relative", width: CONTENT_W, height: CONTENT_H }}>
         {portion && <Callout portion={portion} />}
-        <PlateDrawing activeKey={activeKey} interactive={interactive} onSelect={onSelect} images={images} />
+        <PlateDrawing activeKey={activeKey} interactive={interactive} onSelect={onSelect} onHover={onHover} images={images} />
       </div>
     </div>
   );

@@ -210,8 +210,11 @@ function OilAndWater({ open, onToggle, hidden }) {
 }
 
 function PlateSection() {
-  const [active, setActive] = useState(null);
+  const [pinned, setActive] = useState(null);
+  const [hovered, setHovered] = useState(null);
   const [side, setSide] = useState(null);
+  // Hovering previews a section; clicking pins it open until clicked again.
+  const active = hovered || pinned;
   const select = (key) => {
     setSide(null);
     setActive((cur) => (cur === key ? null : key));
@@ -249,7 +252,7 @@ function PlateSection() {
             transformOrigin: "top left",
           }}
         >
-          <PlateContent activeKey={active} interactive onSelect={select} images={IMG.plate} />
+          <PlateContent activeKey={active} interactive onSelect={select} onHover={setHovered} images={IMG.plate} />
         </div>
       </div>
     </section>

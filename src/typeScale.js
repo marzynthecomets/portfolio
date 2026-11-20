@@ -30,6 +30,8 @@ export const LEVELS = [
 // Phones use the same steps on a smaller base and gentler ratio, so the
 // hierarchy keeps its proportions without headlines wrapping word by word.
 export const PHONE = { base: 1.0625, ratio: 1.125 }; // 17px × 1.125
+// Hand adjustments on top of the phone scale, in px.
+export const PHONE_ADJUST_PX = { small: 2, h2: -2, body: 2, medium: 2 };
 export const PHONE_MAX = 899.98; // matches useIsMobile's 900px breakpoint
 
 export const stepRem = (level, s = SCALE) => s.base * s.ratio ** s.steps[level];
@@ -43,6 +45,6 @@ export const tsLead = (level) => `var(--ts-${level}-lh, ${SCALE.leading[level]})
 export const scaleCss = () =>
   `@media (max-width: ${PHONE_MAX}px) { :root { ` +
   Object.keys(SCALE.steps)
-    .map((l) => `--ts-${l}: ${stepRem(l, { ...SCALE, ...PHONE }).toFixed(4)}rem;`)
+    .map((l) => `--ts-${l}: ${(stepRem(l, { ...SCALE, ...PHONE }) + (PHONE_ADJUST_PX[l] || 0) / 16).toFixed(4)}rem;`)
     .join(" ") +
   ` } }`;

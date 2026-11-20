@@ -258,13 +258,13 @@ export const PLATE_KEYFRAMES = PLATE_TIMELINE.map((t, i) => {
 }).join("\n");
 
 // Figma's glass effect on the label pills doesn't come through in its code
-// export, so this recreates it: a frosted blur of the photo behind, plus a
-// thin light edge.
+// export, so this recreates what CSS can: Frost 9 as a 9px backdrop blur, and
+// Light (-45°, 80%) as a faint bevel, brighter on the top-left edge.
+// Refraction, depth and dispersion have no CSS equivalent.
 export const GLASS = {
-  backdropFilter: "blur(10px) saturate(140%)",
-  WebkitBackdropFilter: "blur(10px) saturate(140%)",
-  border: "1px solid rgba(255,255,255,0.35)",
-  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.25)",
+  backdropFilter: "blur(9px)",
+  WebkitBackdropFilter: "blur(9px)",
+  boxShadow: "inset 1px 1px 0 rgba(255,255,255,0.28), inset -1px -1px 0 rgba(255,255,255,0.12)",
 };
 
 function PortionPill({ portion, open, images }) {

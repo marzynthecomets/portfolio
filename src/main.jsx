@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import NeboCaseStudy from "./NeboCaseStudy.jsx";
 import NutritionSourceCaseStudyV2 from "./NutritionSourceCaseStudyV2.jsx";
 import QueeringIntakeForms from "./QueeringIntakeForms.jsx";
+import RsvInfodemics from "./RsvInfodemics.jsx";
 import { UnderConstruction } from "./SiteNav.jsx";
 import { useIsMobile } from "./tnsShared.jsx";
 
@@ -30,6 +31,7 @@ function App() {
   if (route === "nebo") return <NeboCaseStudy />;
   if (route === "nutrition-source") return <NutritionSourceCaseStudyV2 />;
   if (route === "queering-intake-forms") return <QueeringIntakeForms />;
+  if (route === "rsv-infodemics") return <RsvInfodemics />;
   return <Home />;
 }
 

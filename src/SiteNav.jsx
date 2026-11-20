@@ -9,6 +9,7 @@ export const CASE_STUDIES = [
   { route: "nebo", label: "Nebo", href: "#/nebo" },
 ];
 export const RESEARCH = [
+  { route: "rsv-infodemics", label: "When #RSV Goes Viral", href: "#/rsv-infodemics" },
   { route: "queering-intake-forms", label: "Queering Intake Form Design", href: "#/queering-intake-forms" },
 ];
 const MENUS = [

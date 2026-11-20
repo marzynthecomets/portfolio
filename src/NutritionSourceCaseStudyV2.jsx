@@ -475,7 +475,7 @@ function InsightOne({ isMobile }) {
   return (
     <section
       style={{
-        padding: sectionPad(isMobile, "80px 120px"),
+        padding: sectionPad(isMobile, "80px 120px 40px"),
         display: "flex",
         flexDirection: "column",
         gap: 10,
@@ -539,8 +539,7 @@ function HomepageSection({ isMobile }) {
   return (
     <section
       style={{
-        background: C.navy,
-        padding: isMobile ? "48px 20px" : "60px 120px 80px",
+        padding: isMobile ? "0 20px 48px" : "20px 120px 80px",
         display: "flex",
         flexDirection: "column",
         gap: 40,
@@ -548,9 +547,9 @@ function HomepageSection({ isMobile }) {
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center", textAlign: "center", maxWidth: 1040 }}>
-        <p style={eyebrow(C.white)}>Homepage redesign</p>
-        <h2 style={h2Medium(isMobile, C.white)}>We started with making a clear starting point.</h2>
-        <p style={pLarge(isMobile, C.white)}>
+        <p style={eyebrow(C.navy)}>Homepage redesign</p>
+        <h2 style={h2Medium(isMobile, C.navy)}>We started with making a clear starting point.</h2>
+        <p style={pLarge(isMobile, C.navy)}>
           Since the Nutrition Source truly has so much educational content, giving an overview of common nutrition
           questions, popular content, as well as a search bar, helps reduce the cognitive overload of a large content
           library.
@@ -620,7 +619,7 @@ function InsightTwo({ isMobile }) {
   return (
     <section
       style={{
-        padding: sectionPad(isMobile, "80px 120px"),
+        padding: sectionPad(isMobile, "80px 120px 40px"),
         display: "flex",
         flexDirection: "column",
         gap: 40,
@@ -694,8 +693,7 @@ function PlateRedesign({ isMobile }) {
   return (
     <section
       style={{
-        background: C.navy,
-        padding: sectionPad(isMobile, "60px 120px"),
+        padding: sectionPad(isMobile, "20px 120px 80px"),
         display: "flex",
         flexDirection: "column",
         gap: 40,
@@ -703,13 +701,13 @@ function PlateRedesign({ isMobile }) {
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center", textAlign: "center", width: "100%" }}>
-        <p style={eyebrow(C.white)}>Healthy Eating Plate page redesign</p>
-        <h2 style={h2Medium(isMobile, C.white)}>Personalizing the Plate</h2>
-        <p style={{ ...pLarge(isMobile, C.white), padding: isMobile ? 0 : "0 119px" }}>
+        <p style={eyebrow(C.navy)}>Healthy Eating Plate page redesign</p>
+        <h2 style={h2Medium(isMobile, C.navy)}>Personalizing the Plate</h2>
+        <p style={{ ...pLarge(isMobile, C.navy), padding: isMobile ? 0 : "0 119px" }}>
           The Healthy Eating Plate is Harvard’s guidelines to healthy portions. But they’re broad guidelines that don’t
           account for people’s individual needs. So I designed an interactive Healthy Eating Plate.
         </p>
-        <p style={eyebrow(C.lime100)}>Solo design work on team project</p>
+        <p style={eyebrow(C.navy)}>Solo design work on team project</p>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 48, alignItems: "center", width: "100%", maxWidth: 1042 }}>
         <BeforeAfterToggle labels={["Plate Before", "Plate After"]} value={view} onChange={setView} isMobile={isMobile} />
@@ -748,7 +746,7 @@ function PlateRedesign({ isMobile }) {
 /* ---------- Insight 3 (165:16434) ---------- */
 function InsightThree({ isMobile }) {
   return (
-    <section style={{ padding: sectionPad(isMobile, "80px 120px"), display: "flex", justifyContent: "center" }}>
+    <section style={{ padding: sectionPad(isMobile, "80px 120px 40px"), display: "flex", justifyContent: "center" }}>
       <div
         style={{
           display: "flex",
@@ -784,8 +782,7 @@ function RecipeRedesign({ isMobile }) {
   return (
     <section
       style={{
-        background: C.navy,
-        padding: sectionPad(isMobile, "60px 120px"),
+        padding: sectionPad(isMobile, "20px 120px 80px"),
         display: "flex",
         flexDirection: "column",
         gap: 40,
@@ -793,13 +790,13 @@ function RecipeRedesign({ isMobile }) {
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center", textAlign: "center", width: "100%" }}>
-        <p style={eyebrow(C.white)}>Recipe page redesign</p>
-        <p style={{ ...pLarge(isMobile, C.white), padding: isMobile ? 0 : "0 119px" }}>
+        <p style={eyebrow(C.navy)}>Recipe page redesign</p>
+        <p style={{ ...pLarge(isMobile, C.navy), padding: isMobile ? 0 : "0 119px" }}>
           The existing recipe page was essentially a bulleted text list, but participants told us they relied heavily on
           images to choose what appealed to them, and wanted to be able to filter and search to find recipes quickly. I
           also included quick filter tags for things like “Quick and easy” or high-protein recipes.
         </p>
-        <p style={eyebrow(C.lime100)}>Solo design work on team project</p>
+        <p style={eyebrow(C.navy)}>Solo design work on team project</p>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 48, alignItems: "center", width: "100%", maxWidth: 1042 }}>
         <BeforeAfterToggle labels={["Recipes Before", "Recipes After"]} value={view} onChange={setView} isMobile={isMobile} />
@@ -830,7 +827,7 @@ function RecipeRedesign({ isMobile }) {
 function InformationArchitecture({ isMobile }) {
   const reduced = usePrefersReducedMotion();
   return (
-    <section style={{ display: "flex", flexDirection: "column", gap: isMobile ? 32 : 48, alignItems: "center", padding: isMobile ? "48px 0" : "80px 0" }}>
+    <section style={{ background: C.sand100, display: "flex", flexDirection: "column", gap: isMobile ? 32 : 48, alignItems: "center", padding: isMobile ? "48px 0" : "80px 0" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", textAlign: "center", padding: isMobile ? "0 20px" : "0 165px" }}>
         <p style={eyebrow()}>Information architecture &amp; site navigation</p>
         <h2 style={h2Insight(isMobile)}>
@@ -859,7 +856,7 @@ function InformationArchitecture({ isMobile }) {
 /* ---------- Conclusion (168:20729) ---------- */
 function Conclusion({ isMobile }) {
   return (
-    <section style={{ background: C.sand100, padding: sectionPad(isMobile, "80px 120px"), display: "flex", justifyContent: "center" }}>
+    <section style={{ background: C.sand50, padding: sectionPad(isMobile, "80px 120px"), display: "flex", justifyContent: "center" }}>
       <div
         style={{
           display: "flex",
@@ -906,12 +903,19 @@ export default function NutritionSourceCaseStudyV2() {
       <AboutTNS isMobile={isMobile} />
       <WhyItMatters isMobile={isMobile} />
       <TestersSay isMobile={isMobile} />
-      <InsightOne isMobile={isMobile} />
-      <HomepageSection isMobile={isMobile} />
-      <InsightTwo isMobile={isMobile} />
-      <PlateRedesign isMobile={isMobile} />
-      <InsightThree isMobile={isMobile} />
-      <RecipeRedesign isMobile={isMobile} />
+      {/* Each insight shares one band with the redesign it led to; bands alternate pale/dark cream. */}
+      <div style={{ background: C.sand50 }}>
+        <InsightOne isMobile={isMobile} />
+        <HomepageSection isMobile={isMobile} />
+      </div>
+      <div style={{ background: C.sand100 }}>
+        <InsightTwo isMobile={isMobile} />
+        <PlateRedesign isMobile={isMobile} />
+      </div>
+      <div style={{ background: C.sand50 }}>
+        <InsightThree isMobile={isMobile} />
+        <RecipeRedesign isMobile={isMobile} />
+      </div>
       <InformationArchitecture isMobile={isMobile} />
       <Conclusion isMobile={isMobile} />
     </main>

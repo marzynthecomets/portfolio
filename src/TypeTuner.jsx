@@ -15,16 +15,16 @@ const DEFAULTS = {
   ratio: SCALE.ratio,
   steps: { ...SCALE.steps },
   leading: { ...SCALE.leading },
-  weight: { h1: 500, h2: 500, h3: 500, body: 400, medium: 400, small: 400 },
-  track: { h1: -0.02, h2: -0.01, h3: 0.06, small: 0.08 },
+  weight: { h1: 400, h2: 400, h3: 400, body: 400, medium: 400, small: 400 },
+  track: { h1: 0.03, h2: 0.03, h3: 0.1, small: 0.13 },
   wrap: { h1: "wrap", h2: "balance", h3: "balance" },
-  wordSpace: 0,
+  wordSpace: -0.01,
   align: "",
-  measure: 45,
-  gapSm: 0.8125,
-  gapLg: 3.25,
+  measure: 44.5,
+  gapSm: 0.75,
+  gapLg: 6,
 };
-const STORE = "type-tuner-v4";
+const STORE = "type-tuner-v5";
 // Weights actually loaded for each family (see index.html).
 const MONO = [300, 400, 500];
 const SANS = [400, 500, 600, 700, 800, 900];

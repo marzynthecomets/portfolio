@@ -20,7 +20,7 @@ const eyebrow = (color = C.navy) => ({
   fontWeight: "var(--ts-small-weight, 400)",
   fontSize: tsSize("small"),
   lineHeight: 0.984,
-  letterSpacing: "var(--ts-small-track, 0.08em)", // letterspace all-caps ~5–10% of type size
+  letterSpacing: "var(--ts-small-track, 0.13em)", // letterspace all-caps ~5–10% of type size
   textTransform: "uppercase",
   color,
 });
@@ -28,10 +28,10 @@ const eyebrow = (color = C.navy) => ({
 const h2 = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.sans,
-  fontWeight: "var(--ts-h2-weight, 500)",
+  fontWeight: "var(--ts-h2-weight, 400)",
   fontSize: tsSize("h2", isMobile),
   lineHeight: tsLead("h2"),
-  letterSpacing: "var(--ts-h2-track, -0.01em)",
+  letterSpacing: "var(--ts-h2-track, 0.03em)",
   textWrap: "var(--ts-h2-wrap, balance)",
   color,
 });
@@ -39,10 +39,10 @@ const h2Insight = h2;
 const h3 = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
-  fontWeight: "var(--ts-h3-weight, 500)",
+  fontWeight: "var(--ts-h3-weight, 400)",
   fontSize: tsSize("h3", isMobile),
   lineHeight: tsLead("h3"),
-  letterSpacing: "var(--ts-h3-track, 0.06em)", // all caps: letterspace ~5–10%
+  letterSpacing: "var(--ts-h3-track, 0.1em)", // all caps: letterspace ~5–10%
   textTransform: "uppercase",
   textWrap: "var(--ts-h3-wrap, balance)",
   color,
@@ -53,11 +53,11 @@ const pLarge = (isMobile, color = C.navy) => ({
   fontWeight: "var(--ts-body-weight, 400)",
   fontSize: tsSize("body", isMobile),
   lineHeight: tsLead("body"),
-  wordSpacing: "var(--ts-body-wordspace, 0em)",
+  wordSpacing: "var(--ts-body-wordspace, -0.01em)",
   // Unset unless the tuner sets it, so each paragraph keeps its section's alignment.
   textAlign: "var(--ts-body-align)",
   // One measure for all body text: a ceiling, so paragraphs in narrower columns keep their column width.
-  maxWidth: "var(--ns-measure, 45rem)",
+  maxWidth: "var(--ns-measure, 44.5rem)",
   textWrap: "pretty",
   color,
   ...DM_SANS_OPSZ,
@@ -154,10 +154,10 @@ function TitleBand({ isMobile }) {
         style={{
           margin: 0,
           fontFamily: F.sans,
-          fontWeight: "var(--ts-h1-weight, 500)",
+          fontWeight: "var(--ts-h1-weight, 400)",
           fontSize: tsSize("h1", isMobile),
           lineHeight: tsLead("h1"),
-          letterSpacing: "var(--ts-h1-track, -0.02em)",
+          letterSpacing: "var(--ts-h1-track, 0.03em)",
           textWrap: "var(--ts-h1-wrap, wrap)",
           color: C.white,
         }}
@@ -235,10 +235,10 @@ function AboutTNS({ isMobile }) {
           style={{
             margin: 0,
             fontFamily: F.sans,
-            fontWeight: "var(--ts-h2-weight, 500)",
+            fontWeight: "var(--ts-h2-weight, 400)",
             fontSize: tsSize("h2", isMobile),
             lineHeight: tsLead("h2"),
-            letterSpacing: "var(--ts-h2-track, -0.01em)",
+            letterSpacing: "var(--ts-h2-track, 0.03em)",
             textWrap: "var(--ts-h2-wrap, balance)",
             color: C.navy,
           }}
@@ -471,10 +471,10 @@ function InsightOne({ isMobile }) {
   return (
     <section
       style={{
-        padding: sectionPad(isMobile, "78px 120px var(--ns-gap-lg, 3.25rem)"),
+        padding: sectionPad(isMobile, "78px 120px var(--ns-gap-lg, 6rem)"),
         display: "flex",
         flexDirection: "column",
-        gap: "var(--ns-gap-sm, 0.8125rem)",
+        gap: "var(--ns-gap-sm, 0.75rem)",
         alignItems: "center",
         textAlign: "center",
       }}
@@ -511,7 +511,7 @@ function BeforeAfterToggle({ labels, value, onChange, isMobile }) {
       fontFamily: F.sans,
       fontWeight: active ? 600 : 400,
       fontSize: tsSize("small", isMobile),
-      letterSpacing: "var(--ts-small-track, 0.08em)",
+      letterSpacing: "var(--ts-small-track, 0.13em)",
       lineHeight: 0.984,
       textTransform: "uppercase",
       color: C.navy,
@@ -539,11 +539,11 @@ function HomepageSection({ isMobile }) {
         padding: isMobile ? "0 20px 48px" : "26px 120px 78px",
         display: "flex",
         flexDirection: "column",
-        gap: "var(--ns-gap-lg, 3.25rem)",
+        gap: "var(--ns-gap-lg, 6rem)",
         alignItems: "center",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", alignItems: "center", textAlign: "center", maxWidth: 1040 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.75rem)", alignItems: "center", textAlign: "center", maxWidth: 1040 }}>
         <p style={eyebrow(C.navy)}>Homepage redesign</p>
         <h2 style={h2Insight(isMobile)}>We started with making a clear starting point.</h2>
         <p style={{ ...pLarge(isMobile, C.navy) }}>
@@ -616,10 +616,10 @@ function InsightTwo({ isMobile }) {
   return (
     <section
       style={{
-        padding: sectionPad(isMobile, "78px 120px var(--ns-gap-lg, 3.25rem)"),
+        padding: sectionPad(isMobile, "78px 120px var(--ns-gap-lg, 6rem)"),
         display: "flex",
         flexDirection: "column",
-        gap: "var(--ns-gap-lg, 3.25rem)",
+        gap: "var(--ns-gap-lg, 6rem)",
         alignItems: "center",
       }}
     >
@@ -627,7 +627,7 @@ function InsightTwo({ isMobile }) {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "var(--ns-gap-sm, 0.8125rem)",
+          gap: "var(--ns-gap-sm, 0.75rem)",
           alignItems: "center",
           textAlign: "center",
           padding: isMobile ? 0 : "0 156px",
@@ -683,11 +683,11 @@ function PlateRedesign({ isMobile }) {
         padding: sectionPad(isMobile, "26px 120px 78px"),
         display: "flex",
         flexDirection: "column",
-        gap: "var(--ns-gap-lg, 3.25rem)",
+        gap: "var(--ns-gap-lg, 6rem)",
         alignItems: "center",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.75rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
         <p style={eyebrow(C.navy)}>Healthy Eating Plate page redesign</p>
         <h2 style={h2Insight(isMobile)}>Personalizing the Plate</h2>
         <p style={{ ...pLarge(isMobile, C.navy) }}>
@@ -733,7 +733,7 @@ function PlateRedesign({ isMobile }) {
 /* ---------- Insight 3 (165:16434) ---------- */
 function InsightThree({ isMobile }) {
   return (
-    <section style={{ padding: sectionPad(isMobile, "78px 120px var(--ns-gap-lg, 3.25rem)"), display: "flex", justifyContent: "center" }}>
+    <section style={{ padding: sectionPad(isMobile, "78px 120px var(--ns-gap-lg, 6rem)"), display: "flex", justifyContent: "center" }}>
       <div
         style={{
           display: "flex",
@@ -754,7 +754,7 @@ function InsightThree({ isMobile }) {
             style={{ position: "absolute", maxWidth: "none", width: "221.28%", height: "276.61%", left: "-58.36%", top: "-92.88%" }}
           />
         </div>
-        <div style={{ flex: "1 0 0", display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", color: C.navy, textAlign: isMobile ? "center" : "left" }}>
+        <div style={{ flex: "1 0 0", display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.75rem)", color: C.navy, textAlign: isMobile ? "center" : "left" }}>
           <p style={eyebrow()}>Insight 3</p>
           <h2 style={h2Insight(isMobile)}>People want actionable content, like recipes, but they need to be able to find them easily.</h2>
         </div>
@@ -772,11 +772,11 @@ function RecipeRedesign({ isMobile }) {
         padding: sectionPad(isMobile, "26px 120px 78px"),
         display: "flex",
         flexDirection: "column",
-        gap: "var(--ns-gap-lg, 3.25rem)",
+        gap: "var(--ns-gap-lg, 6rem)",
         alignItems: "center",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.75rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
         <p style={eyebrow(C.navy)}>Recipe page redesign</p>
         <h2 style={h2Insight(isMobile)}>Making recipes findable</h2>
         <p style={{ ...pLarge(isMobile, C.navy) }}>

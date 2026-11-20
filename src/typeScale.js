@@ -5,9 +5,9 @@
 
 export const SCALE = {
   base: 1.125, // rem (18px at the default browser size)
-  ratio: 1.25, // major third
-  steps: { h1: 4, h2: 3, h3: 2, body: 0, medium: -0.5, small: -1 },
-  leading: { h1: 1.15, h2: 1.22, h3: 1.2, body: 1.44, medium: 1.4, small: 1 },
+  ratio: 1.2, // minor third
+  steps: { h1: 5.5, h2: 4.5, h3: 1, body: 0.5, medium: -1, small: 0.5 },
+  leading: { h1: 1.14, h2: 1.22, h3: 1.24, body: 1.36, medium: 1.26, small: 1 },
 };
 
 export const RATIOS = [
@@ -32,7 +32,7 @@ const MOBILE = { h1: "1.75rem", h2: "1.625rem", h3: "1.375rem", body: "1rem", me
 
 export const stepRem = (level, s = SCALE) => s.base * s.ratio ** s.steps[level];
 
-// Steps can be halves: medium sits at -0.5, between body and small.
+// Steps can be halves.
 // CSS values for a level: the tuner's variable if set, otherwise the scale value.
 export const tsSize = (level, isMobile = false) =>
   isMobile ? MOBILE[level] : `var(--ts-${level}, ${stepRem(level).toFixed(4)}rem)`;

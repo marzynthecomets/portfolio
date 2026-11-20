@@ -115,26 +115,23 @@ const PLATE_SCALE = 540.268 / 429.963;
 const SIDE_ITEMS = {
   oils: {
     label: "Healthy Oils",
-    kicker: "In moderation",
     body: (
       <>
-        Use healthy oils (like olive and canola oil) for cooking, on salad, and at the table. <strong>Limit</strong> butter.
-        Avoid trans fat.
+        Use healthy oils (like olive and canola oil) for cooking, on salad, and at the table. <strong>Limit</strong>{" "}
+        butter. <strong>Avoid</strong> trans fat.
       </>
     ),
   },
   water: {
     label: "Water",
-    kicker: "With every meal",
     body: (
       <>
-        Drink water, tea, or coffee (with little or no sugar). <strong>Limit</strong> milk/dairy (1–2 servings/day) and
-        juice (1 small glass/day). Avoid sugary drinks.
+        Drink water, tea, or coffee (with little or no sugar). <strong>Limit</strong> milk/dairy (1-2 servings/day) and
+        juice (1 small glass/day). <strong>Avoid</strong> sugary drinks.
       </>
     ),
   },
 };
-
 function SidePill({ label, open }) {
   return (
     <span
@@ -162,9 +159,25 @@ function SidePill({ label, open }) {
   );
 }
 
+// Each tile opens its card directly beneath it, pushing anything below down.
+function SideCard({ children }) {
+  return (
+    <div style={{ background: "white", border: "1px solid #997A59", borderRadius: 11, padding: 24 }}>
+      <p style={nunito(400, 20, { lineHeight: "26px", color: "#000" })}>{children}</p>
+    </div>
+  );
+}
+
 function OilAndWater({ open, onToggle, hidden }) {
   const tile = { position: "relative", height: 90, width: "100%", borderRadius: 10, overflow: "hidden", padding: 0, border: "none", cursor: "pointer", display: "block" };
-  const item = open && SIDE_ITEMS[open];
+  const photo = {
+    oils: <img alt="" src={IMG.oils} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", borderRadius: 10 }} />,
+    water: (
+      <span style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: 10 }}>
+        <img alt="" src={IMG.water} style={{ position: "absolute", height: "1551.29%", left: "-178.03%", top: "-697.39%", width: "455.92%", maxWidth: "none" }} />
+      </span>
+    ),
+  };
   return (
     <div
       aria-hidden={hidden || undefined}
@@ -182,32 +195,19 @@ function OilAndWater({ open, onToggle, hidden }) {
         transition: "opacity 0.2s",
       }}
     >
-      <button type="button" aria-pressed={open === "oils"} aria-label="Healthy Oils" onClick={() => onToggle("oils")} style={tile}>
-        <img alt="" src={IMG.oils} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", borderRadius: 10 }} />
-        <SidePill label="Healthy Oils" open={open === "oils"} />
-      </button>
-      <button type="button" aria-pressed={open === "water"} aria-label="Water" onClick={() => onToggle("water")} style={tile}>
-        <span style={{ position: "absolute", inset: 0, overflow: "hidden", borderRadius: 10 }}>
-          <img alt="" src={IMG.water} style={{ position: "absolute", height: "1551.29%", left: "-178.03%", top: "-697.39%", width: "455.92%", maxWidth: "none" }} />
-        </span>
-        <SidePill label="Water" open={open === "water"} />
-      </button>
-      {item && (
-        <div
-          style={{
-            background: "white",
-            border: "1px solid #997A59",
-            borderRadius: 11,
-            padding: 28,
-            display: "flex",
-            flexDirection: "column",
-            gap: 4,
-          }}
-        >
-          <p style={nunito(400, 14, { lineHeight: "26px", textTransform: "uppercase", color: "#000" })}>{item.kicker}</p>
-          <p style={nunito(400, 20, { lineHeight: "26px", color: "#000" })}>{item.body}</p>
-        </div>
-      )}
+      {["oils", "water"].map((key) => {
+        const item = SIDE_ITEMS[key];
+        const isOpen = open === key;
+        return (
+          <div key={key} style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%" }}>
+            <button type="button" aria-expanded={isOpen} aria-label={item.label} onClick={() => onToggle(key)} style={tile}>
+              {photo[key]}
+              <SidePill label={item.label} open={isOpen} />
+            </button>
+            {isOpen && <SideCard>{item.body}</SideCard>}
+          </div>
+        );
+      })}
     </div>
   );
 }

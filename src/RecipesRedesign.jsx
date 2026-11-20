@@ -226,14 +226,14 @@ function Carousel({ onNotBuilt }) {
         <div style={{ position: "absolute", left: 32, top: 32, width: 364, display: "flex", flexDirection: "column", gap: s.hero ? 12 : 20 }}>
           {s.hero ? (
             <>
-              <h1 style={nunito(700, 42, { color: K.maroon, lineHeight: 1.194, letterSpacing: "-0.63px" })}>Explore colorful, delicious and nutritious recipes!</h1>
+              <h1 aria-level={3} style={nunito(700, 42, { color: K.maroon, lineHeight: 1.194, letterSpacing: "-0.63px" })}>Explore colorful, delicious and nutritious recipes!</h1>
               <p style={merri(500, 18, { color: K.lightestText, lineHeight: 1.6, letterSpacing: "0.36px" })}>Find recipes that meet your nutritional needs, by chefs and Harvard staff.</p>
             </>
           ) : (
             <>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 <p style={nunito(400, 12, { color: K.darkText, letterSpacing: "-0.18px" })}>FEATURED RECIPE</p>
-                <h2 style={nunito(700, 26, { color: K.darkText, letterSpacing: "-0.39px", whiteSpace: "pre-line" })}>{s.title}</h2>
+                <h2 aria-level={4} style={nunito(700, 26, { color: K.darkText, letterSpacing: "-0.39px", whiteSpace: "pre-line" })}>{s.title}</h2>
                 <p style={merri(500, 18, { color: K.lightestText, lineHeight: 1.6 })}>{s.desc}</p>
               </div>
               <div style={{ alignSelf: "flex-start" }}>
@@ -377,7 +377,7 @@ function RecipeCard({ r, onOpen }) {
       <img alt="" src={r.img} style={{ width: "100%", height: 201, objectFit: "cover", display: "block", flexShrink: 0 }} />
       <div style={{ flex: 1, padding: 26, display: "flex", flexDirection: "column", gap: 22.717 }}>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
-          <h3 style={nunito(700, 22.717, { color: K.darkText, whiteSpace: "pre-line" })}>
+          <h3 aria-level={4} style={nunito(700, 22.717, { color: K.darkText, whiteSpace: "pre-line" })}>
             <button type="button" onClick={open} style={{ ...bare, textAlign: "left" }}>{r.title}</button>
           </h3>
           <p style={merri(300, 20, { color: K.darkText, lineHeight: "28px", letterSpacing: "0.4px" })}>{r.desc}</p>
@@ -417,7 +417,7 @@ function RecipeHub({ state, setState, onOpen }) {
       <section style={{ background: K.pageBg, padding: "64px 80px 100px", display: "flex", flexDirection: "column", gap: 48, alignItems: "center" }}>
         <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 40 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
-            <form role="search" onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column", gap: 16.226 }}>
+            <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column", gap: 16.226 }}>
               <label htmlFor="tns-recipe-search" style={nunito(700, 32, { color: "black" })}>Search Recipes</label>
               <div style={{ width: 630, height: 48, boxSizing: "border-box", background: "white", border: `1.5px solid ${K.lightestText}`, borderRadius: 26.627, padding: "8.521px 17.041px", display: "flex", alignItems: "center", gap: 12 }}>
                 <input id="tns-recipe-search" type="search" value={query} placeholder="Type to search..."
@@ -512,7 +512,7 @@ function RecipePage({ onBack }) {
   const crumb = nunito(600, 12, { color: K.link, textDecoration: "underline", whiteSpace: "nowrap" });
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 79, alignItems: "center", paddingBottom: 79 }}>
-      <nav aria-label="Breadcrumb" style={{ width: 1440, height: 48.583, boxSizing: "border-box", background: K.lightBg, padding: "0 80px", display: "flex", alignItems: "center" }}>
+      <nav role="none" style={{ width: 1440, height: 48.583, boxSizing: "border-box", background: K.lightBg, padding: "0 80px", display: "flex", alignItems: "center" }}>
         <img alt="" src={IMG.home} style={{ width: 23.603, height: 13.603, display: "block" }} />
         <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", gap: 4, alignItems: "center" }}>
           <li><span style={crumb}>The Nutrition Source</span></li>
@@ -526,7 +526,7 @@ function RecipePage({ onBack }) {
         <img alt="Braised greens in a metal bowl" src={IMG.hero} style={{ width: "100%", height: 339, objectFit: "cover", borderRadius: 12, display: "block" }} />
         <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            <h1 style={nunito(700, 48, { color: K.maroon, letterSpacing: "-0.72px" })}>{GREENS.title}</h1>
+            <h1 aria-level={3} style={nunito(700, 48, { color: K.maroon, letterSpacing: "-0.72px" })}>{GREENS.title}</h1>
             <div style={{ display: "flex", gap: 38 }}>
               <Meta icon={IMG.time} gap={7.67} font={(w, s, x) => ({ margin: 0, ...DM(w, s), ...x })}><b>{r.time[0]}</b> {r.time[1]}</Meta>
               <Meta icon={IMG.serves} gap={7.67} font={(w, s, x) => ({ margin: 0, ...DM(w, s), ...x })}>Serves <b>{r.serves}</b></Meta>
@@ -552,14 +552,14 @@ function RecipePage({ onBack }) {
           )}
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <h2 style={nunito(700, 24, { color: "black" })}>Ingredients</h2>
+          <h2 aria-level={4} style={nunito(700, 24, { color: "black" })}>Ingredients</h2>
           <ul style={{ margin: 0, paddingLeft: 33, ...nunito(400, 22, { color: "black" }) }}>
             {GREENS.ingredients.map((g) => <li key={g} style={{ marginBottom: 4 }}>{g}</li>)}
           </ul>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <div style={{ borderBottom: "1px solid black", paddingBottom: 12, display: "flex", gap: 16, alignItems: "flex-end" }}>
-            <h2 style={nunito(700, 24, { color: "black" })}>Directions</h2>
+            <h2 aria-level={4} style={nunito(700, 24, { color: "black" })}>Directions</h2>
             <button type="button" onClick={() => setSteps(steps.map(() => !anyOpen))} style={{ ...bare, paddingBottom: 3, ...nunito(700, 14, { color: "#363636" }) }}>
               {anyOpen ? "CLOSE ALL" : "OPEN ALL"}
             </button>

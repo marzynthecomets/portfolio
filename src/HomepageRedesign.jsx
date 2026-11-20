@@ -111,7 +111,7 @@ function TagSection() {
   const [query, setQuery] = useState("");
   return (
     <section style={{ background: C.lightBg, padding: "60px 80px", display: "flex", flexDirection: "column", gap: 30, alignItems: "center" }}>
-      <form role="search" onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+      <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
         <label htmlFor="tns-home-search" style={nunito(700, 32, { color: C.darkText, letterSpacing: "-0.48px", whiteSpace: "nowrap" })}>
           I’m looking for...
         </label>
@@ -205,7 +205,7 @@ function NavigationCards() {
   const rows = [CARDS.slice(0, 3), CARDS.slice(3, 6), CARDS.slice(6, 9)];
   return (
     <section style={{ background: "white", padding: "40px 80px", display: "flex", flexDirection: "column", gap: 20, alignItems: "center" }}>
-      <h2 style={nunito(700, 32, { color: C.darkText, letterSpacing: "-0.48px", whiteSpace: "nowrap" })}>Explore the Nutrition Source</h2>
+      <h2 aria-level={3} style={nunito(700, 32, { color: C.darkText, letterSpacing: "-0.48px", whiteSpace: "nowrap" })}>Explore the Nutrition Source</h2>
       {rows.map((row, i) => (
         <div key={i} style={{ display: "flex", gap: 40, justifyContent: "center", alignItems: "stretch", width: "100%", padding: i === 0 ? "20px 0" : i === 1 ? "0 0 20px" : 0 }}>
           {row.map((c) => (
@@ -315,7 +315,7 @@ function Newsletter() {
   const [sent, setSent] = useState(false);
   return (
     <section style={{ background: C.lightBg, padding: "40px 80px", display: "flex", flexDirection: "column", gap: 20, alignItems: "center" }}>
-      <h2 style={nunito(700, 25.562, { color: C.darkText, letterSpacing: "-0.3834px", textAlign: "center", whiteSpace: "nowrap" })}>Subscribe to The Nutrition Source Update</h2>
+      <h2 aria-level={3} style={nunito(700, 25.562, { color: C.darkText, letterSpacing: "-0.3834px", textAlign: "center", whiteSpace: "nowrap" })}>Subscribe to The Nutrition Source Update</h2>
       <p style={nunito(700, 17.041, { color: C.lightestText, textAlign: "center", whiteSpace: "nowrap" })}>A monthly e-newsletter with practical strategies for healthy living.</p>
       <form
         onSubmit={(e) => {

@@ -374,6 +374,8 @@ function PortionPill({ portion, open, images }) {
     >
       {portion.label.map((l, i) => (
         <span key={i} style={{ display: "block" }}>
+          {/* The space keeps "Whole Grains" readable as two words to assistive tech. */}
+          {i ? " " : ""}
           {l}
         </span>
       ))}

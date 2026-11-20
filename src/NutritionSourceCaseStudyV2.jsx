@@ -4,6 +4,7 @@ import {
   PLATE_PORTIONS, PLATE_KEYFRAMES, PlateContent,
 } from "./tnsShared.jsx";
 import HepRedesign from "./HepRedesign.jsx";
+import RoughFrame from "./RoughFrame.jsx";
 
 // Reskinned Nutrition Source case study.
 // Source: Figma file "wippy", frame New_NutritionSource_CaseStudy (node 1:21).
@@ -278,6 +279,17 @@ const STATS = [
   },
 ];
 
+// Brushed card outline, approach 1: the outline exported from Figma (Frame 246,
+// node 43:161) as artwork, applied with border-image. The image is sliced into
+// nine pieces: corners keep their drawn shape; the edges stretch to any size.
+const BRUSH_FRAME = {
+  border: "3px solid transparent",
+  borderImageSource: "url(/tns/v2/stat-card-brush.svg)",
+  borderImageSlice: 32,
+  borderImageWidth: "32px",
+  borderImageRepeat: "stretch",
+};
+
 function WhyItMatters({ isMobile }) {
   return (
     <section
@@ -297,8 +309,7 @@ function WhyItMatters({ isMobile }) {
               flex: "1 0 0",
               minWidth: 0,
               background: C.sand50,
-              border: `3px solid ${C.cardBorder}`,
-              borderRadius: 19,
+              ...BRUSH_FRAME,
               padding: isMobile ? "28px 24px" : "42px 35px",
               display: "flex",
               flexDirection: "column",
@@ -834,11 +845,10 @@ function InsightTwo({ isMobile }) {
           <div
             key={n.title}
             style={{
+              position: "relative",
               width: 246,
               boxSizing: "border-box",
-              border: `3px solid ${C.navy}`,
-              borderRadius: 20,
-              padding: 20,
+              padding: 23,
               display: "flex",
               flexDirection: "column",
               gap: 10,
@@ -846,6 +856,7 @@ function InsightTwo({ isMobile }) {
               textAlign: "center",
             }}
           >
+            <RoughFrame stroke={C.navy} strokeWidth={3} radius={20} seed={NEEDS.indexOf(n) + 1} />
             <div style={{ position: "relative", ...n.frame, flexShrink: 0 }}>
               <div style={{ position: "absolute", ...n.box, overflow: "hidden" }}>
                 <img alt="" src={n.img} style={{ position: "absolute", maxWidth: "none", ...n.crop }} />

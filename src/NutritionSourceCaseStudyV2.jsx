@@ -728,7 +728,7 @@ function PlateRedesign({ isMobile }) {
           The Healthy Eating Plate is Harvard’s guidelines to healthy portions. But they’re broad guidelines that don’t
           account for people’s individual needs. So I designed an interactive Healthy Eating Plate.
         </p>
-        <p style={eyebrow(C.lime100)}>Solo extension of the team project</p>
+        <p style={eyebrow(C.lime100)}>Solo design work on team project</p>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 48, alignItems: "center", width: "100%", maxWidth: 1042 }}>
         <BeforeAfterToggle labels={["Plate Before", "Plate After"]} value={view} onChange={setView} isMobile={isMobile} />
@@ -816,7 +816,7 @@ function RecipeRedesign({ isMobile }) {
           images to choose what appealed to them, and wanted to be able to filter and search to find recipes quickly. I
           also included quick filter tags for things like “Quick and easy” or high-protein recipes.
         </p>
-        <p style={eyebrow(C.lime100)}>Solo extension of the team project</p>
+        <p style={eyebrow(C.lime100)}>Solo design work on team project</p>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 48, alignItems: "center", width: "100%", maxWidth: 1042 }}>
         <BeforeAfterToggle labels={["Recipes Before", "Recipes After"]} value={view} onChange={setView} isMobile={isMobile} />

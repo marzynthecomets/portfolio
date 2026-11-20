@@ -15,9 +15,9 @@ const eyebrow = (color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
   fontWeight: 400,
-  fontSize: 14,
+  fontSize: "var(--ns-eyebrow-size, 0.875rem)",
   lineHeight: 0.984,
-  letterSpacing: "0.08em", // letterspace all-caps ~5–10% of type size
+  letterSpacing: "var(--ns-eyebrow-track, 0.08em)", // letterspace all-caps ~5–10% of type size
   textTransform: "uppercase",
   color,
 });
@@ -25,33 +25,34 @@ const h2 = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
   fontWeight: 400,
-  fontSize: isMobile ? 24 : 34,
-  lineHeight: isMobile ? "30px" : "40px",
-  letterSpacing: isMobile ? "0.48px" : "0.68px",
+  fontSize: isMobile ? "1.5rem" : "2.125rem",
+  lineHeight: isMobile ? 1.25 : 1.18,
+  letterSpacing: "0.02em",
   color,
 });
-// Headings after "What did testers say?": 24px.
+// Type sizes are in rem so they respect the visitor's browser text size.
+// Values written as var(--ns-…, default) can be tuned live with ?tune (see TypeTuner.jsx).
 const h2Insight = (isMobile, color = C.navy) => ({
   ...h2(isMobile, color),
-  fontSize: isMobile ? 26 : 36,
-  lineHeight: isMobile ? "32px" : "44px",
-  letterSpacing: isMobile ? "0.2px" : "0.3px",
+  fontSize: isMobile ? "1.625rem" : "var(--ns-insight-size, 2.25rem)",
+  lineHeight: isMobile ? 1.23 : "var(--ns-insight-lh, 1.22)",
+  letterSpacing: "0.008em",
 });
 const h2Medium = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
   fontWeight: 500,
-  fontSize: isMobile ? 20 : 24,
-  lineHeight: isMobile ? "26px" : "30px",
-  letterSpacing: isMobile ? "-0.4px" : "-0.48px",
+  fontSize: isMobile ? "1.25rem" : "var(--ns-sub-size, 1.5rem)",
+  lineHeight: isMobile ? 1.3 : 1.25,
+  letterSpacing: "-0.02em",
   color,
 });
 const pLarge = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.sans,
   fontWeight: 400,
-  fontSize: isMobile ? 16 : 18,
-  lineHeight: isMobile ? "24px" : "26px",
+  fontSize: isMobile ? "1rem" : "var(--ns-body-size, 1.125rem)",
+  lineHeight: isMobile ? 1.5 : "var(--ns-body-lh, 1.44)",
   color,
   ...DM_SANS_OPSZ,
 });
@@ -59,8 +60,8 @@ const pMedium = (color = C.navy) => ({
   margin: 0,
   fontFamily: F.sans,
   fontWeight: 400,
-  fontSize: 18,
-  lineHeight: "22px",
+  fontSize: "1.125rem",
+  lineHeight: 1.22,
   color,
   ...DM_SANS_OPSZ,
 });
@@ -476,10 +477,10 @@ function InsightOne({ isMobile }) {
   return (
     <section
       style={{
-        padding: sectionPad(isMobile, "78px 120px 52px"),
+        padding: sectionPad(isMobile, "78px 120px var(--ns-gap-lg, 3.25rem)"),
         display: "flex",
         flexDirection: "column",
-        gap: 13,
+        gap: "var(--ns-gap-sm, 0.8125rem)",
         alignItems: "center",
         textAlign: "center",
       }}
@@ -543,14 +544,14 @@ function HomepageSection({ isMobile }) {
         padding: isMobile ? "0 20px 48px" : "26px 120px 78px",
         display: "flex",
         flexDirection: "column",
-        gap: 52,
+        gap: "var(--ns-gap-lg, 3.25rem)",
         alignItems: "center",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: 13, alignItems: "center", textAlign: "center", maxWidth: 1040 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", alignItems: "center", textAlign: "center", maxWidth: 1040 }}>
         <p style={eyebrow(C.navy)}>Homepage redesign</p>
         <h2 style={h2Medium(isMobile, C.navy)}>We started with making a clear starting point.</h2>
-        <p style={{ ...pLarge(isMobile, C.navy), maxWidth: 720 }}>
+        <p style={{ ...pLarge(isMobile, C.navy), maxWidth: "var(--ns-measure, 45rem)" }}>
           Since the Nutrition Source truly has so much educational content, giving an overview of common nutrition
           questions, popular content, as well as a search bar, helps reduce the cognitive overload of a large content
           library.
@@ -620,10 +621,10 @@ function InsightTwo({ isMobile }) {
   return (
     <section
       style={{
-        padding: sectionPad(isMobile, "78px 120px 52px"),
+        padding: sectionPad(isMobile, "78px 120px var(--ns-gap-lg, 3.25rem)"),
         display: "flex",
         flexDirection: "column",
-        gap: 52,
+        gap: "var(--ns-gap-lg, 3.25rem)",
         alignItems: "center",
       }}
     >
@@ -631,7 +632,7 @@ function InsightTwo({ isMobile }) {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 13,
+          gap: "var(--ns-gap-sm, 0.8125rem)",
           alignItems: "center",
           textAlign: "center",
           padding: isMobile ? 0 : "0 156px",
@@ -640,7 +641,7 @@ function InsightTwo({ isMobile }) {
       >
         <p style={eyebrow()}>Insight 2</p>
         <h2 style={h2Insight(isMobile)}>No one’s nutritional needs are the same, because their lives aren’t the same.</h2>
-        <p style={{ ...pLarge(isMobile), maxWidth: 720 }}>
+        <p style={{ ...pLarge(isMobile), maxWidth: "var(--ns-measure, 45rem)" }}>
           In our interviews, people said there’s what they <em>should</em> eat, and what they <em>actually</em> end up
           eating, because of life. Well, specifically because of:
         </p>
@@ -697,14 +698,14 @@ function PlateRedesign({ isMobile }) {
         padding: sectionPad(isMobile, "26px 120px 78px"),
         display: "flex",
         flexDirection: "column",
-        gap: 52,
+        gap: "var(--ns-gap-lg, 3.25rem)",
         alignItems: "center",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: 13, alignItems: "center", textAlign: "center", width: "100%" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
         <p style={eyebrow(C.navy)}>Healthy Eating Plate page redesign</p>
         <h2 style={h2Medium(isMobile, C.navy)}>Personalizing the Plate</h2>
-        <p style={{ ...pLarge(isMobile, C.navy), maxWidth: 720 }}>
+        <p style={{ ...pLarge(isMobile, C.navy), maxWidth: "var(--ns-measure, 45rem)" }}>
           The Healthy Eating Plate is Harvard’s guidelines to healthy portions. But they’re broad guidelines that don’t
           account for people’s individual needs. So I designed an interactive Healthy Eating Plate.
         </p>
@@ -747,7 +748,7 @@ function PlateRedesign({ isMobile }) {
 /* ---------- Insight 3 (165:16434) ---------- */
 function InsightThree({ isMobile }) {
   return (
-    <section style={{ padding: sectionPad(isMobile, "78px 120px 52px"), display: "flex", justifyContent: "center" }}>
+    <section style={{ padding: sectionPad(isMobile, "78px 120px var(--ns-gap-lg, 3.25rem)"), display: "flex", justifyContent: "center" }}>
       <div
         style={{
           display: "flex",
@@ -768,7 +769,7 @@ function InsightThree({ isMobile }) {
             style={{ position: "absolute", maxWidth: "none", width: "221.28%", height: "276.61%", left: "-58.36%", top: "-92.88%" }}
           />
         </div>
-        <div style={{ flex: "1 0 0", display: "flex", flexDirection: "column", gap: 13, color: C.navy, textAlign: isMobile ? "center" : "left" }}>
+        <div style={{ flex: "1 0 0", display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", color: C.navy, textAlign: isMobile ? "center" : "left" }}>
           <p style={eyebrow()}>Insight 3</p>
           <h2 style={h2Insight(isMobile)}>People want actionable content, like recipes, but they need to be able to find them easily.</h2>
         </div>
@@ -786,14 +787,14 @@ function RecipeRedesign({ isMobile }) {
         padding: sectionPad(isMobile, "26px 120px 78px"),
         display: "flex",
         flexDirection: "column",
-        gap: 52,
+        gap: "var(--ns-gap-lg, 3.25rem)",
         alignItems: "center",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: 13, alignItems: "center", textAlign: "center", width: "100%" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
         <p style={eyebrow(C.navy)}>Recipe page redesign</p>
         <h2 style={h2Medium(isMobile)}>Making recipes findable</h2>
-        <p style={{ ...pLarge(isMobile, C.navy), maxWidth: 720 }}>
+        <p style={{ ...pLarge(isMobile, C.navy), maxWidth: "var(--ns-measure, 45rem)" }}>
           The existing recipe page was essentially a bulleted text list, but participants told us they relied heavily on
           images to choose what appealed to them, and wanted to be able to filter and search to find recipes quickly. I
           also included quick filter tags for things like “Quick and easy” or high-protein recipes.
@@ -884,7 +885,7 @@ function Conclusion({ isMobile }) {
           />
         </div>
         <h2 style={h2Insight(isMobile)}>People can eat healthier when they have the resources and support they need.</h2>
-        <p style={{ ...pLarge(isMobile), maxWidth: 720 }}>
+        <p style={{ ...pLarge(isMobile), maxWidth: "var(--ns-measure, 45rem)" }}>
           At the end of the day, people want to live healthier lives, but those lives aren’t idealized perfect lives in a
           vacuum. They’re messy and busy, and <em>human</em>, and nutrition resources should recognize and reflect that.
         </p>

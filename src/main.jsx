@@ -6,6 +6,7 @@ import QueeringIntakeForms from "./QueeringIntakeForms.jsx";
 import RsvInfodemics from "./RsvInfodemics.jsx";
 import { UnderConstruction } from "./SiteNav.jsx";
 import { useIsMobile } from "./tnsShared.jsx";
+import TypeTuner, { tunerEnabled } from "./TypeTuner.jsx";
 
 function readRoute() {
   const h = window.location.hash.replace(/^#\/?/, "");
@@ -28,6 +29,15 @@ function App() {
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
+  return (
+    <>
+      <Page route={route} />
+      {tunerEnabled() && <TypeTuner />}
+    </>
+  );
+}
+
+function Page({ route }) {
   if (route === "nebo") return <NeboCaseStudy />;
   if (route === "nutrition-source") return <NutritionSourceCaseStudyV2 />;
   if (route === "queering-intake-forms") return <QueeringIntakeForms />;

@@ -841,6 +841,36 @@ function RecipeRedesign({ isMobile }) {
   );
 }
 
+/* ---------- Information architecture ---------- */
+function InformationArchitecture({ isMobile }) {
+  const reduced = usePrefersReducedMotion();
+  return (
+    <section style={{ display: "flex", flexDirection: "column", gap: isMobile ? 32 : 48, alignItems: "center", padding: isMobile ? "48px 0" : "80px 0" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", textAlign: "center", padding: isMobile ? "0 20px" : "0 165px" }}>
+        <p style={eyebrow()}>Information architecture &amp; site navigation</p>
+        <h2 style={h2(isMobile)}>
+          We also conducted card-sorting and tree-jacking studies to help reorganize the navigation and relabel pages for
+          clarity.
+        </h2>
+      </div>
+      <div style={{ width: "100%", boxSizing: "border-box", padding: isMobile ? "0 20px" : "0 160px" }}>
+        <video
+          src="/tns/v2/ia-changes.mp4"
+          poster="/tns/v2/ia-changes-poster.jpg"
+          controls
+          muted
+          loop
+          playsInline
+          autoPlay={!reduced}
+          preload="metadata"
+          aria-label="Animation: restructuring The Nutrition Source navigation after card sorting and tree testing"
+          style={{ display: "block", width: "100%", aspectRatio: "16 / 9", background: C.sand50, border: "1px solid rgba(16,9,76,0.15)", borderRadius: 4 }}
+        />
+      </div>
+    </section>
+  );
+}
+
 /* ---------- Conclusion (168:20729) ---------- */
 function Conclusion({ isMobile }) {
   return (
@@ -897,6 +927,7 @@ export default function NutritionSourceCaseStudyV2() {
       <PlateRedesign isMobile={isMobile} />
       <InsightThree isMobile={isMobile} />
       <RecipeRedesign isMobile={isMobile} />
+      <InformationArchitecture isMobile={isMobile} />
       <Conclusion isMobile={isMobile} />
     </main>
   );

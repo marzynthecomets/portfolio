@@ -343,7 +343,9 @@ export default function ResearchArticle({ current, eyebrowText, title, hero, lea
               {lead.after && <p style={{ ...body(isMobile), fontStyle: "italic" }}>{lead.after}</p>}
             </section>
           )}
-          <article style={{ paddingTop: lead ? (isMobile ? 32 : 72) : 0, display: "flex", flexDirection: "column", gap: 18 }}>
+          <article style={{ // With a lead box (intake page) keep a wider break; otherwise the first
+            // heading's own top margin is enough space.
+            paddingTop: lead && start?.box ? (isMobile ? 32 : 72) : 0, display: "flex", flexDirection: "column", gap: 18 }}>
             {isMobile && <MobileToc sections={sections} active={active} onJump={jump} />}
             {start?.box && (
               <div id={start.id} style={{ background: C.sand100, padding: isMobile ? "20px" : "28px 32px", display: "flex", flexDirection: "column", gap: 10, scrollMarginTop: isMobile ? 64 : 24 }}>

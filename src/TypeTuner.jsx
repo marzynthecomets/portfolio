@@ -10,8 +10,7 @@ export const tunerEnabled = () =>
   typeof window !== "undefined" && new URLSearchParams(window.location.search).has("tune");
 
 const PARTS = [
-  { id: "headline", label: "Insight headline" },
-  { id: "heading", label: "Redesign heading" },
+  { id: "headline", label: "Headlines (insight + redesign)" },
   { id: "body", label: "Body text" },
   { id: "eyebrow", label: "Eyebrow label" },
   { id: "spacing", label: "Spacing between blocks" },
@@ -20,8 +19,6 @@ const PARTS = [
 const CONTROLS = [
   { part: "headline", v: "--ns-insight-size", label: "Size", min: 1.5, max: 3.5, step: 0.0625, def: 2.25, unit: "rem" },
   { part: "headline", v: "--ns-insight-lh", label: "Leading", min: 1, max: 1.6, step: 0.02, def: 1.22, unit: "" },
-  { part: "heading", v: "--ns-sub-size", label: "Size", min: 1, max: 2.5, step: 0.0625, def: 1.5, unit: "rem" },
-  { part: "heading", v: "--ns-sub-lh", label: "Leading", min: 1, max: 1.6, step: 0.02, def: 1.25, unit: "" },
   { part: "body", v: "--ns-body-size", label: "Size", min: 0.75, max: 1.5, step: 0.0625, def: 1.125, unit: "rem" },
   { part: "body", v: "--ns-body-lh", label: "Leading", min: 1.1, max: 2, step: 0.02, def: 1.44, unit: "" },
   { part: "body", v: "--ns-measure", label: "Paragraph width", min: 25, max: 70, step: 0.5, def: 45, unit: "rem" },
@@ -87,13 +84,9 @@ export default function TypeTuner() {
   if (cpl > 75) flag("body", `Paragraphs run ~${cpl} characters a line. Over 75 gets tiring to read.`);
   if (cpl < 45) flag("body", `Paragraphs run ~${cpl} characters a line. Under 45 breaks too often.`);
   if (vals["--ns-body-lh"] < 1.4) flag("body", "Leading under 1.4 feels cramped at this size.");
-  if (px("--ns-sub-size") >= px("--ns-insight-size") * 0.9) {
-    flag("headline", "Nearly the same size as the redesign heading: the two levels blur.");
-    flag("heading", "Nearly as big as the insight headline: the two levels blur.");
-  }
-  if (px("--ns-sub-size") <= bodyPx * 1.1) {
-    flag("heading", "Barely bigger than body text.");
-    flag("body", "Nearly as big as the redesign heading.");
+  if (px("--ns-insight-size") < bodyPx * 1.5) {
+    flag("headline", "Less than 1.5× body size: headlines start to read as body text.");
+    flag("body", "Close to headline size: headlines lose their pull.");
   }
   if (vals["--ns-gap-sm"] * 2 > vals["--ns-gap-lg"]) flag("spacing", "Gaps inside groups are close to gaps between them, so groups won't separate.");
   const [part, setPart] = useState("headline");

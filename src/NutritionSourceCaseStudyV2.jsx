@@ -550,7 +550,7 @@ function HomepageSection({ isMobile }) {
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", alignItems: "center", textAlign: "center", maxWidth: 1040 }}>
         <p style={eyebrow(C.navy)}>Homepage redesign</p>
-        <h2 style={h2Medium(isMobile, C.navy)}>We started with making a clear starting point.</h2>
+        <h2 style={h2Insight(isMobile)}>We started with making a clear starting point.</h2>
         <p style={{ ...pLarge(isMobile, C.navy), maxWidth: "var(--ns-measure, 45rem)" }}>
           Since the Nutrition Source truly has so much educational content, giving an overview of common nutrition
           questions, popular content, as well as a search bar, helps reduce the cognitive overload of a large content
@@ -704,7 +704,7 @@ function PlateRedesign({ isMobile }) {
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
         <p style={eyebrow(C.navy)}>Healthy Eating Plate page redesign</p>
-        <h2 style={h2Medium(isMobile, C.navy)}>Personalizing the Plate</h2>
+        <h2 style={h2Insight(isMobile)}>Personalizing the Plate</h2>
         <p style={{ ...pLarge(isMobile, C.navy), maxWidth: "var(--ns-measure, 45rem)" }}>
           The Healthy Eating Plate is Harvard’s guidelines to healthy portions. But they’re broad guidelines that don’t
           account for people’s individual needs. So I designed an interactive Healthy Eating Plate.
@@ -793,7 +793,7 @@ function RecipeRedesign({ isMobile }) {
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
         <p style={eyebrow(C.navy)}>Recipe page redesign</p>
-        <h2 style={h2Medium(isMobile)}>Making recipes findable</h2>
+        <h2 style={h2Insight(isMobile)}>Making recipes findable</h2>
         <p style={{ ...pLarge(isMobile, C.navy), maxWidth: "var(--ns-measure, 45rem)" }}>
           The existing recipe page was essentially a bulleted text list, but participants told us they relied heavily on
           images to choose what appealed to them, and wanted to be able to filter and search to find recipes quickly. I

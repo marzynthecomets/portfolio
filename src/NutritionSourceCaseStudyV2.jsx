@@ -5,6 +5,7 @@ import {
 } from "./tnsShared.jsx";
 import HepRedesign from "./HepRedesign.jsx";
 import HomepageRedesign from "./HomepageRedesign.jsx";
+import RecipesRedesign from "./RecipesRedesign.jsx";
 
 // Reskinned Nutrition Source case study.
 // Source: Figma file "wippy", frame New_NutritionSource_CaseStudy (node 1:21).
@@ -761,6 +762,85 @@ function PlateRedesign({ isMobile }) {
   );
 }
 
+/* ---------- Insight 3 (165:16434) ---------- */
+function InsightThree({ isMobile }) {
+  return (
+    <section style={{ padding: sectionPad(isMobile, "80px 120px"), display: "flex", justifyContent: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          gap: isMobile ? 24 : 46,
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <div
+          role="img"
+          aria-label="Ink drawing of two eyes peering over an open cookbook, with a question mark"
+          style={{ position: "relative", width: 428, maxWidth: "100%", aspectRatio: "428 / 191.884", overflow: "hidden", flexShrink: 0 }}
+        >
+          <img
+            alt=""
+            src="/tns/v2/insight-eyes.png"
+            style={{ position: "absolute", maxWidth: "none", width: "221.28%", height: "276.61%", left: "-58.36%", top: "-92.88%" }}
+          />
+        </div>
+        <div style={{ flex: "1 0 0", display: "flex", flexDirection: "column", gap: 10, color: C.navy, textAlign: isMobile ? "center" : "left" }}>
+          <p style={eyebrow()}>Insight 3</p>
+          <h2 style={h2(isMobile)}>People want actionable content, like recipes, but they need to be able to find them easily.</h2>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Recipe page redesign (165:16852) ---------- */
+function RecipeRedesign({ isMobile }) {
+  const [view, setView] = useState("after");
+  return (
+    <section
+      style={{
+        background: C.navy,
+        padding: sectionPad(isMobile, "60px 120px"),
+        display: "flex",
+        flexDirection: "column",
+        gap: 40,
+        alignItems: "center",
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center", textAlign: "center", width: "100%" }}>
+        <p style={eyebrow(C.white)}>Recipe page redesign</p>
+        <p style={{ ...pLarge(isMobile, C.white), padding: isMobile ? 0 : "0 119px" }}>
+          The existing recipe page was essentially a bulleted text list, but participants told us they relied heavily on
+          images to choose what appealed to them, and wanted to be able to filter and search to find recipes quickly. I
+          also included quick filter tags for things like “Quick and easy” or high-protein recipes.
+        </p>
+        <p style={eyebrow(C.lime100)}>Solo extension of the team project</p>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 48, alignItems: "center", width: "100%", maxWidth: 1042 }}>
+        <BeforeAfterToggle labels={["Recipes Before", "Recipes After"]} value={view} onChange={setView} isMobile={isMobile} />
+        <div style={{ position: "relative", width: "100%" }}>
+          <BrushOverlay file="plate-frame-brush.svg" slice={16} bleed={[3.822, 5.256, 6.178, 3.744]} />
+          <div style={{ width: "100%", aspectRatio: "1042 / 1491", position: "relative", overflowY: "auto", background: C.white }}>
+            {view === "before" ? (
+              <img
+                alt="The original Nutrition Source recipes page: a long text list of recipe links"
+                src="/tns/v2/recipes-before.jpg"
+                style={{ width: "100%", height: "auto", display: "block" }}
+              />
+            ) : (
+              <ScaleBox width={1440}>
+                <RecipesRedesign />
+              </ScaleBox>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- Page ---------- */
 export default function NutritionSourceCaseStudyV2() {
   const isMobile = useIsMobile();
@@ -777,6 +857,8 @@ export default function NutritionSourceCaseStudyV2() {
       <HomepageSection isMobile={isMobile} />
       <InsightTwo isMobile={isMobile} />
       <PlateRedesign isMobile={isMobile} />
+      <InsightThree isMobile={isMobile} />
+      <RecipeRedesign isMobile={isMobile} />
     </main>
   );
 }

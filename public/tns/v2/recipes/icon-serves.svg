@@ -1,0 +1,15 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="23.0107" height="23.0107" viewBox="0 0 23.0107 23.0107" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon">
+<g clip-path="url(#clip0_0_1148)">
+<rect width="23.0107" height="23.0107" rx="11.5053" fill="#13273A"/>
+<circle id="Ellipse 1" cx="11.5053" cy="9.21451" r="4.04089" fill="white"/>
+<path id="Rectangle 1" d="M4.60214 20.1585C4.60214 16.346 7.69281 13.2553 11.5053 13.2553V13.2553C15.3179 13.2553 18.4085 16.346 18.4085 20.1585V23.6943H4.60214V20.1585Z" fill="white"/>
+</g>
+<rect x="0.627563" y="0.627563" width="21.7555" height="21.7555" rx="10.8778" stroke="#13273A" stroke-width="1.25513"/>
+</g>
+<defs>
+<clipPath id="clip0_0_1148">
+<rect width="23.0107" height="23.0107" rx="11.5053" fill="white"/>
+</clipPath>
+</defs>
+</svg>

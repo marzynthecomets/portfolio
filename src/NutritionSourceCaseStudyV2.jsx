@@ -16,7 +16,7 @@ import SiteNav from "./SiteNav.jsx";
 const eyebrow = (color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
-  fontWeight: 400,
+  fontWeight: "var(--ts-small-weight, 400)",
   fontSize: tsSize("small"),
   lineHeight: 0.984,
   letterSpacing: "var(--ts-small-track, 0.08em)", // letterspace all-caps ~5–10% of type size
@@ -27,29 +27,34 @@ const eyebrow = (color = C.navy) => ({
 const h2 = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
-  fontWeight: 400,
+  fontWeight: "var(--ts-h2-weight, 400)",
   fontSize: tsSize("h2", isMobile),
   lineHeight: tsLead("h2"),
-  letterSpacing: "0.01em",
-  textWrap: "balance",
+  letterSpacing: "var(--ts-h2-track, 0.01em)",
+  textWrap: "var(--ts-h2-wrap, balance)",
   color,
 });
 const h2Insight = h2;
 const h3 = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.sans,
-  fontWeight: 700,
+  fontWeight: "var(--ts-h3-weight, 700)",
   fontSize: tsSize("h3", isMobile),
   lineHeight: tsLead("h3"),
+  letterSpacing: "var(--ts-h3-track, 0em)",
+  textWrap: "var(--ts-h3-wrap, wrap)",
   color,
   ...DM_SANS_OPSZ,
 });
 const pLarge = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.sans,
-  fontWeight: 400,
+  fontWeight: "var(--ts-body-weight, 400)",
   fontSize: tsSize("body", isMobile),
   lineHeight: tsLead("body"),
+  wordSpacing: "var(--ts-body-wordspace, 0em)",
+  // Unset unless the tuner sets it, so each paragraph keeps its section's alignment.
+  textAlign: "var(--ts-body-align)",
   // One measure for all body text: a ceiling, so paragraphs in narrower columns keep their column width.
   maxWidth: "var(--ns-measure, 45rem)",
   textWrap: "pretty",
@@ -142,10 +147,11 @@ function TitleBand({ isMobile }) {
         style={{
           margin: 0,
           fontFamily: F.mono,
-          fontWeight: 400,
+          fontWeight: "var(--ts-h1-weight, 400)",
           fontSize: tsSize("h1", isMobile),
           lineHeight: tsLead("h1"),
-          letterSpacing: "-0.02em",
+          letterSpacing: "var(--ts-h1-track, -0.02em)",
+          textWrap: "var(--ts-h1-wrap, wrap)",
           color: C.white,
         }}
       >
@@ -222,10 +228,11 @@ function AboutTNS({ isMobile }) {
           style={{
             margin: 0,
             fontFamily: F.mono,
-            fontWeight: 400,
+            fontWeight: "var(--ts-h2-weight, 400)",
             fontSize: tsSize("h2", isMobile),
             lineHeight: tsLead("h2"),
-            letterSpacing: "0.01em",
+            letterSpacing: "var(--ts-h2-track, 0.01em)",
+            textWrap: "var(--ts-h2-wrap, balance)",
             color: C.navy,
           }}
         >

@@ -89,7 +89,7 @@ export const INTAKE = {
   },
   {
    "t": "p",
-   "x": "The two-step question varies slightly from form to form but remains essentially the same. The first part asks, “What sex were you assigned at birth on your original birth certificate?” The second asks “What is your current gender identity” (Rullo et. al, 2018, p.3793). It is highly recommended to follow this two-step question by asking for the patient’s preferred name and pronouns (Goldhammer et. al, 2018, p.561; Fuzzell et. al, 2015, p.1470; Laoch & Holmes, 2018, p.202; Rullo et. al, 2018, pp.3793-3794)."
+   "x": "The two-step question varies slightly from form to form but remains essentially the same. The first part asks, “What sex were you assigned at birth on your original birth certificate?” The second asks “What is your current gender identity” (Rullo et. al, 2018, p.3793). It is highly recommended to follow this two-step question by asking for the patient’s name and pronouns (Goldhammer et. al, 2018, p.561; Fuzzell et. al, 2015, p.1470; Laoch & Holmes, 2018, p.202; Rullo et. al, 2018, pp.3793-3794)."
   },
   {
    "t": "h3",
@@ -199,11 +199,11 @@ export const INTAKE = {
     ],
     [
      "Q6",
-     "Does the intake at your practice form ask about preferred names and pronouns?"
+     "Does the intake at your practice form ask about names and pronouns?"
     ],
     [
      "Q7",
-     "What was your reaction to the sample intake form, particularly the two-step gender and sex question and the questions that ask for preferred names and pronouns?"
+     "What was your reaction to the sample intake form, particularly the two-step gender and sex question and the questions that ask for names and pronouns?"
     ],
     [
      "Q8",
@@ -239,7 +239,7 @@ export const INTAKE = {
     ],
     [
      "Q16",
-     "What would be some difficulties you would anticipate in trying to implement changes to the intake form in regards to a question that asks for preferred name and pronouns?"
+     "What would be some difficulties you would anticipate in trying to implement changes to the intake form in regards to a question that asks for name and pronouns?"
     ]
    ]
   },
@@ -277,7 +277,7 @@ export const INTAKE = {
     ],
     [
      "Q8",
-     "What would influence your decision to disclose your true gender identity, preferred name and pronouns on a medical intake form?"
+     "What would influence your decision to disclose your true gender identity, name and pronouns on a medical intake form?"
     ],
     [
      "Q9",

@@ -1,4 +1,4 @@
-import { tsSize, tsLead } from "./typeScale.js";
+import { tsSize, tsLead, scaleCss } from "./typeScale.js";
 import { useEffect, useRef, useState } from "react";
 import {
   C, F, A, DM_SANS_OPSZ, NUNITO_VAR, useIsMobile, usePrefersReducedMotion, ScaleBox,
@@ -19,7 +19,7 @@ const eyebrow = (color = C.navy) => ({
   fontFamily: F.mono,
   fontWeight: "var(--ts-small-weight, 400)",
   fontSize: tsSize("small"),
-  lineHeight: 0.984,
+  lineHeight: tsLead("small"), // leading for eyebrows that wrap
   letterSpacing: "var(--ts-small-track, 0.13em)", // letterspace all-caps ~5–10% of type size
   textTransform: "uppercase",
   color,
@@ -86,6 +86,13 @@ function useResetScrollOffscreen() {
   return ref;
 }
 
+// Phones: center all of the case study's own text. The nav and the redesign
+// demos (data-demo) keep their own alignment.
+const PHONE_CENTER_CSS = `@media (max-width: 899.98px) {
+  .case-study { text-align: center; }
+  .case-study .site-nav, .case-study [data-demo] { text-align: start; }
+}`;
+
 const sectionPad = (isMobile, desktop) => (isMobile ? "48px 20px" : desktop);
 
 function PlateHero() {
@@ -100,6 +107,7 @@ function PlateHero() {
 
   return (
     <section
+      data-demo
       aria-label="The Healthy Eating Plate"
       style={{ display: "flex", justifyContent: "center", background: C.sand50, padding: "0 0" }}
     >
@@ -138,7 +146,7 @@ function PlateHero() {
 function LiveDemo({ id, label, children }) {
   const end = useRef(null);
   return (
-    <section aria-label={label} style={{ position: "relative" }}>
+    <section data-demo aria-label={label} style={{ position: "relative" }}>
       <button type="button" className="skip-demo" onClick={() => end.current && end.current.focus()}>
         Skip past this demo
       </button>
@@ -547,10 +555,10 @@ function BeforeAfterToggle({ labels, value, onChange, isMobile }) {
   return (
     <div role="group" aria-label="Before and after" style={{ display: "flex", alignItems: "center" }}>
       <button type="button" aria-pressed={value === "before"} onClick={() => onChange("before")} style={seg("before")}>
-        {labels[0]}
+        {isMobile ? "Before" : labels[0]}
       </button>
       <button type="button" aria-pressed={value === "after"} onClick={() => onChange("after")} style={seg("after")}>
-        {labels[1]}
+        {isMobile ? "After" : labels[1]}
       </button>
     </div>
   );
@@ -673,7 +681,7 @@ function InsightTwo({ isMobile }) {
             key={n.title}
             style={{
               position: "relative",
-              width: 246,
+              width: isMobile ? "100%" : 246, // full width on phones, like the stat cards
               boxSizing: "border-box",
               ...NEEDS_BRUSH,
               padding: 20,
@@ -912,6 +920,7 @@ export default function NutritionSourceCaseStudyV2() {
   const isMobile = useIsMobile();
   return (
     <main className="case-study" style={{ background: C.sand50, width: "100%", overflowX: "hidden" }}>
+      <style>{scaleCss() + PHONE_CENTER_CSS}</style>
       <SiteNav isMobile={isMobile} current="nutrition-source" />
       <TitleBand isMobile={isMobile} />
       <PlateHero />

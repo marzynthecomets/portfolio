@@ -7,7 +7,7 @@ export const SCALE = {
   base: 1.125, // rem (18px at the default browser size)
   ratio: 1.2, // minor third
   steps: { h1: 5.5, h2: 4.5, h3: 1, body: 0.5, medium: -1, small: 0.5 },
-  leading: { h1: 1.14, h2: 1.22, h3: 1.24, body: 1.36, medium: 1.26, small: 1 },
+  leading: { h1: 1.14, h2: 1.22, h3: 1.24, body: 1.36, medium: 1.26, small: 1.3 },
 };
 
 export const RATIOS = [
@@ -27,13 +27,24 @@ export const LEVELS = [
   { id: "small", label: "Small · eyebrows and toggles" },
 ];
 
-// Phones use a flatter set so headlines don't wrap word by word.
-const MOBILE = { h1: "1.75rem", h2: "1.625rem", h3: "1.375rem", body: "1rem", medium: "0.9375rem", small: "0.8125rem" };
+// Phones use the same steps on a smaller base and gentler ratio, so the
+// hierarchy keeps its proportions without headlines wrapping word by word.
+export const PHONE = { base: 1.0625, ratio: 1.125 }; // 17px × 1.125
+// Hand adjustments on top of the phone scale, in px.
+export const PHONE_ADJUST_PX = { small: 2, h2: -2, body: 2, medium: 2 };
+export const PHONE_MAX = 899.98; // matches useIsMobile's 900px breakpoint
 
 export const stepRem = (level, s = SCALE) => s.base * s.ratio ** s.steps[level];
 
-// Steps can be halves.
-// CSS values for a level: the tuner's variable if set, otherwise the scale value.
-export const tsSize = (level, isMobile = false) =>
-  isMobile ? MOBILE[level] : `var(--ts-${level}, ${stepRem(level).toFixed(4)}rem)`;
+// Each level reads --ts-<level>. The phone value is set by a media query (see
+// scaleCss), so styles don't need to know the screen size; the ?tune panel
+// overrides the variable inline. isMobile is accepted for older call sites.
+export const tsSize = (level, _isMobile) => `var(--ts-${level}, ${stepRem(level).toFixed(4)}rem)`;
 export const tsLead = (level) => `var(--ts-${level}-lh, ${SCALE.leading[level]})`;
+
+export const scaleCss = () =>
+  `@media (max-width: ${PHONE_MAX}px) { :root { ` +
+  Object.keys(SCALE.steps)
+    .map((l) => `--ts-${l}: ${(stepRem(l, { ...SCALE, ...PHONE }) + (PHONE_ADJUST_PX[l] || 0) / 16).toFixed(4)}rem;`)
+    .join(" ") +
+  ` } }`;

@@ -1,3 +1,4 @@
+import { tsSize, tsLead } from "./typeScale.js";
 import { useRef, useState } from "react";
 import {
   C, F, A, DM_SANS_OPSZ, NUNITO_VAR, useIsMobile, usePrefersReducedMotion, ScaleBox,
@@ -11,60 +12,48 @@ import SiteNav from "./SiteNav.jsx";
 // Reskinned Nutrition Source case study.
 // Source: Figma file "wippy", frame New_NutritionSource_CaseStudy (node 1:21).
 /* ---------- Type helpers ---------- */
+// Type: every size is a step on the scale in typeScale.js.
 const eyebrow = (color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
   fontWeight: 400,
-  fontSize: "var(--ns-eyebrow-size, 0.875rem)",
+  fontSize: tsSize("small"),
   lineHeight: 0.984,
-  letterSpacing: "var(--ns-eyebrow-track, 0.08em)", // letterspace all-caps ~5–10% of type size
+  letterSpacing: "var(--ts-small-track, 0.08em)", // letterspace all-caps ~5–10% of type size
   textTransform: "uppercase",
   color,
 });
+// Section headlines; insights and redesigns share this level (problem / answer).
 const h2 = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
   fontWeight: 400,
-  fontSize: isMobile ? "1.5rem" : "2.125rem",
-  lineHeight: isMobile ? 1.25 : 1.18,
-  letterSpacing: "0.02em",
+  fontSize: tsSize("h2", isMobile),
+  lineHeight: tsLead("h2"),
+  letterSpacing: "0.01em",
+  textWrap: "balance",
   color,
 });
-// Type sizes are in rem so they respect the visitor's browser text size.
-// Values written as var(--ns-…, default) can be tuned live with ?tune (see TypeTuner.jsx).
-const h2Insight = (isMobile, color = C.navy) => ({
-  ...h2(isMobile, color),
-  fontSize: isMobile ? "1.625rem" : "var(--ns-insight-size, 2.25rem)",
-  lineHeight: isMobile ? 1.23 : "var(--ns-insight-lh, 1.22)",
-  letterSpacing: "0.008em",
-});
-const h2Medium = (isMobile, color = C.navy) => ({
+const h2Insight = h2;
+const h3 = (isMobile, color = C.navy) => ({
   margin: 0,
-  fontFamily: F.mono,
-  fontWeight: 500,
-  fontSize: isMobile ? "1.25rem" : "var(--ns-sub-size, 1.5rem)",
-  lineHeight: isMobile ? 1.3 : "var(--ns-sub-lh, 1.25)",
-  letterSpacing: "-0.02em",
+  fontFamily: F.sans,
+  fontWeight: 700,
+  fontSize: tsSize("h3", isMobile),
+  lineHeight: tsLead("h3"),
   color,
+  ...DM_SANS_OPSZ,
 });
 const pLarge = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.sans,
   fontWeight: 400,
-  fontSize: isMobile ? "1rem" : "var(--ns-body-size, 1.125rem)",
-  lineHeight: isMobile ? 1.5 : "var(--ns-body-lh, 1.44)",
+  fontSize: tsSize("body", isMobile),
+  lineHeight: tsLead("body"),
   color,
   ...DM_SANS_OPSZ,
 });
-const pMedium = (color = C.navy) => ({
-  margin: 0,
-  fontFamily: F.sans,
-  fontWeight: 400,
-  fontSize: "1.125rem",
-  lineHeight: 1.22,
-  color,
-  ...DM_SANS_OPSZ,
-});
+const pMedium = (isMobile, color = C.navy) => pLarge(isMobile, color);
 
 const sectionPad = (isMobile, desktop) => (isMobile ? "48px 20px" : desktop);
 
@@ -151,9 +140,9 @@ function TitleBand({ isMobile }) {
           margin: 0,
           fontFamily: F.mono,
           fontWeight: 400,
-          fontSize: isMobile ? 26 : 36,
-          lineHeight: isMobile ? "34px" : "52px",
-          letterSpacing: isMobile ? "-0.52px" : "-0.72px",
+          fontSize: tsSize("h1", isMobile),
+          lineHeight: tsLead("h1"),
+          letterSpacing: "-0.02em",
           color: C.white,
         }}
       >
@@ -185,7 +174,7 @@ function ProjectBand({ isMobile }) {
         <div style={{ display: "flex", flexDirection: "column", gap: 10, width: isMobile ? "100%" : 489 }}>
           <p style={eyebrow(C.navy)}>The team</p>
           <p style={pLarge(isMobile, C.navy)}>Mars Nevada, Xinyu Wang, Mai Amit</p>
-          <p style={pMedium(C.navy)}>All team members contributed to both research and design.</p>
+          <p style={pMedium(isMobile, C.navy)}>All team members contributed to both research and design.</p>
         </div>
       </div>
     </section>
@@ -231,9 +220,9 @@ function AboutTNS({ isMobile }) {
             margin: 0,
             fontFamily: F.mono,
             fontWeight: 400,
-            fontSize: isMobile ? 26 : 36,
-            lineHeight: isMobile ? "34px" : "52px",
-            letterSpacing: isMobile ? "-0.52px" : "-0.72px",
+            fontSize: tsSize("h2", isMobile),
+            lineHeight: tsLead("h2"),
+            letterSpacing: "0.01em",
             color: C.navy,
           }}
         >
@@ -251,19 +240,16 @@ function AboutTNS({ isMobile }) {
 const STATS = [
   {
     title: "129 million",
-    titleSize: 32,
     body: "Americans have preventable chronic diseases which are often related to diet and physical inactivity. Nutrition can also have a protective effect on health. - ",
     source: { label: "NIH", href: "https://www.niehs.nih.gov/health/topics/nutrition", underline: false },
   },
   {
     title: "Less than 1 in 10",
-    titleSize: 30,
     body: "children and adults eat their recommended vegetables, increasing the risk of diseases like obesity, depression, type 2 diabetes, heart disease, and some cancers - ",
     source: { label: "CDC", href: "https://www.cdc.gov/cdi/indicator-definitions/npao.html", underline: true },
   },
   {
     title: "Disinformation about nutrition",
-    titleSize: 30,
     body: "is rampant online, especially on social media. Most online sources of nutrition information are inaccurate or of low quality. - ",
     source: { label: "PHN", href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10346027/", underline: true },
   },
@@ -335,19 +321,10 @@ function WhyItMatters({ isMobile }) {
               color: C.navy,
             }}
           >
-            <p
-              style={{
-                margin: 0,
-                fontFamily: F.sans,
-                fontWeight: 700,
-                fontSize: isMobile ? 26 : s.titleSize,
-                lineHeight: "32px",
-                ...DM_SANS_OPSZ,
-              }}
-            >
+            <p style={h3(isMobile)}>
               {s.title}
             </p>
-            <p style={pMedium()}>
+            <p style={pMedium(isMobile)}>
               {s.body}
               <a
                 href={s.source.href}
@@ -419,7 +396,7 @@ function TestersSay({ isMobile }) {
             Accurate nutrition information is only as good as it is discoverable and digestible to everyday people. So
             we asked them.
           </p>
-          <p style={pMedium()}>
+          <p style={pMedium(isMobile)}>
             We conducted qualitative interviews with participants in which they explored the website without guidance
             and we learned how they approach their own nutrition habits and information-seeking.
           </p>
@@ -516,7 +493,8 @@ function BeforeAfterToggle({ labels, value, onChange, isMobile }) {
         : isLeft ? "18.09px 11.578px 18.09px 26.05px" : "18.09px 26.05px 18.09px 11.578px",
       fontFamily: F.mono,
       fontWeight: active ? 500 : 300,
-      fontSize: isMobile ? 13 : 21.708,
+      fontSize: tsSize("small", isMobile),
+      letterSpacing: "var(--ts-small-track, 0.08em)",
       lineHeight: 0.984,
       textTransform: "uppercase",
       color: C.navy,
@@ -668,20 +646,10 @@ function InsightTwo({ isMobile }) {
                 <img alt="" src={n.img} style={{ position: "absolute", maxWidth: "none", ...n.crop }} />
               </div>
             </div>
-            <h3
-              style={{
-                margin: 0,
-                fontFamily: F.sans,
-                fontWeight: 700,
-                fontSize: 24,
-                lineHeight: "30px",
-                color: C.navy,
-                ...DM_SANS_OPSZ,
-              }}
-            >
+            <h3 style={h3(isMobile)}>
               {n.title}
             </h3>
-            <p style={pMedium()}>{n.body}</p>
+            <p style={pMedium(isMobile)}>{n.body}</p>
           </div>
         ))}
       </div>

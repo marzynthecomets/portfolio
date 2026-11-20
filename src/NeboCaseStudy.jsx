@@ -1841,6 +1841,7 @@ export default function NeboCaseStudy() {
       >
         <Nav isMobile={isMobile} />
         <div
+          role="main"
           style={{
             width: "100%",
             maxWidth: DESIGN_W,
@@ -2475,6 +2476,7 @@ function NutsAndBolts({ bolts, activeBolt, onPick, content, isMobile }) {
           )}
 
           <nav
+            aria-label="Nuts and bolts topics"
             ref={navRef}
             style={{
               width: 314,
@@ -2578,6 +2580,8 @@ function DemoOverlay({ visible, onClose, slotRef, isMobile }) {
         transition: "opacity 0.3s ease",
       }}
       aria-hidden={!visible}
+      // inert keeps keyboard focus out of the overlay while it's hidden.
+      {...(!visible && { inert: "" })}
     >
       <button
         type="button"

@@ -41,8 +41,8 @@ const pLarge = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.sans,
   fontWeight: 400,
-  fontSize: isMobile ? 18 : 24,
-  lineHeight: isMobile ? "26px" : "32px",
+  fontSize: isMobile ? 16 : 18,
+  lineHeight: isMobile ? "24px" : "26px",
   color,
   ...DM_SANS_OPSZ,
 });

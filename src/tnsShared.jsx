@@ -258,14 +258,36 @@ export const PLATE_KEYFRAMES = PLATE_TIMELINE.map((t, i) => {
 }).join("\n");
 
 // Figma's glass effect on the label pills doesn't come through in its code
-// export, so this recreates what CSS can: Frost 9 as a 9px backdrop blur, and
-// Light (-45°, 80%) as a faint bevel, brighter on the top-left edge.
+// export, so this recreates what CSS can: Frost 9 as a 9px backdrop blur.
 // Refraction, depth and dispersion have no CSS equivalent.
 export const GLASS = {
   backdropFilter: "blur(9px)",
   WebkitBackdropFilter: "blur(9px)",
-  boxShadow: "inset 1px 1px 0 rgba(255,255,255,0.28), inset -1px -1px 0 rgba(255,255,255,0.12)",
 };
+
+// Light (-45°, 80%): a hairline rim, brightest at the top-left and
+// bottom-right corners and fading toward the other two. Drawn as a gradient
+// ring (a masked overlay) because CSS borders can't take a gradient with
+// rounded corners. Place inside any element styled with GLASS.
+export function GlassEdge() {
+  return (
+    <span
+      aria-hidden
+      style={{
+        position: "absolute",
+        inset: 0,
+        borderRadius: "inherit",
+        padding: 0.5,
+        background:
+          "linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.12) 38%, rgba(255,255,255,0.12) 62%, rgba(255,255,255,0.75) 100%)",
+        WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+        WebkitMaskComposite: "xor",
+        mask: "linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0)",
+        pointerEvents: "none",
+      }}
+    />
+  );
+}
 
 function PortionPill({ portion, open, images }) {
   const icon = (
@@ -340,6 +362,7 @@ function PortionPill({ portion, open, images }) {
         pointerEvents: "none",
       }}
     >
+      <GlassEdge />
       {portion.iconFirst ? (
         <>
           {icon}

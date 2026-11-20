@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { GLASS, NUNITO_VAR, PlateContent } from "./tnsShared.jsx";
+import { GLASS, GlassEdge, NUNITO_VAR, PlateContent } from "./tnsShared.jsx";
 import { INGREDIENTS } from "./tnsIngredients.js";
 
 // Live build of the redesigned Healthy Eating Plate page.
@@ -151,6 +151,7 @@ function SidePill({ label, open }) {
         pointerEvents: "none",
       }}
     >
+      <GlassEdge />
       <span style={{ position: "relative", width: 12, height: 12, flexShrink: 0, transform: open ? "rotate(45deg)" : "none" }}>
         <img alt="" src={open ? IMG.iconClose : IMG.iconPlus} width="32.6" height="32.6" style={{ position: "absolute", left: "-85.83%", top: "-85.83%", maxWidth: "none" }} />
       </span>

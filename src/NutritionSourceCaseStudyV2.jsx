@@ -50,6 +50,9 @@ const pLarge = (isMobile, color = C.navy) => ({
   fontWeight: 400,
   fontSize: tsSize("body", isMobile),
   lineHeight: tsLead("body"),
+  // One measure for all body text: a ceiling, so paragraphs in narrower columns keep their column width.
+  maxWidth: "var(--ns-measure, 45rem)",
+  textWrap: "pretty",
   color,
   ...DM_SANS_OPSZ,
 });
@@ -529,7 +532,7 @@ function HomepageSection({ isMobile }) {
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", alignItems: "center", textAlign: "center", maxWidth: 1040 }}>
         <p style={eyebrow(C.navy)}>Homepage redesign</p>
         <h2 style={h2Insight(isMobile)}>We started with making a clear starting point.</h2>
-        <p style={{ ...pLarge(isMobile, C.navy), maxWidth: "var(--ns-measure, 45rem)" }}>
+        <p style={{ ...pLarge(isMobile, C.navy) }}>
           Since the Nutrition Source truly has so much educational content, giving an overview of common nutrition
           questions, popular content, as well as a search bar, helps reduce the cognitive overload of a large content
           library.
@@ -619,7 +622,7 @@ function InsightTwo({ isMobile }) {
       >
         <p style={eyebrow()}>Insight 2</p>
         <h2 style={h2Insight(isMobile)}>No one’s nutritional needs are the same, because their lives aren’t the same.</h2>
-        <p style={{ ...pLarge(isMobile), maxWidth: "var(--ns-measure, 45rem)" }}>
+        <p style={{ ...pLarge(isMobile) }}>
           In our interviews, people said there’s what they <em>should</em> eat, and what they <em>actually</em> end up
           eating, because of life. Well, specifically because of:
         </p>
@@ -673,7 +676,7 @@ function PlateRedesign({ isMobile }) {
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
         <p style={eyebrow(C.navy)}>Healthy Eating Plate page redesign</p>
         <h2 style={h2Insight(isMobile)}>Personalizing the Plate</h2>
-        <p style={{ ...pLarge(isMobile, C.navy), maxWidth: "var(--ns-measure, 45rem)" }}>
+        <p style={{ ...pLarge(isMobile, C.navy) }}>
           The Healthy Eating Plate is Harvard’s guidelines to healthy portions. But they’re broad guidelines that don’t
           account for people’s individual needs. So I designed an interactive Healthy Eating Plate.
         </p>
@@ -762,7 +765,7 @@ function RecipeRedesign({ isMobile }) {
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.8125rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
         <p style={eyebrow(C.navy)}>Recipe page redesign</p>
         <h2 style={h2Insight(isMobile)}>Making recipes findable</h2>
-        <p style={{ ...pLarge(isMobile, C.navy), maxWidth: "var(--ns-measure, 45rem)" }}>
+        <p style={{ ...pLarge(isMobile, C.navy) }}>
           The existing recipe page was essentially a bulleted text list, but participants told us they relied heavily on
           images to choose what appealed to them, and wanted to be able to filter and search to find recipes quickly. I
           also included quick filter tags for things like “Quick and easy” or high-protein recipes.
@@ -853,7 +856,7 @@ function Conclusion({ isMobile }) {
           />
         </div>
         <h2 style={h2Insight(isMobile)}>People can eat healthier when they have the resources and support they need.</h2>
-        <p style={{ ...pLarge(isMobile), maxWidth: "var(--ns-measure, 45rem)" }}>
+        <p style={{ ...pLarge(isMobile) }}>
           At the end of the day, people want to live healthier lives, but those lives aren’t idealized perfect lives in a
           vacuum. They’re messy and busy, and <em>human</em>, and nutrition resources should recognize and reflect that.
         </p>

@@ -19,7 +19,7 @@ const eyebrow = (color = C.navy) => ({
   fontFamily: F.mono,
   fontWeight: "var(--ts-small-weight, 400)",
   fontSize: tsSize("small"),
-  lineHeight: 0.984,
+  lineHeight: tsLead("small"), // leading for eyebrows that wrap
   letterSpacing: "var(--ts-small-track, 0.13em)", // letterspace all-caps ~5–10% of type size
   textTransform: "uppercase",
   color,
@@ -673,7 +673,7 @@ function InsightTwo({ isMobile }) {
             key={n.title}
             style={{
               position: "relative",
-              width: 246,
+              width: isMobile ? "100%" : 246, // full width on phones, like the stat cards
               boxSizing: "border-box",
               ...NEEDS_BRUSH,
               padding: 20,

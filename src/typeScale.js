@@ -7,7 +7,7 @@ export const SCALE = {
   base: 1.125, // rem (18px at the default browser size)
   ratio: 1.2, // minor third
   steps: { h1: 5.5, h2: 4.5, h3: 1, body: 0.5, medium: -1, small: 0.5 },
-  leading: { h1: 1.14, h2: 1.22, h3: 1.24, body: 1.36, medium: 1.26, small: 1 },
+  leading: { h1: 1.14, h2: 1.22, h3: 1.24, body: 1.36, medium: 1.26, small: 1.3 },
 };
 
 export const RATIOS = [

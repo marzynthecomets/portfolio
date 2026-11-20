@@ -268,7 +268,7 @@ function MobileToc({ sections, onJump, active }) {
   );
 }
 
-export default function ResearchArticle({ current, eyebrowText, title, hero, lead, start, blocks, figBase }) {
+export default function ResearchArticle({ current, date, title, hero, lead, start, blocks, figBase }) {
   const isMobile = useIsMobile();
   const reduced = usePrefersReducedMotion();
   const [sections] = useState(() => buildSections(start, blocks));
@@ -292,7 +292,6 @@ export default function ResearchArticle({ current, eyebrowText, title, hero, lea
           textAlign: "center",
         }}
       >
-        <p style={eyebrow(C.lime100)}>{eyebrowText}</p>
         <h1
           style={{
             margin: 0,
@@ -330,10 +329,12 @@ export default function ResearchArticle({ current, eyebrowText, title, hero, lea
       >
         {!isMobile && (
           <aside style={{ position: "sticky", top: 24, maxHeight: "calc(100vh - 48px)", overflowY: "auto", paddingTop: 4 }}>
+            {date && <p style={{ ...body(false), fontSize: 13, lineHeight: "18px", opacity: 0.75, margin: "0 0 20px", paddingLeft: 14 }}>{date}</p>}
             <Toc sections={sections} active={active} onJump={jump} />
           </aside>
         )}
         <div style={{ minWidth: 0, display: "flex", flexDirection: "column" }}>
+          {isMobile && date && <p style={{ ...body(true), fontSize: 13, lineHeight: "18px", opacity: 0.75, margin: "0 0 16px" }}>{date}</p>}
           {lead && (
             <section id={lead.id} style={{ display: "flex", flexDirection: "column", gap: 20, scrollMarginTop: isMobile ? 64 : 24 }}>
               {lead.eyebrow && <p style={eyebrow()}>{lead.eyebrow}</p>}

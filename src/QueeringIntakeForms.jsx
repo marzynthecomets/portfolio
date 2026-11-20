@@ -15,7 +15,7 @@ export default function QueeringIntakeForms() {
   return (
     <ResearchArticle
       current="queering-intake-forms"
-      eyebrowText="Research · June 30, 2021"
+      date="June 30, 2021"
       title="Queering Intake Form Design (and Other Onboarding Processes)"
       hero={{
         src: "/research/intake-exam-room.webp",

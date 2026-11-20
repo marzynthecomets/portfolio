@@ -15,20 +15,20 @@ const DEFAULTS = {
   ratio: SCALE.ratio,
   steps: { ...SCALE.steps },
   leading: { ...SCALE.leading },
-  weight: { h1: 400, h2: 400, h3: 700, body: 400, medium: 400, small: 400 },
-  track: { h1: -0.02, h2: 0.01, h3: 0, small: 0.08 },
-  wrap: { h1: "wrap", h2: "balance", h3: "wrap" },
+  weight: { h1: 500, h2: 500, h3: 500, body: 400, medium: 400, small: 400 },
+  track: { h1: -0.02, h2: -0.01, h3: 0.06, small: 0.08 },
+  wrap: { h1: "wrap", h2: "balance", h3: "balance" },
   wordSpace: 0,
   align: "",
   measure: 45,
   gapSm: 0.8125,
   gapLg: 3.25,
 };
-const STORE = "type-tuner-v3";
+const STORE = "type-tuner-v4";
 // Weights actually loaded for each family (see index.html).
 const MONO = [300, 400, 500];
 const SANS = [400, 500, 600, 700, 800, 900];
-const WEIGHTS = { h1: MONO, h2: MONO, h3: SANS, body: SANS, medium: SANS, small: MONO };
+const WEIGHTS = { h1: SANS, h2: SANS, h3: MONO, body: SANS, medium: SANS, small: MONO };
 const MIN_PX = 14;
 
 const load = () => {
@@ -125,9 +125,11 @@ export default function TypeTuner() {
   if (t.wordSpace > 0.12) flag("body", "Wide word spacing opens gaps that run down the paragraph.");
   if (t.wordSpace < -0.03) flag("body", "Tight word spacing runs words together.");
   if (t.weight.body >= 600) flag("body", "Heavy body text gets dense and tiring over several lines.");
-  ["h1", "h2", "h3"].forEach((id) => {
+  ["h1", "h2"].forEach((id) => {
     if (t.track[id] > 0.05) flag(id, "Letterspacing mixed-case headlines pulls the words apart.");
   });
+  if (t.track.h3 < 0.03) flag("h3", "All-caps card headers look cramped without some letterspacing (5–10%).");
+  if (t.track.small < 0.03) flag("small", "All-caps eyebrows look cramped without some letterspacing (5–10%).");
   const order = ["h1", "h2", "h3", "body", "medium", "small"];
   order.slice(0, -1).forEach((a, i) => {
     const b = order[i + 1];

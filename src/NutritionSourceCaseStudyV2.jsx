@@ -13,6 +13,7 @@ import SiteNav from "./SiteNav.jsx";
 // Source: Figma file "wippy", frame New_NutritionSource_CaseStudy (node 1:21).
 /* ---------- Type helpers ---------- */
 // Type: every size is a step on the scale in typeScale.js.
+// DM Sans everywhere, except eyebrows and card headers (H3): all-caps DM Mono.
 const eyebrow = (color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
@@ -26,25 +27,25 @@ const eyebrow = (color = C.navy) => ({
 // Section headlines; insights and redesigns share this level (problem / answer).
 const h2 = (isMobile, color = C.navy) => ({
   margin: 0,
-  fontFamily: F.mono,
-  fontWeight: "var(--ts-h2-weight, 400)",
+  fontFamily: F.sans,
+  fontWeight: "var(--ts-h2-weight, 500)",
   fontSize: tsSize("h2", isMobile),
   lineHeight: tsLead("h2"),
-  letterSpacing: "var(--ts-h2-track, 0.01em)",
+  letterSpacing: "var(--ts-h2-track, -0.01em)",
   textWrap: "var(--ts-h2-wrap, balance)",
   color,
 });
 const h2Insight = h2;
 const h3 = (isMobile, color = C.navy) => ({
   margin: 0,
-  fontFamily: F.sans,
-  fontWeight: "var(--ts-h3-weight, 700)",
+  fontFamily: F.mono,
+  fontWeight: "var(--ts-h3-weight, 500)",
   fontSize: tsSize("h3", isMobile),
   lineHeight: tsLead("h3"),
-  letterSpacing: "var(--ts-h3-track, 0em)",
-  textWrap: "var(--ts-h3-wrap, wrap)",
+  letterSpacing: "var(--ts-h3-track, 0.06em)", // all caps: letterspace ~5–10%
+  textTransform: "uppercase",
+  textWrap: "var(--ts-h3-wrap, balance)",
   color,
-  ...DM_SANS_OPSZ,
 });
 const pLarge = (isMobile, color = C.navy) => ({
   margin: 0,
@@ -152,8 +153,8 @@ function TitleBand({ isMobile }) {
       <h1
         style={{
           margin: 0,
-          fontFamily: F.mono,
-          fontWeight: "var(--ts-h1-weight, 400)",
+          fontFamily: F.sans,
+          fontWeight: "var(--ts-h1-weight, 500)",
           fontSize: tsSize("h1", isMobile),
           lineHeight: tsLead("h1"),
           letterSpacing: "var(--ts-h1-track, -0.02em)",
@@ -233,11 +234,11 @@ function AboutTNS({ isMobile }) {
         <h2
           style={{
             margin: 0,
-            fontFamily: F.mono,
-            fontWeight: "var(--ts-h2-weight, 400)",
+            fontFamily: F.sans,
+            fontWeight: "var(--ts-h2-weight, 500)",
             fontSize: tsSize("h2", isMobile),
             lineHeight: tsLead("h2"),
-            letterSpacing: "var(--ts-h2-track, 0.01em)",
+            letterSpacing: "var(--ts-h2-track, -0.01em)",
             textWrap: "var(--ts-h2-wrap, balance)",
             color: C.navy,
           }}
@@ -507,8 +508,8 @@ function BeforeAfterToggle({ labels, value, onChange, isMobile }) {
       padding: isMobile
         ? isLeft ? "12px 8px 12px 16px" : "12px 16px 12px 8px"
         : isLeft ? "18.09px 11.578px 18.09px 26.05px" : "18.09px 26.05px 18.09px 11.578px",
-      fontFamily: F.mono,
-      fontWeight: active ? 500 : 300,
+      fontFamily: F.sans,
+      fontWeight: active ? 600 : 400,
       fontSize: tsSize("small", isMobile),
       letterSpacing: "var(--ts-small-track, 0.08em)",
       lineHeight: 0.984,

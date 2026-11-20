@@ -95,6 +95,8 @@ function NavMenu({ label, items, current, textStyle, align = "left" }) {
                   style={{
                     ...textStyle,
                     fontFamily: F.sans,
+                    textTransform: "none",
+                    letterSpacing: "normal",
                     ...DM_SANS_OPSZ,
                     fontSize: 20,
                     textDecoration: "none",
@@ -207,7 +209,8 @@ export default function SiteNav({ isMobile, current }) {
     lineHeight: "normal",
     color: C.navy,
   };
-  const plex = { ...text, fontFamily: F.plex, fontWeight: 400 };
+  // Main nav: all-caps DM Mono, letterspaced.
+  const plex = { ...text, fontFamily: F.mono, fontWeight: 400, textTransform: "uppercase", letterSpacing: "0.08em" };
   return (
     <nav
       className="site-nav"
@@ -224,7 +227,7 @@ export default function SiteNav({ isMobile, current }) {
         boxSizing: "border-box",
       }}
     >
-      <a href="#/" style={{ ...text, flex: "1 0 0", fontFamily: F.mono, fontWeight: 500, textDecoration: "none" }}>
+      <a href="#/" style={{ ...text, flex: "1 0 0", fontFamily: F.mono, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em", textDecoration: "none" }}>
         MARS NEVADA
       </a>
       {isMobile ? (
@@ -249,8 +252,8 @@ export function UnderConstruction({ isMobile }) {
         <h1
           style={{
             margin: 0,
-            fontFamily: F.mono,
-            fontWeight: 400,
+            fontFamily: F.sans,
+            fontWeight: 500,
             fontSize: isMobile ? 28 : 48,
             letterSpacing: isMobile ? "0.56px" : "0.96px",
             color: C.navy,

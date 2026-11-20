@@ -28,7 +28,7 @@ const h2 = (isMobile, color = C.navy) => ({
   letterSpacing: isMobile ? "0.48px" : "0.68px",
   color,
 });
-// Insight headlines: five steps down from h2 (34 → 24).
+// Headings after "What did testers say?": 24px.
 const h2Insight = (isMobile, color = C.navy) => ({
   ...h2(isMobile, color),
   fontSize: isMobile ? 20 : 24,
@@ -39,9 +39,9 @@ const h2Medium = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
   fontWeight: 500,
-  fontSize: isMobile ? 22 : 32,
-  lineHeight: isMobile ? "28px" : "39px",
-  letterSpacing: isMobile ? "-0.44px" : "-0.64px",
+  fontSize: isMobile ? 20 : 24,
+  lineHeight: isMobile ? "26px" : "30px",
+  letterSpacing: isMobile ? "-0.4px" : "-0.48px",
   color,
 });
 const pLarge = (isMobile, color = C.navy) => ({
@@ -698,8 +698,8 @@ function InsightTwo({ isMobile }) {
                 margin: 0,
                 fontFamily: F.sans,
                 fontWeight: 700,
-                fontSize: 26,
-                lineHeight: "32px",
+                fontSize: 24,
+                lineHeight: "30px",
                 color: C.navy,
                 ...DM_SANS_OPSZ,
               }}
@@ -855,7 +855,7 @@ function InformationArchitecture({ isMobile }) {
     <section style={{ display: "flex", flexDirection: "column", gap: isMobile ? 32 : 48, alignItems: "center", padding: isMobile ? "48px 0" : "80px 0" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", textAlign: "center", padding: isMobile ? "0 20px" : "0 165px" }}>
         <p style={eyebrow()}>Information architecture &amp; site navigation</p>
-        <h2 style={h2(isMobile)}>
+        <h2 style={h2Insight(isMobile)}>
           We also conducted card-sorting and tree testing studies to help reorganize the navigation and relabel pages for
           clarity.
         </h2>
@@ -906,7 +906,7 @@ function Conclusion({ isMobile }) {
             style={{ position: "absolute", maxWidth: "none", width: "212.24%", height: "251.08%", left: "-56.56%", top: "-86.15%" }}
           />
         </div>
-        <h2 style={h2(isMobile)}>People can eat healthier when they have the resources and support they need.</h2>
+        <h2 style={h2Insight(isMobile)}>People can eat healthier when they have the resources and support they need.</h2>
         <p style={pLarge(isMobile)}>
           At the end of the day, people want to live healthier lives, but those lives aren’t idealized perfect lives in a
           vacuum. They’re messy and busy, and <em>human</em>, and nutrition resources should recognize and reflect that.

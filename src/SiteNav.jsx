@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { C, F } from "./tnsShared.jsx";
+import { C, F, DM_SANS_OPSZ } from "./tnsShared.jsx";
 
 // Site-wide nav: "MARS NEVADA" on the left, the practice areas on the right.
 // "Design" opens a dropdown of case studies.
@@ -22,7 +22,7 @@ function NoShiftBold({ bold, children }) {
   );
 }
 
-function DesignMenu({ isMobile, current, textStyle }) {
+function DesignMenu({ current, textStyle }) {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(null);
   const ref = useRef(null);
@@ -58,7 +58,7 @@ function DesignMenu({ isMobile, current, textStyle }) {
         <NoShiftBold bold={open}>Design</NoShiftBold>
       </button>
       {open && (
-        <span style={{ position: "absolute", top: "100%", ...(isMobile ? { right: 0 } : { left: 0 }), paddingTop: 10, zIndex: 40 }}>
+        <span style={{ position: "absolute", top: "100%", left: 0, paddingTop: 10, zIndex: 40 }}>
           <span
             style={{
               display: "flex",
@@ -84,9 +84,11 @@ function DesignMenu({ isMobile, current, textStyle }) {
                   onBlur={() => setHover(null)}
                   style={{
                     ...textStyle,
-                    fontSize: isMobile ? 14 : 20,
+                    fontFamily: F.sans,
+                    ...DM_SANS_OPSZ,
+                    fontSize: 20,
                     textDecoration: "none",
-                    padding: isMobile ? "8px 14px" : "10px 20px",
+                    padding: "10px 20px",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -101,10 +103,93 @@ function DesignMenu({ isMobile, current, textStyle }) {
   );
 }
 
+function MobileMenu({ current }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!open) return undefined;
+    const down = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    const key = (e) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("pointerdown", down);
+    document.addEventListener("keydown", key);
+    return () => {
+      document.removeEventListener("pointerdown", down);
+      document.removeEventListener("keydown", key);
+    };
+  }, [open]);
+  const bar = (transform, opacity = 1) => ({
+    position: "absolute", left: 0, width: 24, height: 2, borderRadius: 1, background: C.navy,
+    transition: "transform 200ms ease, opacity 150ms ease", transform, opacity,
+  });
+  return (
+    <div ref={ref}>
+      <button
+        type="button"
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+        aria-controls="site-mobile-menu"
+        onClick={() => setOpen((v) => !v)}
+        style={{ background: "none", border: "none", padding: 10, margin: -10, cursor: "pointer", display: "block" }}
+      >
+        <span style={{ position: "relative", display: "block", width: 24, height: 18 }}>
+          <span style={{ ...bar(open ? "translateY(8px) rotate(45deg)" : "none"), top: 0 }} />
+          <span style={{ ...bar("none", open ? 0 : 1), top: 8 }} />
+          <span style={{ ...bar(open ? "translateY(-8px) rotate(-45deg)" : "none"), top: 16 }} />
+        </span>
+      </button>
+      {open && (
+        <div
+          id="site-mobile-menu"
+          style={{
+            position: "absolute",
+            top: "100%",
+            left: 0,
+            right: 0,
+            background: C.sand50,
+            borderBottom: `1px solid ${C.navy}`,
+            boxShadow: "0 12px 24px rgba(16,9,76,0.12)",
+            padding: "20px 20px 24px",
+            display: "flex",
+            flexDirection: "column",
+            gap: 4,
+          }}
+        >
+          <p style={{ margin: "0 0 6px", fontFamily: F.mono, fontSize: 13, letterSpacing: "0.26px", textTransform: "uppercase", color: C.navy }}>
+            Design
+          </p>
+          {CASE_STUDIES.map((cs) => {
+            const active = current === cs.route;
+            return (
+              <a
+                key={cs.route}
+                href={cs.href}
+                aria-current={active ? "page" : undefined}
+                onClick={() => setOpen(false)}
+                style={{
+                  fontFamily: F.sans,
+                  ...DM_SANS_OPSZ,
+                  fontWeight: active ? 700 : 400,
+                  fontSize: 22,
+                  lineHeight: "30px",
+                  color: C.navy,
+                  textDecoration: "none",
+                  padding: "8px 0",
+                }}
+              >
+                {cs.label}
+              </a>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function SiteNav({ isMobile, current }) {
   const text = {
     margin: 0,
-    fontSize: isMobile ? 14 : 24,
+    fontSize: isMobile ? 16 : 24,
     lineHeight: "normal",
     color: C.navy,
   };
@@ -116,9 +201,9 @@ export default function SiteNav({ isMobile, current }) {
         zIndex: 20,
         background: C.lime100,
         display: "flex",
-        alignItems: "flex-end",
+        alignItems: isMobile ? "center" : "flex-end",
         gap: 10,
-        padding: isMobile ? "16px 20px" : "28px 64px",
+        padding: isMobile ? "18px 20px" : "28px 64px",
         width: "100%",
         boxSizing: "border-box",
       }}
@@ -126,13 +211,17 @@ export default function SiteNav({ isMobile, current }) {
       <a href="#/" style={{ ...text, flex: "1 0 0", fontFamily: F.mono, fontWeight: 500, textDecoration: "none" }}>
         MARS NEVADA
       </a>
-      <div style={{ ...plex, display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "flex-end", alignItems: "baseline" }}>
-        <span>Research</span>
-        <span aria-hidden="true">&amp;</span>
-        <DesignMenu isMobile={isMobile} current={current} textStyle={plex} />
-        <span aria-hidden="true">&amp;</span>
-        <span>Health Storytelling</span>
-      </div>
+      {isMobile ? (
+        <MobileMenu current={current} />
+      ) : (
+        <div style={{ ...plex, display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "flex-end", alignItems: "baseline" }}>
+          <span>Research</span>
+          <span aria-hidden="true">&amp;</span>
+          <DesignMenu current={current} textStyle={plex} />
+          <span aria-hidden="true">&amp;</span>
+          <span>Health Storytelling</span>
+        </div>
+      )}
     </nav>
   );
 }

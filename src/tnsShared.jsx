@@ -266,26 +266,41 @@ export const GLASS = {
 };
 
 // Light (-45°, 80%): a hairline rim, brightest at the top-left and
-// bottom-right corners and fading toward the other two. Drawn as a gradient
-// ring (a masked overlay) because CSS borders can't take a gradient with
-// rounded corners. Place inside any element styled with GLASS.
-export function GlassEdge() {
+// bottom-right corners and fading toward the other two. Drawn as an SVG
+// outline rather than a CSS mask: masks push the pill into its own layer,
+// which some browsers (Safari) rasterize at low resolution, softening the
+// icons inside. Place inside any element styled with GLASS; pass its radius.
+let glassEdgeId = 0;
+export function GlassEdge({ radius }) {
+  const [id] = useState(() => `glass-edge-${++glassEdgeId}`);
   return (
-    <span
+    <svg
       aria-hidden
-      style={{
-        position: "absolute",
-        inset: 0,
-        borderRadius: "inherit",
-        padding: 0.5,
-        background:
-          "linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.12) 38%, rgba(255,255,255,0.12) 62%, rgba(255,255,255,0.75) 100%)",
-        WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-        WebkitMaskComposite: "xor",
-        mask: "linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0)",
-        pointerEvents: "none",
-      }}
-    />
+      width="100%"
+      height="100%"
+      style={{ position: "absolute", inset: 0, overflow: "visible", pointerEvents: "none" }}
+    >
+      <defs>
+        <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#fff" stopOpacity="0.75" />
+          <stop offset="0.38" stopColor="#fff" stopOpacity="0.12" />
+          <stop offset="0.62" stopColor="#fff" stopOpacity="0.12" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0.75" />
+        </linearGradient>
+      </defs>
+      <rect
+        x="0"
+        y="0"
+        width="100%"
+        height="100%"
+        rx={radius}
+        ry={radius}
+        fill="none"
+        stroke={`url(#${id})`}
+        strokeWidth="0.5"
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
   );
 }
 
@@ -362,7 +377,7 @@ function PortionPill({ portion, open, images }) {
         pointerEvents: "none",
       }}
     >
-      <GlassEdge />
+      <GlassEdge radius={7.958} />
       {portion.iconFirst ? (
         <>
           {icon}

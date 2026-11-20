@@ -4,7 +4,6 @@ import {
   PLATE_PORTIONS, PLATE_KEYFRAMES, PlateContent,
 } from "./tnsShared.jsx";
 import HepRedesign from "./HepRedesign.jsx";
-import RoughFrame from "./RoughFrame.jsx";
 
 // Reskinned Nutrition Source case study.
 // Source: Figma file "wippy", frame New_NutritionSource_CaseStudy (node 1:21).
@@ -279,16 +278,44 @@ const STATS = [
   },
 ];
 
-// Brushed card outline, approach 1: the outline exported from Figma (Frame 246,
-// node 43:161) as artwork, applied with border-image. The image is sliced into
-// nine pieces: corners keep their drawn shape; the edges stretch to any size.
-const BRUSH_FRAME = {
-  border: "3px solid transparent",
-  borderImageSource: "url(/tns/v2/stat-card-brush.svg)",
-  borderImageSlice: 32,
-  borderImageWidth: "32px",
+// Brushed outlines, exported from the Figma frames as artwork and applied with
+// border-image: the image is sliced into nine pieces, so the drawn corners keep
+// their shape and the edges stretch to any size.
+const brushBorder = (file, slice) => ({
+  borderStyle: "solid",
+  borderColor: "transparent",
+  borderWidth: slice,
+  borderImageSource: `url(/tns/v2/${file})`,
+  borderImageSlice: slice,
+  borderImageWidth: `${slice}px`,
   borderImageRepeat: "stretch",
-};
+});
+
+// Cards: the outline sits under the text, so it can be the card's own border.
+const BRUSH_FRAME = { ...brushBorder("stat-card-brush.svg", 32), borderWidth: 3 }; // Frame 246, 43:161
+const NEEDS_BRUSH = { ...brushBorder("needs-card-brush.svg", 28), borderWidth: 3 }; // 110:12188
+
+// Image frames: in Figma the brush is painted on top of the picture, and a
+// border-image would draw under it, so these lie over the frame. `bleed` is
+// how far the drawn stroke reaches past the frame in the export [t, r, b, l].
+function BrushOverlay({ file, slice, bleed }) {
+  const [t, r, b, l] = bleed;
+  return (
+    <span
+      aria-hidden
+      style={{
+        position: "absolute",
+        top: -t,
+        right: -r,
+        bottom: -b,
+        left: -l,
+        pointerEvents: "none",
+        zIndex: 2,
+        ...brushBorder(file, slice),
+      }}
+    />
+  );
+}
 
 function WhyItMatters({ isMobile }) {
   return (
@@ -426,34 +453,17 @@ function TestersSay({ isMobile }) {
             target="_blank"
             rel="noreferrer"
             aria-label="The current Nutrition Source homepage (opens in a new tab)"
-            style={{
-              display: "block",
-              border: `6px solid ${C.navy}`,
-              width: 486,
-              maxWidth: "100%",
-              aspectRatio: "486 / 313",
-              overflow: "hidden",
-              position: "relative",
-              boxSizing: "border-box",
-            }}
+            style={{ display: "block", position: "relative", width: 486, maxWidth: "100%", aspectRatio: "486 / 313" }}
           >
-            <div
-              style={{
-                position: "absolute",
-                left: -3,
-                top: -3,
-                width: "calc(100% + 12px)",
-                aspectRatio: "486 / 743",
-                border: `1px solid ${C.navy}`,
-                overflow: "hidden",
-              }}
-            >
+            <div style={{ position: "absolute", inset: 0, overflow: "hidden", background: C.white }}>
               <img
                 alt="Screenshot of the original Nutrition Source homepage"
                 src={A.originalScreencap}
-                style={{ position: "absolute", left: 0, top: "-0.07%", width: "100%", height: "100.12%", maxWidth: "none" }}
+                style={{ position: "absolute", left: 0.5, top: 0.5, width: "calc(100% - 1px)", aspectRatio: "485 / 742", border: `1px solid ${C.navy}`, boxSizing: "content-box", maxWidth: "none" }}
               />
             </div>
+            {/* 43:266 */}
+            <BrushOverlay file="screencap-frame-brush.svg" slice={12} bleed={[3, 2.096, 2, 0.904]} />
           </a>
         </div>
         <div style={{ flex: "1 0 0", minWidth: isMobile ? "100%" : 0, display: "flex", flexDirection: "column", gap: 24 }}>
@@ -749,26 +759,20 @@ function HomepageRedesign({ isMobile }) {
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 30, alignItems: "center", width: "100%", maxWidth: 1042 }}>
         <BeforeAfterToggle labels={["Homepage Before", "Homepage after"]} value={view} onChange={setView} isMobile={isMobile} />
-        <div
-          style={{
-            width: "100%",
-            boxSizing: "border-box",
-            border: `12.301px solid ${C.lime100}`,
-            background: C.white,
-            overflow: "hidden",
-          }}
-        >
-          {view === "after" ? (
-            <ScaleBox width={1042 - 24.602} height={645.461 - 24.602}>
-              <div style={{ position: "relative", left: -6.15, top: -6.15 }}>
+        <div style={{ position: "relative", width: "100%" }}>
+          <div style={{ width: "100%", background: C.white, overflow: "hidden" }}>
+            {view === "after" ? (
+              <ScaleBox width={1042} height={645.461}>
                 <HomepageAfter />
+              </ScaleBox>
+            ) : (
+              <div style={{ aspectRatio: "1042 / 645.461", overflowY: "auto" }}>
+                <img alt="The original Nutrition Source homepage" src={A.homepageBefore} style={{ width: "100%", display: "block" }} />
               </div>
-            </ScaleBox>
-          ) : (
-            <div style={{ aspectRatio: `${1042 - 24.602} / ${645.461 - 24.602}`, overflowY: "auto" }}>
-              <img alt="The original Nutrition Source homepage" src={A.homepageBefore} style={{ width: "100%", display: "block" }} />
-            </div>
-          )}
+            )}
+          </div>
+          {/* HomepageChange, 110:11418 */}
+          <BrushOverlay file="homepage-frame-brush.svg" slice={20} bleed={[5.968, 7.129, 6.571, 5.871]} />
         </div>
       </div>
     </section>
@@ -848,7 +852,8 @@ function InsightTwo({ isMobile }) {
               position: "relative",
               width: 246,
               boxSizing: "border-box",
-              padding: 23,
+              ...NEEDS_BRUSH,
+              padding: 20,
               display: "flex",
               flexDirection: "column",
               gap: 10,
@@ -856,7 +861,6 @@ function InsightTwo({ isMobile }) {
               textAlign: "center",
             }}
           >
-            <RoughFrame stroke={C.navy} strokeWidth={3} radius={20} seed={NEEDS.indexOf(n) + 1} />
             <div style={{ position: "relative", ...n.frame, flexShrink: 0 }}>
               <div style={{ position: "absolute", ...n.box, overflow: "hidden" }}>
                 <img alt="" src={n.img} style={{ position: "absolute", maxWidth: "none", ...n.crop }} />
@@ -908,11 +912,12 @@ function PlateRedesign({ isMobile }) {
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 48, alignItems: "center", width: "100%", maxWidth: 1042 }}>
         <BeforeAfterToggle labels={["Plate Before", "Plate After"]} value={view} onChange={setView} isMobile={isMobile} />
+        <div style={{ position: "relative", width: "100%" }}>
+        {/* Frame 339, 155:12480 */}
+        <BrushOverlay file="plate-frame-brush.svg" slice={16} bleed={[3.822, 5.256, 6.178, 3.744]} />
         <div
           style={{
             width: "100%",
-            boxSizing: "border-box",
-            border: `11px solid ${C.lime100}`,
             aspectRatio: "1042 / 1491",
             position: "relative",
             overflowY: view === "after" ? "auto" : "hidden",
@@ -930,6 +935,7 @@ function PlateRedesign({ isMobile }) {
               <HepRedesign />
             </ScaleBox>
           )}
+        </div>
         </div>
       </div>
     </section>

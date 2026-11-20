@@ -424,42 +424,36 @@ function TestersSay({ isMobile }) {
           crop={{ width: "257.46%", height: "435.8%", left: "-72.04%", top: "-155.34%" }}
         />
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: isMobile ? 40 : 128, alignItems: "flex-start" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10, maxWidth: "100%" }}>
-          <p style={{ ...eyebrow(), width: isMobile ? "auto" : 486 }}>
-            Original (and{" "}
-            <a href="https://nutritionsource.hsph.harvard.edu/" target="_blank" rel="noreferrer" style={{ color: "inherit", textDecoration: "none" }}>
-              current
-            </a>{" "}
-            design):
-          </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
+        <p style={{ ...eyebrow(), textAlign: "center" }}>What participants said about the site:</p>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "flex-start", gap: isMobile ? 16 : 46 }}>
+          {QUOTES.map((q) => <QuoteBubble key={q.text} q={q} />)}
+        </div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center", width: "100%" }}>
+        <p style={{ ...eyebrow(), textAlign: "center" }}>
+          Original (and{" "}
+          <a href="https://nutritionsource.hsph.harvard.edu/" target="_blank" rel="noreferrer" style={{ color: "inherit", textDecoration: "none" }}>
+            current
+          </a>{" "}
+          design):
+        </p>
+        {/* Same size and lime frame as the redesign insets below. */}
+        <div style={{ position: "relative", width: "100%", maxWidth: 1042 }}>
           <a
             href="https://nutritionsource.hsph.harvard.edu/"
             target="_blank"
             rel="noreferrer"
             aria-label="The current Nutrition Source homepage (opens in a new tab)"
-            style={{ display: "block", position: "relative", width: 486, maxWidth: "100%", aspectRatio: "486 / 313" }}
+            style={{ display: "block", width: "100%", aspectRatio: "1042 / 645.461", overflowY: "auto", background: C.white }}
           >
-            <div style={{ position: "absolute", inset: 0, overflow: "hidden", background: C.white }}>
-              <img
-                alt="Screenshot of the original Nutrition Source homepage"
-                src={A.originalScreencap}
-                style={{ position: "absolute", left: 0.5, top: 0.5, width: "calc(100% - 1px)", aspectRatio: "485 / 742", border: `1px solid ${C.navy}`, boxSizing: "content-box", maxWidth: "none" }}
-              />
-            </div>
-            {/* 43:266 */}
-            <BrushOverlay file="screencap-frame-brush.svg" slice={12} bleed={[3, 2.096, 2, 0.904]} />
+            <img
+              alt="Screenshot of the original Nutrition Source homepage"
+              src={A.originalScreencap}
+              style={{ display: "block", width: "100%", height: "auto" }}
+            />
           </a>
-        </div>
-        <div style={{ flex: "1 0 0", minWidth: isMobile ? "100%" : 0, display: "flex", flexDirection: "column", gap: 24 }}>
-          <p style={eyebrow()}>What participants said about the site:</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: isMobile ? 16 : 46 }}>
-              <QuoteBubble q={QUOTES[0]} />
-              <QuoteBubble q={QUOTES[1]} />
-            </div>
-            <QuoteBubble q={QUOTES[2]} />
-          </div>
+          <BrushOverlay file="homepage-frame-brush.svg" slice={20} bleed={[5.968, 7.129, 6.571, 5.871]} />
         </div>
       </div>
     </section>
@@ -482,14 +476,14 @@ function InsightOne({ isMobile }) {
       <p style={eyebrow()}>Insight 1</p>
       <h2 style={h2Insight(isMobile)}>“I feel like real people don’t use this website.” - P7</h2>
       <p style={pLarge(isMobile)}>
-        People felt like they were walking into an academic library and struggled to know where to start.
+        People felt like they were walking into an academic library and struggled to know where to start. Because
+        nutrition isn’t academic. It’s personal.
       </p>
       <img
         alt="Hand-drawn figure standing between towering library shelves"
         src={A.inkLibrary}
         style={{ width: 566, maxWidth: "100%", aspectRatio: "566 / 301.064", objectFit: "cover", display: "block" }}
       />
-      <p style={{ ...pLarge(isMobile), fontWeight: 500, fontStyle: "italic" }}>Because nutrition isn’t academic. It’s personal.</p>
     </section>
   );
 }
@@ -539,13 +533,13 @@ function HomepageSection({ isMobile }) {
         padding: isMobile ? "0 20px 48px" : "26px 120px 78px",
         display: "flex",
         flexDirection: "column",
-        gap: "var(--ns-gap-lg, 6rem)",
+        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // redesign sits close to its copy,
         alignItems: "center",
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.75rem)", alignItems: "center", textAlign: "center", maxWidth: 1040 }}>
-        <p style={eyebrow(C.navy)}>Homepage redesign</p>
-        <h2 style={h2Insight(isMobile)}>We started with making a clear starting point.</h2>
+        <p style={eyebrow(C.navy)}>So we…</p>
+        <h2 style={h2Insight(isMobile)}>Started with a clear starting point</h2>
         <p style={{ ...pLarge(isMobile, C.navy) }}>
           Since the Nutrition Source truly has so much educational content, giving an overview of common nutrition
           questions, popular content, as well as a search bar, helps reduce the cognitive overload of a large content
@@ -683,18 +677,17 @@ function PlateRedesign({ isMobile }) {
         padding: sectionPad(isMobile, "26px 120px 78px"),
         display: "flex",
         flexDirection: "column",
-        gap: "var(--ns-gap-lg, 6rem)",
+        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // redesign sits close to its copy,
         alignItems: "center",
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.75rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
-        <p style={eyebrow(C.navy)}>Healthy Eating Plate page redesign</p>
-        <h2 style={h2Insight(isMobile)}>Personalizing the Plate</h2>
+        <p style={eyebrow(C.navy)}>So we…</p>
+        <h2 style={h2Insight(isMobile)}>Personalized the Plate Page</h2>
         <p style={{ ...pLarge(isMobile, C.navy) }}>
           The Healthy Eating Plate is Harvard’s guidelines to healthy portions. But they’re broad guidelines that don’t
           account for people’s individual needs. So I designed an interactive Healthy Eating Plate.
         </p>
-        <p style={eyebrow(C.navy)}>Solo design work on team project</p>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 39, alignItems: "center", width: "100%", maxWidth: 1042 }}>
         <BeforeAfterToggle labels={["Plate Before", "Plate After"]} value={view} onChange={setView} isMobile={isMobile} />
@@ -772,19 +765,18 @@ function RecipeRedesign({ isMobile }) {
         padding: sectionPad(isMobile, "26px 120px 78px"),
         display: "flex",
         flexDirection: "column",
-        gap: "var(--ns-gap-lg, 6rem)",
+        gap: "calc(var(--ns-gap-lg, 6rem) / 2)", // redesign sits close to its copy,
         alignItems: "center",
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--ns-gap-sm, 0.75rem)", alignItems: "center", textAlign: "center", width: "100%" }}>
-        <p style={eyebrow(C.navy)}>Recipe page redesign</p>
-        <h2 style={h2Insight(isMobile)}>Making recipes findable</h2>
+        <p style={eyebrow(C.navy)}>So we…</p>
+        <h2 style={h2Insight(isMobile)}>Made recipes more findable</h2>
         <p style={{ ...pLarge(isMobile, C.navy) }}>
           The existing recipe page was essentially a bulleted text list, but participants told us they relied heavily on
           images to choose what appealed to them, and wanted to be able to filter and search to find recipes quickly. I
           also included quick filter tags for things like “Quick and easy” or high-protein recipes.
         </p>
-        <p style={eyebrow(C.navy)}>Solo design work on team project</p>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 39, alignItems: "center", width: "100%", maxWidth: 1042 }}>
         <BeforeAfterToggle labels={["Recipes Before", "Recipes After"]} value={view} onChange={setView} isMobile={isMobile} />
@@ -815,11 +807,10 @@ function RecipeRedesign({ isMobile }) {
 function InformationArchitecture({ isMobile }) {
   const reduced = usePrefersReducedMotion();
   return (
-    <section style={{ background: C.sand100, display: "flex", flexDirection: "column", gap: isMobile ? 32 : 48, alignItems: "center", padding: isMobile ? "48px 0" : "80px 0" }}>
+    <section style={{ display: "flex", flexDirection: "column", gap: isMobile ? 32 : 48, alignItems: "center", padding: isMobile ? "0 0 48px" : "0 0 80px" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", textAlign: "center", padding: isMobile ? "0 20px" : "0 165px" }}>
-        <p style={eyebrow()}>Information architecture &amp; site navigation</p>
         <h2 style={h2Insight(isMobile)}>
-          We also conducted card-sorting and tree testing studies to help reorganize the navigation and relabel pages for
+          Sitewide, we also conducted card-sorting and tree testing studies to help reorganize the navigation and relabel pages for
           clarity.
         </h2>
       </div>
@@ -844,7 +835,7 @@ function InformationArchitecture({ isMobile }) {
 /* ---------- Conclusion (168:20729) ---------- */
 function Conclusion({ isMobile }) {
   return (
-    <section style={{ background: C.sand50, padding: sectionPad(isMobile, "80px 120px"), display: "flex", justifyContent: "center" }}>
+    <section style={{ background: C.sand100, padding: sectionPad(isMobile, "80px 120px"), display: "flex", justifyContent: "center" }}>
       <div
         style={{
           display: "flex",
@@ -903,8 +894,8 @@ export default function NutritionSourceCaseStudyV2() {
       <div style={{ background: C.sand50 }}>
         <InsightThree isMobile={isMobile} />
         <RecipeRedesign isMobile={isMobile} />
+        <InformationArchitecture isMobile={isMobile} />
       </div>
-      <InformationArchitecture isMobile={isMobile} />
       <Conclusion isMobile={isMobile} />
     </main>
   );

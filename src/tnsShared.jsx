@@ -47,8 +47,6 @@ export const A = {
     fruits: `${V2}/plate-fruits.png`,
     fruitsDim: `${V2}/plate-fruits-dim.png`,
   },
-  iconPlus: `${V2}/icon-plus.svg`,
-  iconClose: `${V2}/icon-plus-b.svg`,
   learnMoreArrow: `${V2}/learn-more-arrow.svg`,
   lines: {
     vegetables: `${V2}/line-vegetable.svg`,
@@ -304,6 +302,39 @@ export function GlassEdge({ radius }) {
   );
 }
 
+// The + (and the × it rotates into) from Figma's icon-plus.svg, drawn inline.
+// The exported file carries an SVG drop-shadow filter, and Safari renders an
+// <img> with an SVG filter at low resolution, so the icon went soft, worst
+// when zoomed on a phone. Same path, stroke and 24% shadow, as live vector.
+// `size` is the full drawing box; the visible + is the middle 37% of it.
+export function PlusIcon({ size }) {
+  return (
+    <svg
+      aria-hidden
+      width={size}
+      height={size}
+      viewBox="0 0 25.9442 25.9442"
+      style={{
+        position: "absolute",
+        left: "-85.83%",
+        top: "-85.83%",
+        display: "block",
+        overflow: "visible",
+        filter: "drop-shadow(0 0 3.5px rgba(0,0,0,0.24))",
+      }}
+    >
+      <path
+        d="M12.9721 8.19708V17.7471M8.19708 12.9721H17.7471"
+        stroke="#FFFCF7"
+        strokeWidth="2.3875"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </svg>
+  );
+}
+
 function PortionPill({ portion, open, images }) {
   const icon = (
     <span
@@ -328,13 +359,7 @@ function PortionPill({ portion, open, images }) {
           transform: open ? "rotate(45deg)" : "none",
         }}
       >
-        <img
-          alt=""
-          src={open ? images?.iconClose || A.iconClose : images?.iconPlus || A.iconPlus}
-          width="25.9442"
-          height="25.9442"
-          style={{ position: "absolute", left: "-85.83%", top: "-85.83%", display: "block", maxWidth: "none" }}
-        />
+        <PlusIcon size={25.9442} />
       </span>
     </span>
   );
@@ -546,7 +571,7 @@ function Callout({ portion }) {
 }
 
 // `images` swaps in higher-resolution wedge art (keys: vegetables, grains,
-// protein, fruits, iconPlus, iconClose) where a page has its own exports.
+// protein, fruits) where a page has its own exports.
 export function PlateContent({ activeKey, interactive, onSelect, images }) {
   const portion = PLATE_PORTIONS.find((p) => p.key === activeKey);
   return (

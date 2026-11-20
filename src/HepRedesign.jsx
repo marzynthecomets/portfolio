@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { GLASS, GlassEdge, NUNITO_VAR, PlateContent } from "./tnsShared.jsx";
+import { GLASS, GlassEdge, NUNITO_VAR, PlateContent, PlusIcon } from "./tnsShared.jsx";
 import { INGREDIENTS } from "./tnsIngredients.js";
 
 // Live build of the redesigned Healthy Eating Plate page.
@@ -16,8 +16,6 @@ const IMG = {
   arrowLeft: `${H}/arrow-left.svg`,
   arrowDown: `${H}/arrow-down.svg`,
   chipPlus: `${H}/chip-plus.svg`,
-  iconPlus: `${H}/icon-plus.svg`,
-  iconClose: `${H}/icon-plus-b.svg`,
   oils: `${H}/oils.png`,
   water: `${H}/water.png`,
   plate: {
@@ -25,8 +23,6 @@ const IMG = {
     grains: `${H}/plate-grains.png`,
     protein: `${H}/plate-protein.png`,
     fruits: `${H}/plate-fruits.png`,
-    iconPlus: `${H}/icon-plus.svg`,
-    iconClose: `${H}/icon-plus-b.svg`,
   },
   search: "/tns/newnav/search-icon.svg",
 };
@@ -153,7 +149,7 @@ function SidePill({ label, open }) {
     >
       <GlassEdge radius={10} />
       <span style={{ position: "relative", width: 12, height: 12, flexShrink: 0, transform: open ? "rotate(45deg)" : "none" }}>
-        <img alt="" src={open ? IMG.iconClose : IMG.iconPlus} width="32.6" height="32.6" style={{ position: "absolute", left: "-85.83%", top: "-85.83%", maxWidth: "none" }} />
+        <PlusIcon size={32.6} />
       </span>
       <span style={{ fontFamily: OUTFIT, fontSize: 26, lineHeight: "29.185px", color: "white", whiteSpace: "nowrap" }}>{label}</span>
     </span>

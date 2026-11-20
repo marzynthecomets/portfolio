@@ -1839,6 +1839,7 @@ export default function NeboCaseStudy() {
           overflowX: "clip",
         }}
       >
+        <Nav isMobile={isMobile} />
         <div
           style={{
             width: "100%",
@@ -1847,7 +1848,6 @@ export default function NeboCaseStudy() {
             position: "relative",
           }}
         >
-          <Nav isMobile={isMobile} />
 
           {isMobile ? (
             <>

@@ -874,7 +874,7 @@ function Conclusion({ isMobile }) {
 export default function NutritionSourceCaseStudyV2() {
   const isMobile = useIsMobile();
   return (
-    <main style={{ background: C.sand50, width: "100%", overflowX: "hidden" }}>
+    <main className="case-study" style={{ background: C.sand50, width: "100%", overflowX: "hidden" }}>
       <SiteNav isMobile={isMobile} current="nutrition-source" />
       <TitleBand isMobile={isMobile} />
       <PlateHero />

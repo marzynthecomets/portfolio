@@ -273,8 +273,10 @@ function PortionPill({ portion, open, images }) {
       aria-hidden
       style={{
         position: "relative",
-        width: open ? 13.506 : 9.55,
-        height: open ? 13.506 : 9.55,
+        // Same box in both states so the label never shifts; the × is the
+        // plus rotated in place.
+        width: 9.55,
+        height: 9.55,
         flexShrink: 0,
         display: "flex",
         alignItems: "center",

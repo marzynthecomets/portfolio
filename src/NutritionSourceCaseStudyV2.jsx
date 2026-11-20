@@ -841,6 +841,44 @@ function RecipeRedesign({ isMobile }) {
   );
 }
 
+/* ---------- Conclusion (168:20729) ---------- */
+function Conclusion({ isMobile }) {
+  return (
+    <section style={{ background: C.sand100, padding: sectionPad(isMobile, "80px 120px"), display: "flex", justifyContent: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 10,
+          alignItems: "center",
+          textAlign: "center",
+          padding: isMobile ? 0 : "0 156px",
+          width: "100%",
+          boxSizing: "border-box",
+        }}
+      >
+        <p style={eyebrow()}>Conclusion</p>
+        <div
+          role="img"
+          aria-label="Ink drawing of a family eating together around a dinner table"
+          style={{ position: "relative", width: 686, maxWidth: "100%", aspectRatio: "686 / 325", overflow: "hidden", flexShrink: 0 }}
+        >
+          <img
+            alt=""
+            src="/tns/v2/ink-family-table.png"
+            style={{ position: "absolute", maxWidth: "none", width: "212.24%", height: "251.08%", left: "-56.56%", top: "-86.15%" }}
+          />
+        </div>
+        <h2 style={h2(isMobile)}>People can eat healthier when they have the resources and support they need.</h2>
+        <p style={pLarge(isMobile)}>
+          At the end of the day, people want to live healthier lives, but those lives aren’t idealized perfect lives in a
+          vacuum. They’re messy and busy, and <em>human</em>, and nutrition resources should recognize and reflect that.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- Page ---------- */
 export default function NutritionSourceCaseStudyV2() {
   const isMobile = useIsMobile();
@@ -859,6 +897,7 @@ export default function NutritionSourceCaseStudyV2() {
       <PlateRedesign isMobile={isMobile} />
       <InsightThree isMobile={isMobile} />
       <RecipeRedesign isMobile={isMobile} />
+      <Conclusion isMobile={isMobile} />
     </main>
   );
 }

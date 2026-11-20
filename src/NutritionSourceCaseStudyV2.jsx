@@ -849,7 +849,7 @@ function InformationArchitecture({ isMobile }) {
       <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", textAlign: "center", padding: isMobile ? "0 20px" : "0 165px" }}>
         <p style={eyebrow()}>Information architecture &amp; site navigation</p>
         <h2 style={h2(isMobile)}>
-          We also conducted card-sorting and tree-jacking studies to help reorganize the navigation and relabel pages for
+          We also conducted card-sorting and tree testing studies to help reorganize the navigation and relabel pages for
           clarity.
         </h2>
       </div>

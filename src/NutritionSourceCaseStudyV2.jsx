@@ -86,6 +86,13 @@ function useResetScrollOffscreen() {
   return ref;
 }
 
+// Phones: center all of the case study's own text. The nav and the redesign
+// demos (data-demo) keep their own alignment.
+const PHONE_CENTER_CSS = `@media (max-width: 899.98px) {
+  .case-study { text-align: center; }
+  .case-study .site-nav, .case-study [data-demo] { text-align: start; }
+}`;
+
 const sectionPad = (isMobile, desktop) => (isMobile ? "48px 20px" : desktop);
 
 function PlateHero() {
@@ -100,6 +107,7 @@ function PlateHero() {
 
   return (
     <section
+      data-demo
       aria-label="The Healthy Eating Plate"
       style={{ display: "flex", justifyContent: "center", background: C.sand50, padding: "0 0" }}
     >
@@ -138,7 +146,7 @@ function PlateHero() {
 function LiveDemo({ id, label, children }) {
   const end = useRef(null);
   return (
-    <section aria-label={label} style={{ position: "relative" }}>
+    <section data-demo aria-label={label} style={{ position: "relative" }}>
       <button type="button" className="skip-demo" onClick={() => end.current && end.current.focus()}>
         Skip past this demo
       </button>
@@ -912,7 +920,7 @@ export default function NutritionSourceCaseStudyV2() {
   const isMobile = useIsMobile();
   return (
     <main className="case-study" style={{ background: C.sand50, width: "100%", overflowX: "hidden" }}>
-      <style>{scaleCss()}</style>
+      <style>{scaleCss() + PHONE_CENTER_CSS}</style>
       <SiteNav isMobile={isMobile} current="nutrition-source" />
       <TitleBand isMobile={isMobile} />
       <PlateHero />

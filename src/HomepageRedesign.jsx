@@ -7,7 +7,6 @@ import { Menu, Footer, nunito, OUTFIT, T } from "./HepRedesign.jsx";
 
 const H = "/tns/v2/home";
 const IMG = {
-  fork: "/tns/v2/fork-photo.png",
   arrowCircle: "/tns/v2/arrow-circle.svg",
   search: "/tns/newnav/search-icon.svg",
   searchGo: `${H}/search-go.svg`,
@@ -26,17 +25,59 @@ const C = {
 };
 
 /* ---------- Hero ---------- */
-const WORDS = ["plate", "cup", "cart"];
+// Frame 256 (76:5723): hovering or focusing a word makes it the bold, active
+// one with the arrow, and swaps the photo. The words stay in place.
+const WORDS = [
+  { word: "plate", img: "/tns/v2/fork-photo.png", crop: { height: "114.34%", left: "-10.26%", top: "-7.25%", width: "63.35%" } },
+  { word: "cup", img: `${H}/hero-cup.png`, crop: { height: "359.46%", left: "-45.5%", top: "-129.68%", width: "100%" } },
+  { word: "cart", img: `${H}/hero-cart.png`, crop: { height: "194.44%", left: "-58.43%", top: "-55.62%", width: "100.38%" } },
+];
+const WORD_TEXT = { fontFamily: OUTFIT, fontSize: 68.691, lineHeight: "62.135px", whiteSpace: "nowrap" };
+
+function HeroWord({ word, active, onActivate }) {
+  return (
+    <span style={{ display: "inline-flex", alignItems: "flex-start", gap: 12 }}>
+      <button
+        type="button"
+        aria-pressed={active}
+        onMouseEnter={onActivate}
+        onFocus={onActivate}
+        onClick={onActivate}
+        style={{
+          ...WORD_TEXT,
+          fontWeight: active ? 700 : 400,
+          color: active ? "#000" : "rgba(0,0,0,0.5)",
+          background: "none",
+          border: "none",
+          padding: 0,
+          cursor: "pointer",
+          transition: "color 0.15s",
+        }}
+      >
+        {word}
+      </button>
+      {active && (
+        <span style={{ paddingTop: 9.159, display: "flex" }}>
+          <img alt="" src={IMG.arrowCircle} width="53.4265" height="53.4265" style={{ display: "block" }} />
+        </span>
+      )}
+    </span>
+  );
+}
 
 function Hero() {
-  const [word, setWord] = useState(0);
-  const order = [...WORDS.slice(word), ...WORDS.slice(0, word)];
+  const [active, setActive] = useState("plate");
+  const [first, ...rest] = WORDS;
   return (
-    <section style={{ position: "relative", padding: "80px 230px 80px 250px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+    // The basket photo has transparent edges; the hero's own grey (the colour
+    // the gradient fades to) shows through there, not the page's cream.
+    <section style={{ position: "relative", background: "rgb(241,241,241)", padding: "80px 230px 80px 250px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
       <div aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-        <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
-          <img alt="" src={IMG.fork} style={{ position: "absolute", height: "114.34%", left: "-10.26%", top: "-7.25%", width: "63.35%", maxWidth: "none" }} />
-        </div>
+        {WORDS.map((w) => (
+          <div key={w.word} style={{ position: "absolute", inset: 0, overflow: "hidden", opacity: active === w.word ? 1 : 0, transition: "opacity 0.3s" }}>
+            <img alt="" src={w.img} style={{ position: "absolute", maxWidth: "none", ...w.crop }} />
+          </div>
+        ))}
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(81.03deg, rgba(241,241,241,0) 42.73%, rgb(241,241,241) 48.617%)" }} />
       </div>
       <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start" }}>
@@ -45,31 +86,13 @@ function Hero() {
           <p style={nunito(400, 28)}>Explore research-backed guidelines from experts at Harvard on the healthiest ways to</p>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 8.717 }}>
-          <div style={{ display: "flex", gap: 12.212, alignItems: "center" }}>
-            <p aria-live="polite" style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 700, fontSize: 68.691, lineHeight: "62.135px", color: "#000", whiteSpace: "nowrap" }}>
-              fill your {order[0]}
-            </p>
-            <div style={{ paddingTop: 9.159, display: "flex" }}>
-              <button
-                type="button"
-                aria-label="Show the next word"
-                onClick={() => setWord((w) => (w + 1) % WORDS.length)}
-                style={{ width: 53.427, height: 53.427, padding: 0, border: "none", background: "transparent", cursor: "pointer" }}
-              >
-                <img alt="" src={IMG.arrowCircle} width="53.4265" height="53.4265" style={{ display: "block" }} />
-              </button>
-            </div>
+          <div style={{ display: "flex", alignItems: "flex-start" }}>
+            <span style={{ ...WORD_TEXT, fontWeight: 700, color: "#000" }}>fill your&nbsp;</span>
+            <HeroWord word={first.word} active={active === first.word} onActivate={() => setActive(first.word)} />
           </div>
-          <div style={{ paddingLeft: 247, display: "flex", flexDirection: "column", gap: 9, fontFamily: OUTFIT, fontSize: 68.691, lineHeight: "62.135px", color: "rgba(0,0,0,0.5)", whiteSpace: "nowrap" }}>
-            {order.slice(1).map((w) => (
-              <button
-                key={w}
-                type="button"
-                onClick={() => setWord(WORDS.indexOf(w))}
-                style={{ font: "inherit", color: "inherit", background: "none", border: "none", padding: 0, textAlign: "left", cursor: "pointer" }}
-              >
-                {w}
-              </button>
+          <div style={{ paddingLeft: 247, display: "flex", flexDirection: "column", gap: 9 }}>
+            {rest.map((w) => (
+              <HeroWord key={w.word} word={w.word} active={active === w.word} onActivate={() => setActive(w.word)} />
             ))}
           </div>
         </div>

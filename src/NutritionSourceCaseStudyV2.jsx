@@ -28,6 +28,13 @@ const h2 = (isMobile, color = C.navy) => ({
   letterSpacing: isMobile ? "0.48px" : "0.68px",
   color,
 });
+// Insight headlines: five steps down from h2 (34 → 24).
+const h2Insight = (isMobile, color = C.navy) => ({
+  ...h2(isMobile, color),
+  fontSize: isMobile ? 20 : 24,
+  lineHeight: isMobile ? "26px" : "30px",
+  letterSpacing: isMobile ? "0.4px" : "0.48px",
+});
 const h2Medium = (isMobile, color = C.navy) => ({
   margin: 0,
   fontFamily: F.mono,
@@ -505,7 +512,7 @@ function InsightOne({ isMobile }) {
       }}
     >
       <p style={eyebrow()}>Insight 1</p>
-      <h2 style={h2(isMobile)}>“I feel like real people don’t use this website.” - P7</h2>
+      <h2 style={h2Insight(isMobile)}>“I feel like real people don’t use this website.” - P7</h2>
       <p style={pLarge(isMobile)}>
         People felt like they were walking into an academic library and struggled to know where to start.
       </p>
@@ -658,7 +665,7 @@ function InsightTwo({ isMobile }) {
         }}
       >
         <p style={eyebrow()}>Insight 2</p>
-        <h2 style={h2(isMobile)}>No one’s nutritional needs are the same, because their lives aren’t the same.</h2>
+        <h2 style={h2Insight(isMobile)}>No one’s nutritional needs are the same, because their lives aren’t the same.</h2>
         <p style={pLarge(isMobile)}>
           In our interviews, people said there’s what they <em>should</em> eat, and what they <em>actually</em> end up
           eating, because of life. Well, specifically because of:
@@ -788,7 +795,7 @@ function InsightThree({ isMobile }) {
         </div>
         <div style={{ flex: "1 0 0", display: "flex", flexDirection: "column", gap: 10, color: C.navy, textAlign: isMobile ? "center" : "left" }}>
           <p style={eyebrow()}>Insight 3</p>
-          <h2 style={h2(isMobile)}>People want actionable content, like recipes, but they need to be able to find them easily.</h2>
+          <h2 style={h2Insight(isMobile)}>People want actionable content, like recipes, but they need to be able to find them easily.</h2>
         </div>
       </div>
     </section>

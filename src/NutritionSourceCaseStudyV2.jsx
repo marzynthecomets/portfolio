@@ -743,7 +743,7 @@ function InsightThree({ isMobile }) {
       <div
         style={{
           display: "flex",
-          flexDirection: isMobile ? "column" : "row-reverse", // text left, illustration right
+          flexDirection: isMobile ? "column-reverse" : "row-reverse", // text first: left on desktop, above on phones
           gap: isMobile ? 24 : 46,
           alignItems: "center",
           width: "100%",

@@ -637,7 +637,7 @@ function InsightTwo({ isMobile }) {
           gap: "var(--ns-gap-sm, 0.75rem)",
           alignItems: "center",
           textAlign: "center",
-          padding: isMobile ? 0 : "0 156px",
+          maxWidth: 1042, // same column as the insets
           color: C.navy,
         }}
       >
@@ -747,6 +747,7 @@ function InsightThree({ isMobile }) {
           gap: isMobile ? 24 : 46,
           alignItems: "center",
           width: "100%",
+          maxWidth: 1042, // same column as the insets, so it doesn't sprawl on wide screens
         }}
       >
         <div
@@ -821,7 +822,7 @@ function InformationArchitecture({ isMobile }) {
   const reduced = usePrefersReducedMotion();
   return (
     <section style={{ display: "flex", flexDirection: "column", gap: isMobile ? 32 : 48, alignItems: "center", padding: isMobile ? "0 0 48px" : "0 0 80px" }}>
-      <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", textAlign: "center", padding: isMobile ? "0 20px" : "0 165px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", textAlign: "center", padding: isMobile ? "0 20px" : 0, maxWidth: 1042 }}>
         <p style={eyebrow()}>We also…</p>
         <h2 style={h2Insight(isMobile)}>
           Sitewide, we conducted card-sorting and tree testing studies to help reorganize the navigation and relabel pages for

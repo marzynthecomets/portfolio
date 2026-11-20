@@ -43,7 +43,7 @@ const h2Medium = (isMobile, color = C.navy) => ({
   fontFamily: F.mono,
   fontWeight: 500,
   fontSize: isMobile ? "1.25rem" : "var(--ns-sub-size, 1.5rem)",
-  lineHeight: isMobile ? 1.3 : 1.25,
+  lineHeight: isMobile ? 1.3 : "var(--ns-sub-lh, 1.25)",
   letterSpacing: "-0.02em",
   color,
 });

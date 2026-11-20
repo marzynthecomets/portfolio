@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { NUNITO_VAR, PlateContent, PLATE_PORTIONS } from "./tnsShared.jsx";
+import { NUNITO_VAR, PlateContent } from "./tnsShared.jsx";
 import { INGREDIENTS } from "./tnsIngredients.js";
 
 // Live build of the redesigned Healthy Eating Plate page.
@@ -12,6 +12,9 @@ const IMG = {
   tnsLogo: `${H}/tns-logo.png`,
   footerLogo: `${H}/footer-hsph-logo.svg`,
   creatorPlate: `${H}/creator-plate.svg`,
+  resultsPlate: `${H}/results-plate.svg`,
+  arrowLeft: `${H}/arrow-left.svg`,
+  arrowDown: `${H}/arrow-down.svg`,
   chipPlus: `${H}/chip-plus.svg`,
   iconPlus: `${H}/icon-plus.svg`,
   iconClose: `${H}/icon-plus-b.svg`,
@@ -273,11 +276,12 @@ const METHODS = [
   { id: "Stovetop", label: "Stovetop" },
   { id: "None", label: "No Cooking" },
 ];
-const SECTIONS = [
-  { name: "Vegetables", key: "vegetables" },
-  { name: "Whole grains", key: "grains" },
-  { name: "Healthy protein", key: "protein" },
-  { name: "Fruits", key: "fruits" },
+// Results order and colours from Figma (PersonalPlate_Results, node 162:12943).
+const RESULT_SECTIONS = [
+  { title: "Vegetables", section: "Vegetables", color: "#39B54A" },
+  { title: "Fruit", section: "Fruits", color: "#B50937" },
+  { title: "Whole Grains", section: "Whole grains", color: "#A68461" },
+  { title: "Protein", section: "Healthy protein", color: "#E87D1D" },
 ];
 
 function Chip({ label, selected, onClick }) {
@@ -335,54 +339,87 @@ function filterIngredients(priorities, allergens, methods) {
   });
 }
 
-// Results view. Not in the Figma file yet: a stand-in that shows the matches
-// from the ingredient sheet, grouped by plate section.
-function PlateGuide({ matches, onReset }) {
+const equipmentLabel = (e) => (e === "None" ? "No cooking" : e);
+const metaLine = (m) =>
+  [m.form, equipmentLabel(m.equipment), m.prep === "No cook" ? null : m.prep, "$".repeat(m.cost)].filter(Boolean).join(" | ");
+
+function downloadGuide(matches) {
+  const lines = ["My Personal Healthy Eating Plate Guide", ""];
+  for (const s of RESULT_SECTIONS) {
+    lines.push(s.title.toUpperCase());
+    const items = matches.filter((m) => m.section === s.section);
+    if (!items.length) lines.push("  (nothing matched every choice)");
+    for (const m of items) {
+      lines.push(`- ${m.name}: ${metaLine(m)}`);
+      if (m.notes) lines.push(`  ${m.notes}`);
+    }
+    lines.push("");
+  }
+  lines.push("Always check labels for allergens. WIC-eligible foods vary by state.");
+  const blob = new Blob([lines.join("\n")], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "my-healthy-eating-plate-guide.txt";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function FoodCard({ item }) {
   return (
-    <div style={{ width: "100%", borderTop: `1px solid ${T.brown}`, paddingTop: 40, display: "flex", flexDirection: "column", gap: 24 }}>
-      <p style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 200, fontSize: 26, lineHeight: "37px", textTransform: "uppercase", color: T.brown }}>
-        Your personal Healthy Eating Plate guide
-      </p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24 }}>
-        {SECTIONS.map((s) => {
-          const items = matches.filter((m) => m.section === s.name);
-          const portion = PLATE_PORTIONS.find((p) => p.key === s.key);
-          return (
-            <div key={s.name} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              <h3 style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 500, fontSize: 22, lineHeight: "37px", color: T.brown, borderBottom: `1px solid ${T.creatorBorder}` }}>
-                {s.name}
-              </h3>
-              <p style={nunito(400, 14, { lineHeight: "20px", textTransform: "uppercase", color: T.brown })}>{portion.callout.kicker}</p>
-              {items.length ? (
-                <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 6 }}>
-                  {items.map((m) => (
-                    <li key={m.name + m.form} style={{ display: "flex", justifyContent: "space-between", gap: 8, fontFamily: OUTFIT, fontSize: 18, lineHeight: "24px", color: T.brown }}>
-                      <span>
-                        {m.name} <span style={{ opacity: 0.7 }}>· {m.form.toLowerCase()}</span>
-                      </span>
-                      <span aria-label={`Cost: ${m.cost} of 3`} style={{ whiteSpace: "nowrap" }}>
-                        {"$".repeat(m.cost)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p style={{ margin: 0, fontFamily: OUTFIT, fontSize: 18, lineHeight: "24px", color: T.brown }}>
-                  Nothing matches every choice. Try removing one.
-                </p>
-              )}
+    <div style={{ border: `1px solid ${T.brown}`, borderRadius: 8, padding: 18, display: "flex", flexDirection: "column", gap: 8, color: T.brown }}>
+      <p style={nunito(500, 30, { lineHeight: "37px" })}>{item.name}</p>
+      <p style={nunito(300, 18, { lineHeight: "22px" })}>{metaLine(item)}</p>
+      {item.notes && <p style={nunito(500, 18, { lineHeight: "22px" })}>{item.notes}</p>}
+    </div>
+  );
+}
+
+function PersonalPlateResults({ matches, onRestart }) {
+  const action = { borderRadius: 26.627, padding: "12px 24px", display: "flex", gap: 13, alignItems: "center", justifyContent: "center", cursor: "pointer" };
+  return (
+    <div style={{ width: 1200, boxSizing: "border-box", background: T.cream, border: `1px solid ${T.creatorBorder}`, borderRadius: 40, padding: 60, display: "flex", flexDirection: "column", gap: 46, alignItems: "center", overflow: "hidden" }}>
+      <div style={{ display: "flex", gap: 46, alignItems: "center", width: "100%" }}>
+        <img alt="" src={IMG.resultsPlate} width="169.999" height="169.983" style={{ display: "block", width: 170, height: 169.984, flexShrink: 0 }} />
+        <div style={{ flex: "1 0 0", display: "flex", flexDirection: "column", gap: 26 }}>
+          <div style={{ borderBottom: "1px solid #000", paddingBottom: 24, display: "flex", flexDirection: "column", gap: 12, color: T.brown }}>
+            <p style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 200, fontSize: 26, lineHeight: "37px", textTransform: "uppercase" }}>My Healthy Eating Plate Creator</p>
+            <h3 style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 400, fontSize: 36, lineHeight: "44px" }}>Your Personalized Healthy Eating Plate Guide</h3>
+          </div>
+          <div style={{ display: "flex", gap: 26 }}>
+            <button type="button" onClick={onRestart} style={{ ...action, background: "transparent", border: `2px solid ${T.crimson100}` }}>
+              <img alt="" src={IMG.arrowLeft} width="11" height="18" style={{ display: "block" }} />
+              <span style={nunito(600, 20, { color: T.crimson100, whiteSpace: "nowrap" })}>Restart Personalization</span>
+            </button>
+            <button type="button" onClick={() => downloadGuide(matches)} style={{ ...action, background: T.crimson100, border: "none" }}>
+              <span style={nunito(600, 20, { color: "white", whiteSpace: "nowrap" })}>Download My Guide</span>
+              <img alt="" src={IMG.arrowDown} width="14.7279" height="18" style={{ display: "block" }} />
+            </button>
+          </div>
+        </div>
+      </div>
+      {RESULT_SECTIONS.map((s) => {
+        const items = matches.filter((m) => m.section === s.section);
+        return (
+          <section key={s.title} style={{ display: "flex", flexDirection: "column", gap: 20, width: "100%" }}>
+            <div style={{ borderBottom: `1px solid ${s.color}`, paddingBottom: 20, display: "flex", gap: 10, alignItems: "center" }}>
+              <span aria-hidden style={{ background: s.color, width: 20, height: 21, borderRadius: 200, flexShrink: 0 }} />
+              <h4 style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 500, fontSize: 38, lineHeight: "37px", color: T.brown, whiteSpace: "nowrap" }}>{s.title}</h4>
             </div>
-          );
-        })}
-      </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24 }}>
-        <p style={nunito(400, 16, { lineHeight: "22px", color: T.slate })}>
-          Always check labels for allergens. WIC foods vary by state.
-        </p>
-        <button type="button" onClick={onReset} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", ...nunito(700, 18, { color: T.crimson100, textDecoration: "underline" }) }}>
-          Start over
-        </button>
-      </div>
+            {items.length ? (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 27 }}>
+                {items.map((m) => (
+                  <FoodCard key={m.name + m.form} item={m} />
+                ))}
+              </div>
+            ) : (
+              <p style={nunito(400, 20, { lineHeight: "26px", color: T.brown })}>
+                Nothing here matches every choice you made. Try restarting with fewer filters.
+              </p>
+            )}
+          </section>
+        );
+      })}
     </div>
   );
 }
@@ -411,6 +448,8 @@ function PersonalPlate() {
     setMethods(new Set());
     setShowGuide(false);
   };
+
+  if (showGuide) return <PersonalPlateResults matches={matches} onRestart={reset} />;
 
   return (
     <div
@@ -464,7 +503,6 @@ function PersonalPlate() {
         >
           <span style={nunito(700, 22, { color: "white", whiteSpace: "nowrap" })}>Make My Personal Healthy Eating Plate Guide</span>
         </button>
-        {showGuide && <PlateGuide matches={matches} onReset={reset} />}
       </div>
     </div>
   );

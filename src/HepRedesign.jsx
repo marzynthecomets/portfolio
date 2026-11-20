@@ -375,7 +375,7 @@ function FoodCard({ item }) {
   );
 }
 
-function PersonalPlateResults({ matches, onRestart }) {
+function PersonalPlateResults({ matches, onBack }) {
   const action = { borderRadius: 26.627, padding: "12px 24px", display: "flex", gap: 13, alignItems: "center", justifyContent: "center", cursor: "pointer" };
   return (
     <div style={{ width: 1200, boxSizing: "border-box", background: T.cream, border: `1px solid ${T.creatorBorder}`, borderRadius: 40, padding: 60, display: "flex", flexDirection: "column", gap: 46, alignItems: "center", overflow: "hidden" }}>
@@ -387,9 +387,9 @@ function PersonalPlateResults({ matches, onRestart }) {
             <h3 style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 400, fontSize: 36, lineHeight: "44px" }}>Your Personalized Healthy Eating Plate Guide</h3>
           </div>
           <div style={{ display: "flex", gap: 26 }}>
-            <button type="button" onClick={onRestart} style={{ ...action, background: "transparent", border: `2px solid ${T.crimson100}` }}>
+            <button type="button" onClick={onBack} style={{ ...action, background: "transparent", border: `2px solid ${T.crimson100}` }}>
               <img alt="" src={IMG.arrowLeft} width="11" height="18" style={{ display: "block" }} />
-              <span style={nunito(600, 20, { color: T.crimson100, whiteSpace: "nowrap" })}>Restart Personalization</span>
+              <span style={nunito(600, 20, { color: T.crimson100, whiteSpace: "nowrap" })}>Back to Personalization</span>
             </button>
             <button type="button" onClick={() => downloadGuide(matches)} style={{ ...action, background: T.crimson100, border: "none" }}>
               <span style={nunito(600, 20, { color: "white", whiteSpace: "nowrap" })}>Download My Guide</span>
@@ -414,7 +414,7 @@ function PersonalPlateResults({ matches, onRestart }) {
               </div>
             ) : (
               <p style={nunito(400, 20, { lineHeight: "26px", color: T.brown })}>
-                Nothing here matches every choice you made. Try restarting with fewer filters.
+                Nothing here matches every choice you made. Try going back and removing a filter.
               </p>
             )}
           </section>
@@ -442,14 +442,9 @@ function PersonalPlate() {
 
   const matches = useMemo(() => filterIngredients(priorities, allergens, methods), [priorities, allergens, methods]);
 
-  const reset = () => {
-    setPriorities(new Set());
-    setAllergens(new Set());
-    setMethods(new Set());
-    setShowGuide(false);
-  };
 
-  if (showGuide) return <PersonalPlateResults matches={matches} onRestart={reset} />;
+  // Going back keeps every choice so people can adjust rather than start over.
+  if (showGuide) return <PersonalPlateResults matches={matches} onBack={() => setShowGuide(false)} />;
 
   return (
     <div

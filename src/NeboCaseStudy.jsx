@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import leoProfanity from "leo-profanity";
 import { ts } from "./theme.js";
-import NavTitles from "./NavTitles.jsx";
+import SiteNav from "./SiteNav.jsx";
 
 const COLORS = {
   purps: "#270059",
@@ -1979,41 +1979,7 @@ export default function NeboCaseStudy() {
 }
 
 function Nav({ isMobile }) {
-  return (
-    <nav
-      style={{
-        background: COLORS.limon,
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        padding: isMobile ? "14px 20px" : "20px 80px",
-        width: "100%",
-        boxSizing: "border-box",
-      }}
-    >
-      <a
-        href="#/"
-        style={{
-          flex: "1 0 0",
-          margin: 0,
-          fontFamily: "'DM Sans', sans-serif",
-          fontWeight: 600,
-          fontSize: isMobile ? 20 : 28,
-          lineHeight: 1.142,
-          color: COLORS.neptune,
-          fontVariationSettings: "'opsz' 14",
-          textDecoration: "none",
-        }}
-      >
-        Mars Nevada
-      </a>
-      <NavTitles
-        color={COLORS.neptune}
-        isMobile={isMobile}
-        currentRoute="nebo"
-      />
-    </nav>
-  );
+  return <SiteNav isMobile={isMobile} current="nebo" />;
 }
 
 function PhoneFrame({ slotRef, isMobile }) {

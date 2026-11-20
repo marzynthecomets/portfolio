@@ -6,6 +6,7 @@ import {
 import HepRedesign from "./HepRedesign.jsx";
 import HomepageRedesign from "./HomepageRedesign.jsx";
 import RecipesRedesign from "./RecipesRedesign.jsx";
+import SiteNav from "./SiteNav.jsx";
 
 // Reskinned Nutrition Source case study.
 // Source: Figma file "wippy", frame New_NutritionSource_CaseStudy (node 1:21).
@@ -64,53 +65,6 @@ const pMedium = (color = C.navy) => ({
 });
 
 const sectionPad = (isMobile, desktop) => (isMobile ? "48px 20px" : desktop);
-
-/* ---------- Nav ---------- */
-function Nav({ isMobile }) {
-  const text = {
-    margin: 0,
-    fontSize: isMobile ? 14 : 24,
-    lineHeight: "normal",
-    color: C.navy,
-  };
-  return (
-    <nav
-      style={{
-        background: C.lime100,
-        display: "flex",
-        alignItems: "flex-end",
-        gap: 10,
-        padding: isMobile ? "16px 20px" : "28px 64px",
-        width: "100%",
-        boxSizing: "border-box",
-      }}
-    >
-      <a
-        href="#/"
-        style={{ ...text, flex: "1 0 0", fontFamily: F.mono, fontWeight: 500, textDecoration: "none" }}
-      >
-        MARS NEVADA
-      </a>
-      <p
-        style={{
-          ...text,
-          fontFamily: F.plex,
-          fontWeight: 400,
-          display: "flex",
-          gap: 10,
-          flexWrap: "wrap",
-          justifyContent: "flex-end",
-        }}
-      >
-        <span>Research</span>
-        <span>&amp;</span>
-        <span>Design</span>
-        <span>&amp;</span>
-        <span>Health Storytelling</span>
-      </p>
-    </nav>
-  );
-}
 
 function PlateHero() {
   const reducedMotion = usePrefersReducedMotion();
@@ -921,7 +875,7 @@ export default function NutritionSourceCaseStudyV2() {
   const isMobile = useIsMobile();
   return (
     <main style={{ background: C.sand50, width: "100%", overflowX: "hidden" }}>
-      <Nav isMobile={isMobile} />
+      <SiteNav isMobile={isMobile} current="nutrition-source" />
       <TitleBand isMobile={isMobile} />
       <PlateHero />
       <ProjectBand isMobile={isMobile} />

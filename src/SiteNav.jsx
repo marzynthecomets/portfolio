@@ -209,6 +209,7 @@ export default function SiteNav({ isMobile, current }) {
   return (
     <nav
       className="site-nav"
+      aria-label="Site"
       style={{
         position: "relative",
         zIndex: 20,

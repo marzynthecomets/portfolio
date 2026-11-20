@@ -1,4 +1,4 @@
-import { tsSize, tsLead } from "./typeScale.js";
+import { tsSize, tsLead, scaleCss } from "./typeScale.js";
 import { useEffect, useRef, useState } from "react";
 import {
   C, F, A, DM_SANS_OPSZ, NUNITO_VAR, useIsMobile, usePrefersReducedMotion, ScaleBox,
@@ -547,10 +547,10 @@ function BeforeAfterToggle({ labels, value, onChange, isMobile }) {
   return (
     <div role="group" aria-label="Before and after" style={{ display: "flex", alignItems: "center" }}>
       <button type="button" aria-pressed={value === "before"} onClick={() => onChange("before")} style={seg("before")}>
-        {labels[0]}
+        {isMobile ? "Before" : labels[0]}
       </button>
       <button type="button" aria-pressed={value === "after"} onClick={() => onChange("after")} style={seg("after")}>
-        {labels[1]}
+        {isMobile ? "After" : labels[1]}
       </button>
     </div>
   );
@@ -912,6 +912,7 @@ export default function NutritionSourceCaseStudyV2() {
   const isMobile = useIsMobile();
   return (
     <main className="case-study" style={{ background: C.sand50, width: "100%", overflowX: "hidden" }}>
+      <style>{scaleCss()}</style>
       <SiteNav isMobile={isMobile} current="nutrition-source" />
       <TitleBand isMobile={isMobile} />
       <PlateHero />

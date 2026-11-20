@@ -15,7 +15,7 @@ const DEFAULTS = {
   ratio: SCALE.ratio,
   steps: { ...SCALE.steps },
   leading: { ...SCALE.leading },
-  weight: { h1: 400, h2: 400, h3: 700, body: 400, small: 400 },
+  weight: { h1: 400, h2: 400, h3: 700, body: 400, medium: 400, small: 400 },
   track: { h1: -0.02, h2: 0.01, h3: 0, small: 0.08 },
   wrap: { h1: "wrap", h2: "balance", h3: "wrap" },
   wordSpace: 0,
@@ -28,7 +28,7 @@ const STORE = "type-tuner-v3";
 // Weights actually loaded for each family (see index.html).
 const MONO = [300, 400, 500];
 const SANS = [400, 500, 600, 700, 800, 900];
-const WEIGHTS = { h1: MONO, h2: MONO, h3: SANS, body: SANS, small: MONO };
+const WEIGHTS = { h1: MONO, h2: MONO, h3: SANS, body: SANS, medium: SANS, small: MONO };
 const MIN_PX = 14;
 
 const load = () => {
@@ -115,6 +115,7 @@ export default function TypeTuner() {
   const warnings = [];
   const flag = (where, text) => warnings.push({ where, text });
   if (px("small") < MIN_PX) flag("small", `${px("small").toFixed(1)}px is under ${MIN_PX}px.`);
+  if (px("medium") < 15) flag("medium", `${px("medium").toFixed(1)}px is small for several lines of card text.`);
   if (bodyPx < 16) flag("body", `${bodyPx.toFixed(1)}px. 16px or more reads best on screen.`);
   if (cpl > 75) flag("body", `~${cpl} characters a line. Over 75 gets tiring to read.`);
   if (cpl < 45) flag("body", `~${cpl} characters a line. Under 45 breaks too often.`);
@@ -127,7 +128,7 @@ export default function TypeTuner() {
   ["h1", "h2", "h3"].forEach((id) => {
     if (t.track[id] > 0.05) flag(id, "Letterspacing mixed-case headlines pulls the words apart.");
   });
-  const order = ["h1", "h2", "h3", "body", "small"];
+  const order = ["h1", "h2", "h3", "body", "medium", "small"];
   order.slice(0, -1).forEach((a, i) => {
     const b = order[i + 1];
     if (t.steps[a] <= t.steps[b]) {
@@ -209,7 +210,7 @@ export default function TypeTuner() {
           {part !== "spacing" && (
             <>
               <Slider id="tt-step" label="Step on the scale" value={t.steps[part]} shown={`${px(part).toFixed(1)}px`}
-                min={-2} max={6} step={1} onChange={(v) => upd((n) => { n.steps[part] = v; })} />
+                min={-2} max={6} step={0.5} onChange={(v) => upd((n) => { n.steps[part] = v; })} />
               <Slider id="tt-lh" label="Leading" value={t.leading[part]} shown={t.leading[part].toFixed(2)}
                 min={0.9} max={2} step={0.02} onChange={(v) => upd((n) => { n.leading[part] = v; })} />
               <label htmlFor="tt-weight" style={{ display: "block", marginTop: 8 }}>Weight</label>

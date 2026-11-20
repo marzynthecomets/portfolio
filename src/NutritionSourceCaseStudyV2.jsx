@@ -61,7 +61,13 @@ const pLarge = (isMobile, color = C.navy) => ({
   color,
   ...DM_SANS_OPSZ,
 });
-const pMedium = (isMobile, color = C.navy) => pLarge(isMobile, color);
+// Body medium: card text (stat cards, need cards). Quote bubbles stay body large.
+const pMedium = (isMobile, color = C.navy) => ({
+  ...pLarge(isMobile, color),
+  fontWeight: "var(--ts-medium-weight, 400)",
+  fontSize: tsSize("medium", isMobile),
+  lineHeight: tsLead("medium"),
+});
 
 const sectionPad = (isMobile, desktop) => (isMobile ? "48px 20px" : desktop);
 
@@ -183,7 +189,7 @@ function ProjectBand({ isMobile }) {
         <div style={{ display: "flex", flexDirection: "column", gap: 10, width: isMobile ? "100%" : 489 }}>
           <p style={eyebrow(C.navy)}>The team</p>
           <p style={pLarge(isMobile, C.navy)}>Mars Nevada, Xinyu Wang, Mai Amit</p>
-          <p style={pMedium(isMobile, C.navy)}>All team members contributed to both research and design.</p>
+          <p style={pLarge(isMobile, C.navy)}>All team members contributed to both research and design.</p>
         </div>
       </div>
     </section>
@@ -406,7 +412,7 @@ function TestersSay({ isMobile }) {
             Accurate nutrition information is only as good as it is discoverable and digestible to everyday people. So
             we asked them.
           </p>
-          <p style={pMedium(isMobile)}>
+          <p style={pLarge(isMobile)}>
             We conducted qualitative interviews with participants in which they explored the website without guidance
             and we learned how they approach their own nutrition habits and information-seeking.
           </p>

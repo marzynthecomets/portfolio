@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { NUNITO_VAR, PlateContent } from "./tnsShared.jsx";
+import { GLASS, NUNITO_VAR, PlateContent } from "./tnsShared.jsx";
 import { INGREDIENTS } from "./tnsIngredients.js";
 
 // Live build of the redesigned Healthy Eating Plate page.
@@ -144,6 +144,7 @@ function SidePill({ label, open }) {
         top: "50%",
         transform: "translate(-50%, -50%)",
         background: "rgba(36,36,36,0.38)",
+        ...GLASS,
         borderRadius: 10,
         padding: 12,
         display: "flex",

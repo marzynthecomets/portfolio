@@ -257,6 +257,16 @@ export const PLATE_KEYFRAMES = PLATE_TIMELINE.map((t, i) => {
   return `@keyframes tnsPlate${i} { ${steps} }`;
 }).join("\n");
 
+// Figma's glass effect on the label pills doesn't come through in its code
+// export, so this recreates it: a frosted blur of the photo behind, plus a
+// thin light edge.
+export const GLASS = {
+  backdropFilter: "blur(10px) saturate(140%)",
+  WebkitBackdropFilter: "blur(10px) saturate(140%)",
+  border: "1px solid rgba(255,255,255,0.35)",
+  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.25)",
+};
+
 function PortionPill({ portion, open, images }) {
   const icon = (
     <span
@@ -318,6 +328,7 @@ function PortionPill({ portion, open, images }) {
         width: portion.pill.width,
         boxSizing: "border-box",
         background: "rgba(36,36,36,0.24)",
+        ...GLASS,
         borderRadius: 7.958,
         padding: 9.55,
         display: "flex",

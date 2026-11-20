@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   C, F, A, DM_SANS_OPSZ, NUNITO_VAR, useIsMobile, usePrefersReducedMotion, ScaleBox,
   PLATE_PORTIONS, PLATE_KEYFRAMES, PlateContent,
@@ -106,6 +106,24 @@ function PlateHero() {
             ))}
         </div>
       </ScaleBox>
+    </section>
+  );
+}
+
+/* ---------- Live demos ---------- */
+// Each live redesign is a whole fake Harvard page. To a screen reader it's
+// labelled as one region inside this page, with a way to jump past it.
+function LiveDemo({ id, label, children }) {
+  const end = useRef(null);
+  return (
+    <section aria-label={label} style={{ position: "relative" }}>
+      <button type="button" className="skip-demo" onClick={() => end.current && end.current.focus()}>
+        Skip past this demo
+      </button>
+      {children}
+      <span ref={end} id={`${id}-end`} tabIndex={-1} className="sr-only">
+        End of {label.toLowerCase()}
+      </span>
     </section>
   );
 }
@@ -544,9 +562,11 @@ function HomepageSection({ isMobile }) {
           <div style={{ width: "100%", background: C.white, overflow: "hidden" }}>
             <div style={{ aspectRatio: "1042 / 645.461", overflowY: "auto" }}>
               {view === "after" ? (
-                <ScaleBox width={1440}>
-                  <HomepageRedesign />
-                </ScaleBox>
+                <LiveDemo id="homepage-demo" label="Live demo: homepage redesign">
+                  <ScaleBox width={1440}>
+                    <HomepageRedesign />
+                  </ScaleBox>
+                </LiveDemo>
               ) : (
                 <img alt="The original Nutrition Source homepage" src={A.homepageBefore} style={{ width: "100%", display: "block" }} />
               )}
@@ -712,9 +732,11 @@ function PlateRedesign({ isMobile }) {
               style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             />
           ) : (
-            <ScaleBox width={1440}>
-              <HepRedesign />
-            </ScaleBox>
+            <LiveDemo id="plate-demo" label="Live demo: Healthy Eating Plate page redesign">
+              <ScaleBox width={1440}>
+                <HepRedesign />
+              </ScaleBox>
+            </LiveDemo>
           )}
         </div>
         </div>
@@ -791,9 +813,11 @@ function RecipeRedesign({ isMobile }) {
                 style={{ width: "100%", height: "auto", display: "block" }}
               />
             ) : (
-              <ScaleBox width={1440}>
-                <RecipesRedesign />
-              </ScaleBox>
+              <LiveDemo id="recipes-demo" label="Live demo: recipes page redesign">
+                <ScaleBox width={1440}>
+                  <RecipesRedesign />
+                </ScaleBox>
+              </LiveDemo>
             )}
           </div>
         </div>

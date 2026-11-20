@@ -70,7 +70,7 @@ export function Menu() {
     ["Recipes", 108],
   ];
   return (
-    <header style={{ borderBottom: `1px solid ${T.navBorder}`, width: "100%" }}>
+    <header role="none" style={{ borderBottom: `1px solid ${T.navBorder}`, width: "100%" }}>
       <div style={{ background: T.crimson100, padding: "13px 46px" }}>
         <img alt="Harvard T.H. Chan School of Public Health" src={IMG.hsphLogo} width="178.994" height="31.9657" style={{ display: "block", width: 179, height: 31.966 }} />
       </div>
@@ -78,7 +78,7 @@ export function Menu() {
         <div style={{ position: "relative", width: 292, height: 113, flexShrink: 0 }}>
           <img alt="The Nutrition Source" src={IMG.tnsLogo} style={{ position: "absolute", left: 43, top: 18, width: 229, height: 79, objectFit: "cover" }} />
         </div>
-        <nav style={{ flex: "1 0 0", display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+        <nav role="none" style={{ flex: "1 0 0", display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
           <div style={{ display: "flex", alignItems: "center", paddingRight: 30 }}>
             <button type="button" style={{ ...plainButton, gap: 4, padding: "12.134px 17.191px" }}>
               <img alt="" src={IMG.search} style={{ width: 15.375, height: 15.375 }} />
@@ -229,7 +229,7 @@ function PlateSection() {
       <OilAndWater open={side} onToggle={toggleSide} hidden={active === "grains" || active === "protein"} />
       <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center", textAlign: "center", width: "100%" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 12, padding: "0 302px" }}>
-          <h1 style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 500, fontSize: 48, lineHeight: "48px", letterSpacing: "0.3516px", color: T.titleRed }}>
+          <h1 aria-level={3} style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 500, fontSize: 48, lineHeight: "48px", letterSpacing: "0.3516px", color: T.titleRed }}>
             The Healthy Eating Plate
           </h1>
           <p style={nunito(400, 26, { lineHeight: "37px", color: T.slate })}>
@@ -385,7 +385,7 @@ function PersonalPlateResults({ matches, onBack }) {
         <div style={{ flex: "1 0 0", display: "flex", flexDirection: "column", gap: 26 }}>
           <div style={{ borderBottom: "1px solid #000", paddingBottom: 24, display: "flex", flexDirection: "column", gap: 12, color: T.brown }}>
             <p style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 200, fontSize: 26, lineHeight: "37px", textTransform: "uppercase" }}>My Healthy Eating Plate Creator</p>
-            <h3 style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 400, fontSize: 36, lineHeight: "44px" }}>Your Personalized Healthy Eating Plate Guide</h3>
+            <h3 aria-level={5} style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 400, fontSize: 36, lineHeight: "44px" }}>Your Personalized Healthy Eating Plate Guide</h3>
           </div>
           <div style={{ display: "flex", gap: 26 }}>
             <button type="button" onClick={onBack} style={{ ...action, background: "transparent", border: `2px solid ${T.crimson100}` }}>
@@ -405,7 +405,7 @@ function PersonalPlateResults({ matches, onBack }) {
           <section key={s.title} style={{ display: "flex", flexDirection: "column", gap: 20, width: "100%" }}>
             <div style={{ borderBottom: `1px solid ${s.color}`, paddingBottom: 20, display: "flex", gap: 10, alignItems: "center" }}>
               <span aria-hidden style={{ background: s.color, width: 20, height: 21, borderRadius: 200, flexShrink: 0 }} />
-              <h4 style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 500, fontSize: 38, lineHeight: "37px", color: T.brown, whiteSpace: "nowrap" }}>{s.title}</h4>
+              <h4 aria-level={6} style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 500, fontSize: 38, lineHeight: "37px", color: T.brown, whiteSpace: "nowrap" }}>{s.title}</h4>
             </div>
             {items.length ? (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 27 }}>
@@ -508,7 +508,7 @@ function MakeItYours() {
   return (
     <section style={{ background: "white", padding: "80px 120px", display: "flex", flexDirection: "column", gap: 40, alignItems: "center" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", textAlign: "center", color: T.slate }}>
-        <h2 style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 500, fontSize: 36, lineHeight: "37px", whiteSpace: "nowrap" }}>
+        <h2 aria-level={4} style={{ margin: 0, fontFamily: OUTFIT, fontWeight: 500, fontSize: 36, lineHeight: "37px", whiteSpace: "nowrap" }}>
           Nutrition is personal. Make the Plate yours!
         </h2>
         <p style={nunito(400, 26, { lineHeight: "37px" })}>
@@ -531,7 +531,7 @@ export function Footer() {
   ];
   const linkStyle = nunito(800, 22, { lineHeight: "37px", color: "white", textDecoration: "none", whiteSpace: "nowrap" });
   return (
-    <footer style={{ background: T.crimson300, padding: "32px 46px 46px", display: "flex", flexDirection: "column", gap: 10 }}>
+    <footer role="none" style={{ background: T.crimson300, padding: "32px 46px 46px", display: "flex", flexDirection: "column", gap: 10 }}>
       <div style={{ padding: "16px 0" }}>
         <img alt="Harvard T.H. Chan School of Public Health" src={IMG.footerLogo} width="273" height="48.7539" style={{ display: "block" }} />
       </div>

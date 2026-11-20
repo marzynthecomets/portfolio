@@ -27,7 +27,7 @@ const IMG = {
   search: "/tns/newnav/search-icon.svg",
 };
 
-const T = {
+export const T = {
   crimson100: "#A51C30",
   crimson300: "#610311",
   titleRed: "#A71E34",
@@ -39,9 +39,9 @@ const T = {
   navBorder: "#C5C5C5",
 };
 
-const OUTFIT = "'Outfit', sans-serif";
+export const OUTFIT = "'Outfit', sans-serif";
 const NUNITO = "'Nunito Sans', sans-serif";
-const nunito = (weight, size, extra = {}) => ({
+export const nunito = (weight, size, extra = {}) => ({
   margin: 0,
   fontFamily: NUNITO,
   fontWeight: weight,
@@ -59,7 +59,7 @@ const plainButton = {
 };
 
 /* ---------- Header ---------- */
-function Menu() {
+export function Menu() {
   const topItems = ["Nutrition News", "About", "Donate"];
   const mainItems = [
     ["Nutrition 101", 161],
@@ -518,7 +518,7 @@ function MakeItYours() {
 }
 
 /* ---------- Footer ---------- */
-function Footer() {
+export function Footer() {
   const links = [
     ["Harvard Chan Home", "https://www.hsph.harvard.edu/"],
     ["Donate", null],

@@ -4,6 +4,7 @@ import {
   PLATE_PORTIONS, PLATE_KEYFRAMES, PlateContent,
 } from "./tnsShared.jsx";
 import HepRedesign from "./HepRedesign.jsx";
+import HomepageRedesign from "./HomepageRedesign.jsx";
 
 // Reskinned Nutrition Source case study.
 // Source: Figma file "wippy", frame New_NutritionSource_CaseStudy (node 1:21).
@@ -545,197 +546,7 @@ function BeforeAfterToggle({ labels, value, onChange, isMobile }) {
   );
 }
 
-/* ---------- Live redesigned homepage (after) ---------- */
-const HOMEPAGE_WORDS = ["plate", "cup", "cart"];
-const HOMEPAGE_TAGS = [
-  ["Healthy recipes", "Nutrition guidance for my kids", "How much protein I should be eating?", "What’s an anti-inflammatory diet?"],
-  ["How does nutrition affect my sleep?", "What’s intuitive eating?", "How much salt is okay?", "How do carbohydrates affect my blood sugar?"],
-];
-
-function HomepageAfter() {
-  const [word, setWord] = useState(0);
-  const [query, setQuery] = useState("");
-  const order = [...HOMEPAGE_WORDS.slice(word), ...HOMEPAGE_WORDS.slice(0, word)];
-  return (
-    <div style={{ width: 1042, display: "flex", flexDirection: "column", background: C.white }}>
-      {/* Hero */}
-      <div
-        style={{
-          position: "relative",
-          height: 362.325,
-          boxSizing: "border-box",
-          padding: "57.889px 166.431px 57.889px 180.903px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          overflow: "hidden",
-        }}
-      >
-        <div aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-          <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
-            <img
-              alt=""
-              src={A.forkPhoto}
-              style={{ position: "absolute", height: "114.34%", left: "-10.26%", top: "-7.25%", width: "63.35%", maxWidth: "none" }}
-            />
-          </div>
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              backgroundImage:
-                "linear-gradient(81.03deg, rgba(241, 241, 241, 0) 42.73%, rgb(241, 241, 241) 48.617%)",
-            }}
-          />
-        </div>
-        {/* In Figma this hero instance is drawn at 72.36% of the component's
-            native size (the same factor as the tags and toggle). */}
-        <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", transform: "scale(0.7236)", transformOrigin: "center" }}>
-          <div style={{ width: 586, fontFamily: F.nunito, fontSize: 28, color: C.tnsDarkText, letterSpacing: "-0.42px", ...NUNITO_VAR }}>
-            <p style={{ margin: 0, fontWeight: 700 }}>Your nutrition guide starts here.</p>
-            <p style={{ margin: 0, fontWeight: 400 }}>
-              Explore research-backed guidelines from experts at Harvard on the healthiest ways to
-            </p>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8.717 }}>
-            <div style={{ display: "flex", gap: 12.212, alignItems: "center" }}>
-              <p
-                aria-live="polite"
-                style={{ margin: 0, fontFamily: F.outfit, fontWeight: 700, fontSize: 68.691, lineHeight: "62.135px", color: "#000", whiteSpace: "nowrap" }}
-              >
-                fill your {order[0]}
-              </p>
-              <div style={{ paddingTop: 9.159, display: "flex" }}>
-                <button
-                  type="button"
-                  aria-label="Show the next word"
-                  onClick={() => setWord((w) => (w + 1) % HOMEPAGE_WORDS.length)}
-                  style={{ width: 53.427, height: 53.427, padding: 0, border: "none", background: "transparent", cursor: "pointer" }}
-                >
-                  <img alt="" src={A.arrowCircle} width="53.4265" height="53.4265" style={{ display: "block" }} />
-                </button>
-              </div>
-            </div>
-            <div
-              style={{
-                paddingLeft: 247,
-                display: "flex",
-                flexDirection: "column",
-                gap: 9,
-                fontFamily: F.outfit,
-                fontWeight: 400,
-                fontSize: 68.691,
-                lineHeight: "62.135px",
-                color: "rgba(0,0,0,0.5)",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {order.slice(1).map((w) => (
-                <button
-                  key={w}
-                  type="button"
-                  onClick={() => setWord(HOMEPAGE_WORDS.indexOf(w))}
-                  style={{ font: "inherit", color: "inherit", background: "none", border: "none", padding: 0, textAlign: "left", cursor: "pointer" }}
-                >
-                  {w}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Tag section */}
-      <div
-        style={{
-          background: C.tnsLightBg,
-          height: 282.96,
-          boxSizing: "border-box",
-          padding: "43.417px 57.889px",
-          display: "flex",
-          flexDirection: "column",
-          gap: 21.708,
-          alignItems: "center",
-          overflow: "hidden",
-        }}
-      >
-        <div style={{ display: "flex", flexDirection: "column", gap: 8.683, alignItems: "center" }}>
-          <label
-            htmlFor="tns-v2-search"
-            style={{ fontFamily: F.nunito, fontWeight: 700, fontSize: 23.156, color: C.tnsDarkText, letterSpacing: "-0.3473px", whiteSpace: "nowrap", ...NUNITO_VAR }}
-          >
-            I’m looking for...
-          </label>
-          <div
-            style={{
-              width: 455.875,
-              boxSizing: "border-box",
-              background: C.white,
-              border: `1.085px solid ${C.tnsLightestText}`,
-              borderRadius: 36.181,
-              padding: "14.472px 21.708px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 8,
-            }}
-          >
-            <input
-              id="tns-v2-search"
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Type to search"
-              style={{
-                flex: 1,
-                border: "none",
-                outline: "none",
-                padding: 0,
-                fontFamily: F.nunito,
-                fontWeight: 600,
-                fontSize: 12.331,
-                color: C.tnsDarkText,
-                background: "transparent",
-                ...NUNITO_VAR,
-              }}
-            />
-            <img alt="" src={A.searchIcon} style={{ width: 15.375, height: 15.375, display: "block" }} />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10.854, width: "100%", alignItems: "center" }}>
-          {HOMEPAGE_TAGS.map((row, i) => (
-            <div key={i} style={{ display: "flex", gap: 7.236, justifyContent: "center" }}>
-              {row.map((t) => (
-                <button
-                  key={t}
-                  type="button"
-                  onClick={() => setQuery(t)}
-                  style={{
-                    background: query === t ? C.tnsDarkText : C.white,
-                    color: query === t ? C.white : C.tnsDarkText,
-                    border: `1.085px solid ${C.tnsLightestText}`,
-                    borderRadius: 19.268,
-                    padding: "10.854px 21.708px",
-                    fontFamily: F.nunito,
-                    fontWeight: 600,
-                    fontSize: 12.331,
-                    whiteSpace: "nowrap",
-                    cursor: "pointer",
-                    ...NUNITO_VAR,
-                  }}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function HomepageRedesign({ isMobile }) {
+function HomepageSection({ isMobile }) {
   const [view, setView] = useState("after");
   return (
     <section
@@ -761,15 +572,15 @@ function HomepageRedesign({ isMobile }) {
         <BeforeAfterToggle labels={["Homepage Before", "Homepage after"]} value={view} onChange={setView} isMobile={isMobile} />
         <div style={{ position: "relative", width: "100%" }}>
           <div style={{ width: "100%", background: C.white, overflow: "hidden" }}>
-            {view === "after" ? (
-              <ScaleBox width={1042} height={645.461}>
-                <HomepageAfter />
-              </ScaleBox>
-            ) : (
-              <div style={{ aspectRatio: "1042 / 645.461", overflowY: "auto" }}>
+            <div style={{ aspectRatio: "1042 / 645.461", overflowY: "auto" }}>
+              {view === "after" ? (
+                <ScaleBox width={1440}>
+                  <HomepageRedesign />
+                </ScaleBox>
+              ) : (
                 <img alt="The original Nutrition Source homepage" src={A.homepageBefore} style={{ width: "100%", display: "block" }} />
-              </div>
-            )}
+              )}
+            </div>
           </div>
           {/* HomepageChange, 110:11418 */}
           <BrushOverlay file="homepage-frame-brush.svg" slice={20} bleed={[5.968, 7.129, 6.571, 5.871]} />
@@ -954,7 +765,7 @@ export default function NutritionSourceCaseStudyV2() {
       <WhyItMatters isMobile={isMobile} />
       <TestersSay isMobile={isMobile} />
       <InsightOne isMobile={isMobile} />
-      <HomepageRedesign isMobile={isMobile} />
+      <HomepageSection isMobile={isMobile} />
       <InsightTwo isMobile={isMobile} />
       <PlateRedesign isMobile={isMobile} />
     </main>

@@ -63,9 +63,6 @@ export const A = {
   inkCart: `${V2}/ink-cart.png`,
   originalScreencap: `${V2}/tns-original-screencap.png`,
   bubbles: [`${V2}/bubble-1.svg`, `${V2}/bubble-2.svg`, `${V2}/bubble-3.svg`],
-  forkPhoto: `${V2}/fork-photo.png`,
-  arrowCircle: `${V2}/arrow-circle.svg`,
-  searchIcon: "/tns/newnav/search-icon.svg",
   homepageBefore: "/tns/pages/homepage-before.png",
   hepBefore: `${V2}/hep-before-full.png`,
 };

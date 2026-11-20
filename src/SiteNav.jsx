@@ -208,6 +208,7 @@ export default function SiteNav({ isMobile, current }) {
   const plex = { ...text, fontFamily: F.plex, fontWeight: 400 };
   return (
     <nav
+      className="site-nav"
       style={{
         position: "relative",
         zIndex: 20,

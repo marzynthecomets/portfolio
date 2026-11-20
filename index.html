@@ -17,6 +17,15 @@
       html, body, #root { margin: 0; padding: 0; }
       body { font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #EFEFEF; }
       * { box-sizing: border-box; }
+      /* Case studies on big monitors: section backgrounds stay full-bleed, but the
+         content inside every section, and the site nav on every page, is held to a centered 1200px column. */
+      @media (min-width: 1500px) {
+        .case-study > section,
+        .site-nav {
+          padding-left: calc((100% - 1200px) / 2) !important;
+          padding-right: calc((100% - 1200px) / 2) !important;
+        }
+      }
     </style>
   </head>
   <body>

@@ -30,7 +30,9 @@ function NoShiftBold({ bold, children }) {
   );
 }
 
-function NavMenu({ label, items, current, textStyle }) {
+// align="right" anchors the dropdown to the trigger's right edge so it grows
+// leftward — needed for the last menu, which sits against the viewport edge.
+function NavMenu({ label, items, current, textStyle, align = "left" }) {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(null);
   const ref = useRef(null);
@@ -66,7 +68,7 @@ function NavMenu({ label, items, current, textStyle }) {
         <NoShiftBold bold={open || items.some((cs) => cs.route === current)}>{label}</NoShiftBold>
       </button>
       {open && (
-        <span style={{ position: "absolute", top: "100%", left: 0, paddingTop: 10, zIndex: 40 }}>
+        <span style={{ position: "absolute", top: "100%", [align]: 0, paddingTop: 10, zIndex: 40 }}>
           <span
             style={{
               display: "flex",
@@ -231,7 +233,7 @@ export default function SiteNav({ isMobile, current }) {
         <div style={{ ...plex, display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "flex-end", alignItems: "baseline" }}>
           <NavMenu label="Design" items={CASE_STUDIES} current={current} textStyle={plex} />
           <span aria-hidden="true">&amp;</span>
-          <NavMenu label="Health Research" items={RESEARCH} current={current} textStyle={plex} />
+          <NavMenu label="Health Research" items={RESEARCH} current={current} textStyle={plex} align="right" />
         </div>
       )}
     </nav>

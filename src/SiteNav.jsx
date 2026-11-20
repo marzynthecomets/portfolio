@@ -2,11 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { C, F, DM_SANS_OPSZ } from "./tnsShared.jsx";
 
 // Site-wide nav: "MARS NEVADA" on the left, the practice areas on the right.
-// "Design" opens a dropdown of case studies.
+// "Research" and "Design" each open a dropdown of pages.
 
 export const CASE_STUDIES = [
   { route: "nutrition-source", label: "The Nutrition Source", href: "#/nutrition-source" },
   { route: "nebo", label: "Nebo", href: "#/nebo" },
+];
+export const RESEARCH = [
+  { route: "queering-intake-forms", label: "Queering Intake Form Design", href: "#/queering-intake-forms" },
+];
+const MENUS = [
+  { label: "Research", items: RESEARCH },
+  { label: "Design", items: CASE_STUDIES },
 ];
 
 // Text that turns bold without moving anything around it: an invisible bold
@@ -22,7 +29,7 @@ function NoShiftBold({ bold, children }) {
   );
 }
 
-function DesignMenu({ current, textStyle }) {
+function NavMenu({ label, items, current, textStyle }) {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(null);
   const ref = useRef(null);
@@ -55,7 +62,7 @@ function DesignMenu({ current, textStyle }) {
         onClick={() => setOpen((v) => !v)}
         style={{ ...textStyle, background: "none", border: "none", padding: 0, cursor: "pointer" }}
       >
-        <NoShiftBold bold={open}>Design</NoShiftBold>
+        <NoShiftBold bold={open || items.some((cs) => cs.route === current)}>{label}</NoShiftBold>
       </button>
       {open && (
         <span style={{ position: "absolute", top: "100%", left: 0, paddingTop: 10, zIndex: 40 }}>
@@ -70,7 +77,7 @@ function DesignMenu({ current, textStyle }) {
               boxShadow: "0 8px 24px rgba(16,9,76,0.12)",
             }}
           >
-            {CASE_STUDIES.map((cs) => {
+            {items.map((cs) => {
               const active = current === cs.route;
               return (
                 <a
@@ -154,32 +161,36 @@ function MobileMenu({ current }) {
             gap: 4,
           }}
         >
-          <p style={{ margin: "0 0 6px", fontFamily: F.mono, fontSize: 13, letterSpacing: "0.26px", textTransform: "uppercase", color: C.navy }}>
-            Design
-          </p>
-          {CASE_STUDIES.map((cs) => {
-            const active = current === cs.route;
-            return (
-              <a
-                key={cs.route}
-                href={cs.href}
-                aria-current={active ? "page" : undefined}
-                onClick={() => setOpen(false)}
-                style={{
-                  fontFamily: F.sans,
-                  ...DM_SANS_OPSZ,
-                  fontWeight: active ? 700 : 400,
-                  fontSize: 22,
-                  lineHeight: "30px",
-                  color: C.navy,
-                  textDecoration: "none",
-                  padding: "8px 0",
-                }}
-              >
-                {cs.label}
-              </a>
-            );
-          })}
+          {MENUS.map((menu, mi) => (
+            <div key={menu.label} style={{ display: "flex", flexDirection: "column", gap: 4, marginTop: mi ? 16 : 0 }}>
+              <p style={{ margin: "0 0 6px", fontFamily: F.mono, fontSize: 13, letterSpacing: "0.26px", textTransform: "uppercase", color: C.navy }}>
+                {menu.label}
+              </p>
+              {menu.items.map((cs) => {
+                const active = current === cs.route;
+                return (
+                  <a
+                    key={cs.route}
+                    href={cs.href}
+                    aria-current={active ? "page" : undefined}
+                    onClick={() => setOpen(false)}
+                    style={{
+                      fontFamily: F.sans,
+                      ...DM_SANS_OPSZ,
+                      fontWeight: active ? 700 : 400,
+                      fontSize: 22,
+                      lineHeight: "30px",
+                      color: C.navy,
+                      textDecoration: "none",
+                      padding: "8px 0",
+                    }}
+                  >
+                    {cs.label}
+                  </a>
+                );
+              })}
+            </div>
+          ))}
         </div>
       )}
     </div>
@@ -215,9 +226,9 @@ export default function SiteNav({ isMobile, current }) {
         <MobileMenu current={current} />
       ) : (
         <div style={{ ...plex, display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "flex-end", alignItems: "baseline" }}>
-          <span>Research</span>
+          <NavMenu label="Research" items={RESEARCH} current={current} textStyle={plex} />
           <span aria-hidden="true">&amp;</span>
-          <DesignMenu current={current} textStyle={plex} />
+          <NavMenu label="Design" items={CASE_STUDIES} current={current} textStyle={plex} />
           <span aria-hidden="true">&amp;</span>
           <span>Health Storytelling</span>
         </div>
